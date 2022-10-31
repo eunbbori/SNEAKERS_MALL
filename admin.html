@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>관리자페이지</title>
+    <!-- 아이콘 -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/elice-rabbit-favicon.png"
+    />
+    <!-- bulma css 관련 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="login.css" />
+    <script src="login.js" type="module" defer></script>
+  </head>
+  <body>
+    <!-- 헤더 -->
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="container mt-3">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="/">
+            <img src="/elice-rabbit.png" width="30" height="30" />
+            <span class="has-text-link">쇼핑-데모</span>
+          </a>
+
+          <a
+            role="button"
+            class="navbar-burger"
+            aria-label="menu"
+            aria-expanded="false"
+            data-target="navbarBasicExample"
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
+
+          </div>
+        </div>
+      </div>
+    </nav>
+    
+    <p class="title is-5 has-text-info">카테고리 관리</p>
+    <!-- 로그인 폼(Form) -->
+    <div class="login-form-container categoryAddContainer">
+      <form class="box login-form-box categoryAddForm" id="categoryAddForm">
+        <div class="field">
+          <label class="label" for="categoryAdd">카테고리 추가</label>
+          <div class="control">
+            <input
+              class="input"
+              id="categoryAdd"
+              type="email"
+              placeholder="카테고리"
+              autocomplete="on"
+            />
+          </div>
+        </div>
+
+ 
+
+        <button class="button is-info is-fullwidth addBtn" id="submitButton">
+          확인
+        </button>
+      </form>
+    </div>
+
+
+    <div class="login-form-container categoryUpdateContainer">
+      <form class="box login-form-box categoryUpdateForm" id="categoryUpdateContainer">
+
+
+        <div class="field mb-5">
+          <label class="label" for="categoryUpdate">카테고리 수정</label>
+          <div class="control">
+            <input
+              class="input"
+              id="categoryUpdate"
+              type="password"
+              placeholder="********"
+              autocomplete="on"
+            />
+          </div>
+        </div>
+
+        <button class="button is-info is-fullwidth updateBtn" id="submitButton">
+          확인
+        </button>
+      </form>
+    </div>
+
+    <div class="login-form-container categoryDeleteContainer">
+      <form class="box login-form-box categoryDeleteForm" id="categoryDeleteForm">
+
+
+        <div class="field mb-5">
+          <label class="label" for="categoryDelte">카테고리 삭제</label>
+          <div class="control">
+            <input
+              class="input"
+              id="categoryDelte"
+              type="password"
+              placeholder="********"
+              autocomplete="on"
+            />
+          </div>
+        </div>
+
+        <button class="button is-info is-fullwidth deleteBtn" id="submitButton">
+          확인
+        </button>
+      </form>
+    </div>
+    <p class="title is-5 has-text-info">상품 관리</p>
+    <div class="login-form-container productAddContainer">
+      <form class="box login-form-box categoryDeleteForm" id="porductAddForm">
+
+
+        <div class="field mb-5">
+          <label class="label" for="productAdd">상품 추가</label>
+          <div class="control">
+            <input class='input' type="text" placeholder="브랜드" autocomplete="on"/>
+            <input class='input' type="text" placeholder="상품이름" autocomplete="on"/>
+            <input class='input' type="text" placeholder="가격" autocomplete="on"/>
+
+            <input
+              class="input"
+              id="productAdd"
+              type="text"
+              placeholder="설명"
+              autocomplete="on"
+            />
+
+
+            
+          </div>
+        </div>
+
+        <button class="button is-info is-fullwidth deleteBtn" id="submitButton">
+          확인
+        </button>
+      </form>
+    </div>
+
+    <div class="login-form-container productUpdateContainer">
+      <form class="box login-form-box categoryDeleteForm" id="porductUpdateForm">
+
+
+        <div class="field mb-5">
+          <label class="label" for="productUpdate">상품 수정</label>
+          <div class="control">
+            <input
+              class="input"
+              id="productUpdate"
+              type="password"
+              placeholder=""
+              autocomplete="on"
+            />
+          </div>
+        </div>
+
+        <button class="button is-info is-fullwidth deleteBtn" id="submitButton">
+          확인
+        </button>
+      </form>
+    </div>
+
+    <div class="login-form-container productDeleteContainer">
+      <form class="box login-form-box categoryDeleteForm" id="porductDeleteForm">
+
+
+        <div class="field mb-5">
+          <label class="label" for="productDelete">상품 삭제</label>
+          <div class="control">
+            <input
+              class="input"
+              id="productDelete"
+              type="password"
+              placeholder="상품이름"
+              autocomplete="on"
+            />
+          </div>
+        </div>
+
+        <button class="button is-info is-fullwidth deleteBtn" id="submitButton">
+          확인
+        </button>
+      </form>
+    </div>
+
+
+
+  </body>
+</html>
