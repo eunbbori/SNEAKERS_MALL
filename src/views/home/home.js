@@ -65,21 +65,35 @@ async function showProduct() { //test용 json파일요청
     .then(res => res.json())
 }
 
-function makeProductList() {  // 받아온 json정보로 html요소 변경
+function makeProductList() {  // 각 data마다 html을 생성하여 data를 삽입
   showProduct().then((data) => {
-    const brandName = data.brandName;
-    const productName = data.productName;
-    const price = data.price;
-
-    selectElement('.brandName').innerHTML = brandName
-    selectElement('.productName').innerHTML = productName
-    selectElement('.price').innerHTML = price
-
+    data.forEach((item) => {
+      const brandName = item.brandName;
+      const productName = item.productName;
+      const price = item.price;
+      const productId = item.productId;
+      selectElement('.productList').insertAdjacentHTML(
+        'beforeend',
+        `<li class="product" id="${productId}">
+        <a href="/product/:${productId}">
+        <img src="../elice-rabbit.png">
+        <div>
+        <p class="brandName">브랜드</p>
+        <p class="productName">상품명</p>
+        <p class="price">가격</p>
+        </div>
+        </a>
+        </li>`
+      )
+        selectElement(`#${productId} > a > div > .brandName`).innerHTML = brandName
+        selectElement(`#${productId} > a > div > .productName`).innerHTML = productName
+        selectElement(`#${productId} > a > div > .price`).innerHTML = price
+    })
   })
 }
 
 function selectElement(selector) {    //selector에 선택자를 포함한 str을 넣어줘서 html요소를 반환한다.
-  return document.querySelector(`${selector}`)
+  return document.querySelector(selector)
 }
 
 makeProductList()
