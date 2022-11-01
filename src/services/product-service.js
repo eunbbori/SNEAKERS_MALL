@@ -2,6 +2,6 @@ class ProductService {
   
 }
 
-const productService = new UserService();
+const productService = new ProductService();
 
 export { productService };
