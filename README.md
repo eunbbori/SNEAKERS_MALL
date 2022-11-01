@@ -5,9 +5,9 @@ Update admin.html
 
 Update admin.js
 
-상품기능폼
+##상품기능폼
 
- -상품추가(이름, 설명, 가격, 사이즈, 이미지주소) post 요청 
+ ###-상품추가(이름, 설명, 가격, 사이즈, 이미지주소) post 요청 
   - Input 태그
    -productName
    -productDsc
@@ -15,5 +15,5 @@ Update admin.js
    -productSize
    -productImg
 
-  -button 태그 (누를 시 폼을 제출해주는 함수(async handleSubmit) 실행)
+  ###-button 태그 (누를 시 폼을 제출해주는 함수(async handleSubmit) 실행)
    -submitAddProduct
