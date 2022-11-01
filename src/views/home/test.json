@@ -1,0 +1,27 @@
+[
+    {
+        "brandName": "nike",
+        "productName": "jordan1",
+        "price": "10000",
+        "productId": "p1" 
+    },
+    {
+        "brandName": "puma",
+        "productName": "unknownShoes",
+        "price": "110000",
+        "productId": "p2" 
+    },
+    {
+        "brandName": "nike",
+        "productName": "airmax",
+        "price": "20000",
+        "productId": "p3" 
+    },
+    {
+        "brandName": "adidas",
+        "productName": "superstar",
+        "price": "3000",
+        "productId": "p4" 
+    }
+    
+]

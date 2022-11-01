@@ -2,12 +2,13 @@
 // 다만, 앞으로 ~.js 파일을 작성할 때 아래의 코드 구조를 참조할 수 있도록,
 // 코드 예시를 남겨 두었습니다.
 
-import * as Api from "/api.js";
-import { randomId } from "/useful-functions.js";
+// import * as Api from "/api.js";
+// import { randomId } from "/useful-functions.js";
 
 // 요소(element), input 혹은 상수
 const landingDiv = document.querySelector("#landingDiv");
 const greetingDiv = document.querySelector("#greetingDiv");
+
 
 addAllElements();
 addAllEvents();
@@ -58,3 +59,41 @@ async function getDataFromApi() {
   console.log({ data });
   console.log({ random });
 }
+
+async function showProduct() { //test용 json파일요청
+  return await fetch('./test.json')
+    .then(res => res.json())
+}
+
+function makeProductList() {  // 각 data마다 html을 생성하여 data를 삽입
+  showProduct().then((data) => {
+    data.forEach((item) => {
+      const brandName = item.brandName;
+      const productName = item.productName;
+      const price = item.price;
+      const productId = item.productId;
+      selectElement('.productList').insertAdjacentHTML(
+        'beforeend',
+        `<li class="product" id="${productId}">
+        <a href="/product/:${productId}">
+        <img src="../elice-rabbit.png">
+        <div>
+        <p class="brandName">브랜드</p>
+        <p class="productName">상품명</p>
+        <p class="price">가격</p>
+        </div>
+        </a>
+        </li>`
+      )
+        selectElement(`#${productId} > a > div > .brandName`).innerHTML = brandName
+        selectElement(`#${productId} > a > div > .productName`).innerHTML = productName
+        selectElement(`#${productId} > a > div > .price`).innerHTML = price
+    })
+  })
+}
+
+function selectElement(selector) {    //selector에 선택자를 포함한 str을 넣어줘서 html요소를 반환한다.
+  return document.querySelector(selector)
+}
+
+makeProductList()
