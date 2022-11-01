@@ -2,12 +2,13 @@
 // 다만, 앞으로 ~.js 파일을 작성할 때 아래의 코드 구조를 참조할 수 있도록,
 // 코드 예시를 남겨 두었습니다.
 
-import * as Api from "/api.js";
-import { randomId } from "/useful-functions.js";
+// import * as Api from "/api.js";
+// import { randomId } from "/useful-functions.js";
 
 // 요소(element), input 혹은 상수
 const landingDiv = document.querySelector("#landingDiv");
 const greetingDiv = document.querySelector("#greetingDiv");
+
 
 addAllElements();
 addAllEvents();
@@ -58,3 +59,27 @@ async function getDataFromApi() {
   console.log({ data });
   console.log({ random });
 }
+
+async function showProduct() { //test용 json파일요청
+  return await fetch('./test.json')
+    .then(res => res.json())
+}
+
+function makeProductList() {  // 받아온 json정보로 html요소 변경
+  showProduct().then((data) => {
+    const brandName = data.brandName;
+    const productName = data.productName;
+    const price = data.price;
+
+    selectElement('.brandName').innerHTML = brandName
+    selectElement('.productName').innerHTML = productName
+    selectElement('.price').innerHTML = price
+
+  })
+}
+
+function selectElement(selector) {    //selector에 선택자를 포함한 str을 넣어줘서 html요소를 반환한다.
+  return document.querySelector(`${selector}`)
+}
+
+makeProductList()
