@@ -1,10 +1,9 @@
 # sneakersMall
-Update admin.html
+**Update admin.html**
 
 -전 버전과 다르게 카테고리 폼들과 상품기능 폼을 div로 구분함 ex) div1->카테고리 폼 div2-> 상품기능 폼 
 
-Update admin.js
-상품기능폼
+**Update admin.js 상품기능폼**
 
 -상품추가(이름, 설명, 가격, 사이즈, 이미지주소) post 요청 **
 
