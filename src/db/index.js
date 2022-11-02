@@ -20,6 +20,6 @@ db.on("error", (error) =>
 // '../db/index.js' 에서 index.js 는 생략 가능하므로, '../db' 면 됨 (index는 특별한 용어)
 export * from "./models/cart-model";
 export * from "./models/product-model";
-export * from "./models/orders-model";
+export * from "./models/order-model";
 export * from "./models/orderDetail-model";
 export * from "./models/user-model";
