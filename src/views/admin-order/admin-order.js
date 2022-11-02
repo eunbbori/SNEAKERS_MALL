@@ -47,13 +47,13 @@ const userOrderList = async function (e) {
               </option>
               <option 
               class="has-background-primary-light has-text-primary"
-              ${e.orderState === "상품 준비중" ? "selected" : ""}
+              ${e.orderState === "상품 배송중" ? "selected" : ""}
               value="상품 배송중">
               상품 배송중
               </option>
               <option 
               class="has-background-grey-light"
-              ${e.orderState === "상품 준비중" ? "selected" : ""}
+              ${e.orderState === "배송완료" ? "selected" : ""}
               value="배송완료">
               배송완료
               </option>
