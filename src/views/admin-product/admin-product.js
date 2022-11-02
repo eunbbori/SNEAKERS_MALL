@@ -85,8 +85,7 @@ async function handleSubmitAddProduct(e) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        key: authorization,
-        value:
+        Authorization:
           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzYwYjQ4MWJjMGZiY2I1YWFhNDYxMmMiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY2NzI4MjIwNH0.pAegQIKEaZmGFznaEablnGuF-1iDFLZs9OgmW4EYFbE",
       },
       body: bodyData,
