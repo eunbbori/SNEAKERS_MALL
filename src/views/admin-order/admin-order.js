@@ -59,11 +59,6 @@ const userOrderList = async function (e) {
               </option>
             </select>
           </div>
-          <div class="column is-2">
-            <button class="button" id="deleteButton-${
-              e.userId
-            }" >주문 취소</button>
-          </div>
         </div>
         <div class="column is-2">
         <button class="button" id="deleteButton-${e.userId}" >주문 취소</button>
