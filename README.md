@@ -23,3 +23,4 @@
 
 - 주문조회 기능 product.json 파일 생성 (*dummy파일)
 - 조회 버튼 누를 시 사용자 주문내역 부분에 생성됨
+- admin-product 상품 추가 post 요청시 컬랙션에 doc 생성 확인
