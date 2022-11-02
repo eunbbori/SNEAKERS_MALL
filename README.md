@@ -5,7 +5,7 @@
 
 **Update admin.js 상품기능폼**
 
--상품추가(이름, 설명, 가격, 사이즈, 이미지주소) post 요청 **
+-상품추가(이름, 설명, 가격, 사이즈, 이미지주소) post 요청
 
 - Input 태그
    -productName
