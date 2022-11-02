@@ -2,43 +2,43 @@ import { Schema } from "mongoose";
 
 const ProductSchema = new Schema(
   {
-    goodsCode: {
+    code: {
       type: String,
       required: true,
     },
-    brandName: {
+    brand: {
       type: String,
       required: true,
     },
-    goodsName: {
+    name: {
       type: String,
       required: true,
     },
-    goodsIamge: {
+    imageUrl: {
       type: String,
       required: true,
     },
-    goodsContent: {
+    content: {
       type: String,
       required: true,
     },
-    goodsType: {
+    category: {
       type: String,
       required: true,
     },
-    goodsSize: {
+    size: {
       type: Number,
       required: true,
     },
-    goodsPrice: {
+    price: {
       type: Number,
       required: true,
     },
-    goodsStock: {
+    stock: {
       type: Number,
       required: true,
     },
-    goodsRegDate: {
+    regDate: {
       type: String,
       required: true,
     },
