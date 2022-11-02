@@ -1,6 +1,7 @@
 import { Router } from "express";
 import is from "@sindresorhus/is";
 import { loginRequired } from "../middlewares";
+import { productService } from "../services";
 
 const productRouter = Router();
 
@@ -13,7 +14,22 @@ productRouter.post('/', loginRequired, async function (req, res, next) {
          "headers의 Content-Type을 application/json으로 설정해주세요"
         );
       }
-      res.status(200).json({});
+
+      // req (request)의 body 에서 데이터 가져오기
+      const { code, brand, name, imageUrl, content, category, size, price, stock } = req.body;
+      const newProduct = await productService.addProduct({
+        code,
+        brand,
+        name,
+        imageUrl,
+        content,
+        category,
+        size,
+        price,
+        stock
+      });
+
+      res.status(200).json(newProduct);
     } catch (error) {
       next(error);
     }
