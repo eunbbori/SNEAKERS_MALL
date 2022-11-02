@@ -1,6 +1,6 @@
 import { model } from "mongoose";
-import { OrdersSchema } from "../schemas/orders-schema";
+import { OrderSchema } from "../schemas/orders-schema";
 
-const Orders = model("orders", OrdersSchema);
+const Orders = model("orders", OrderSchema);
 
 export { Orders };
