@@ -24,8 +24,8 @@
     ></script>
 
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="admin.css" />
-    <script src="admin.js" type="module" defer></script>
+    <link rel="stylesheet" href="admin-product.css" />
+    <script src="admin-product.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
@@ -146,7 +146,7 @@
     <p class="title is-5 has-text-info">상품 관리</p>
     
     <div class="login-form-container productAddContainer">
-      <form class="box login-form-box categoryDeleteForm" id="porductAddForm">
+      <form class="box login-form-box categoryDeleteForm" id="productAddForm">
         <div class="field mb-5">
           <label class="label" for="productAdd">상품 추가</label>
           <div class="control">
@@ -167,14 +167,16 @@
            <input class='input' type="text" placeholder="카테고리" id="productCategory" autocomplete="on"/>
           </div>
         </div>
-        <button class="button is-info is-fullwidth deleteBtn" id="submitAddProduct">
+        <div class="mt-5">
+          <button class="button is-primary is-fullwidth" id="submitAddButton">
           확인
-        </button>
+          </button>
+        </div>
       </form>
    
 
    
-      <form class="box login-form-box categoryDeleteForm" id="porductUpdateForm">
+      <form class="box login-form-box categoryDeleteForm" id="productUpdateForm">
 
 
         <div class="field mb-5">

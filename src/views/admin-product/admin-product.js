@@ -1,4 +1,3 @@
-import * as Api from "/api.js";
 const productName = document.querySelector("#productName");
 const productDsc = document.querySelector("#productDsc");
 const productPrice = document.querySelector("#productPrice");
@@ -8,7 +7,7 @@ const productCode = document.querySelector("#productCode");
 const productBrand = document.querySelector("#productBrand");
 const productStock = document.querySelector("#productStock");
 const productCategory = document.querySelector("#productCategory");
-const submitAddProduct = document.querySelector("#porductAddForm");
+const submitAddProduct = document.querySelector("#productAddForm");
 
 // async function handleSubmitAddProduct(e) {
 //   e.preventDefault();
@@ -68,10 +67,10 @@ async function handleSubmitAddProduct(e) {
   };
   if (
     !name ||
-    !dsc ||
+    !content ||
     !price ||
     !size ||
-    !img ||
+    !imageUrl ||
     !code ||
     !brand ||
     !category ||
@@ -80,6 +79,7 @@ async function handleSubmitAddProduct(e) {
     return alert("데이터 값을 제대로 입력하셔야 합니다.");
   }
   const bodyData = JSON.stringify(data);
+  console.log(data);
   try {
     await fetch("/api/product", {
       method: "POST",
@@ -109,4 +109,12 @@ async function handleSubmitAddProduct(e) {
 //   console.log(data);
 // }
 
+// function handleSubmitAddProduct(e) {
+//   e.preventDefault();
+//   const name = productName.value;
+
+//   const data = { name };
+
+//   console.log(data);
+// }
 submitAddProduct.addEventListener("submit", handleSubmitAddProduct);
