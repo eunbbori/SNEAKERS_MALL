@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>쇼핑-n팀</title>
+    <title>snekersMall</title>
     <!-- 아이콘 -->
     <link
       rel="icon"
@@ -22,9 +22,9 @@
       src="https://kit.fontawesome.com/9daa42bcef.js"
       crossorigin="anonymous"
     ></script>
+
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="home.css" />
-    <script src="home.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
@@ -67,11 +67,26 @@
       </div>
     </nav>
     <div >
-      <ul class="navContainer">
-        <li><a href="/:brand">BRAND</a></li>
+      <ul class="categoryNav">
+        <li id="brand"><a href="/:brand">BRAND</a></li>
         <li><a href="">MEN</a></li>
         <li><a href="">WOMEN</a></li>
         <li><a href="">KIDS</a></li>
+      </ul>
+    </div>
+    <div>
+      <ul class="categoryList hidden">
+        <li><a href="" id="NIKE">NIKE</a></li>
+        <li><a href="" id="NEW BALANCE">NEW BALANCE</a></li>
+        <li><a href="" id="ADIDAS">ADIDAS</a></li>
+        <li><a href="" id="CONVERSE">CONVERSE</a></li>
+        <li><a href="" id="PUMA">PUMA</a></li>
+        <li><a href="" id="LACOSTE">LACOSTE</a></li>
+        <li><a href="" id="DISCOVERY">DISCOVERY</a></li>
+        <li><a href="" id="VANS">VANS</a></li>
+        <li><a href="" id="FILA">FILA</a></li>
+        <li><a href="" id="REEBOK">REEBOK</a></li>
+        <li><a href="" id="CROCS">CROCS</a></li>
       </ul>
     </div>
     <div class="container">
@@ -79,13 +94,10 @@
         
       </ul>    
     </div>
-    <div class="div-container">
-    <div class="landing" id="landingDiv">
-      <h1>랜딩 페이지</h1>
-    </div>
-    <div class="greeting" id="greetingDiv">
-      <h1>안녕하세요!</h1>
-    </div>
-  </div>
+    <ul class="pageFrame" id="js-pagination">
+
+    </ul>
+    <script src="home.js" type="module" defer></script>
+
 </body>
 </html>
