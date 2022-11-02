@@ -1,9 +1,13 @@
-// import * as Api from "/api.js";
+import * as Api from "/api.js";
 const productName = document.querySelector("#productName");
 const productDsc = document.querySelector("#productDsc");
 const productPrice = document.querySelector("#productPrice");
 const productSize = document.querySelector("#productSize");
 const productImg = document.querySelector("#productImg");
+const productCode = document.querySelector("#productCode");
+const productBrand = document.querySelector("#productBrand");
+const productStock = document.querySelector("#productStock");
+const productCategory = document.querySelector("#productCategory");
 const submitAddProduct = document.querySelector("#porductAddForm");
 
 // async function handleSubmitAddProduct(e) {
@@ -43,25 +47,54 @@ const submitAddProduct = document.querySelector("#porductAddForm");
 async function handleSubmitAddProduct(e) {
   e.preventDefault();
   const name = productName.value;
-  const dsc = productDsc.value;
+  const content = productDsc.value;
   const price = productPrice.value;
   const size = productSize.value;
-  const img = productImg.value;
-
-  const data = { name, dsc, price, size, img };
+  const imageUrl = productImg.value;
+  const code = productCode.value;
+  const brand = productBrand.value;
+  const stock = productStock.value;
+  const category = productCategory.value;
+  const data = {
+    name,
+    content,
+    price,
+    size,
+    imageUrl,
+    code,
+    brand,
+    stock,
+    category,
+  };
+  if (
+    !name ||
+    !dsc ||
+    !price ||
+    !size ||
+    !img ||
+    !code ||
+    !brand ||
+    !category ||
+    !stock
+  ) {
+    return alert("데이터 값을 제대로 입력하셔야 합니다.");
+  }
   const bodyData = JSON.stringify(data);
-
-  const res = await fetch("./product.json", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: bodyData,
-  });
-
-  const result = await res.json();
-
-  return result;
+  try {
+    await fetch("/api/product", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        key: authorization,
+        value:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzYwYjQ4MWJjMGZiY2I1YWFhNDYxMmMiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY2NzI4MjIwNH0.pAegQIKEaZmGFznaEablnGuF-1iDFLZs9OgmW4EYFbE",
+      },
+      body: bodyData,
+    });
+    submitAddProduct.reset();
+  } catch (err) {
+    console.log(err.stack);
+  }
 }
 
 // function handleSubmitAddProduct(e) {
