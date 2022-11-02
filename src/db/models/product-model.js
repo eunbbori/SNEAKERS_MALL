@@ -13,6 +13,20 @@ export class ProductModel {
     const createdNewProduct = await Product.create(productInfo);
     return createdNewProduct;
   }
+
+  async total(category) {
+    const total = await Product.countDocuments({ category: category });
+    return total;
+  }
+
+  async paginationProducts(page, perPage, category){
+    const products = await Product.find({ category }) 
+      .sort({regDate : -1})
+      .skip(perPage * (page -1))
+      .limit(perPage);
+
+    return products;
+  }
 }
 
 const productModel = new ProductModel();

@@ -21,6 +21,17 @@ class ProductService {
     const newProduct = await this.productModel.create(productInfo);
     return newProduct
   }
+
+  //상품 조회
+  async getProductList(page, perPage, category) {
+    const total = await this.productModel.total(category);
+    const paginationProducts = await this.productModel.paginationProducts(page, perPage, category);
+
+    return {
+      total: total,
+      products: paginationProducts
+    };
+  }
 }
 
 const productService = new ProductService(productModel);
