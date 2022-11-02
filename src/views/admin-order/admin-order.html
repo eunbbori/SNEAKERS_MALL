@@ -138,8 +138,27 @@
         </div>
       </div>
     </div>
+    <div id="modal" class="modal">
+      <div class="modal-background" id="modalBackground"></div>
+      <div class="modal-content">
+        <div class="box">
+          <p class="mb-3">
+            주문 삭제 시 복구할 수 없습니다. 정말로 취소하시겠습니까?
+          </p>
 
-    <button class="modal-close is-large" id="modalCloseButton" aria-label="close"></button>
+          <div class="buttons">
+            <button class="button mt-5" id="deleteCompleteButton" aria-label="close">
+              네
+            </button>
+            <button class="button is-primary mt-5" id="deleteCancelButton" aria-label="close">
+              아니오
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button class="modal-close is-large" id="modalCloseButton" aria-label="close"></button>
+    </div>
   </div>  
   </body>
 </html>
