@@ -39,8 +39,8 @@ const ProductSchema = new Schema(
       required: true,
     },
     regDate: {
-      type: String,
-      required: true,
+      type: Date,
+      default: Date.now
     },
   }
 );
