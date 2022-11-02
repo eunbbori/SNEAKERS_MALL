@@ -19,6 +19,7 @@
 
 - json으로 받아온 데이터를 각각 html요소로 만들어 표현할 수 있도록 함수 작성
 
-**2022/11/02 Update admin-product,admin-order admin페이지 분할 라우팅 수정
--주문조회 기능 product.json 파일 생성 (*dummy파일)
--조회 버튼 누를 시 사용자 주문내역 부분에 생성됨
+**2022/11/02 Update admin-product,admin-order admin페이지 분할 라우팅 수정**
+
+- 주문조회 기능 product.json 파일 생성 (*dummy파일)
+- 조회 버튼 누를 시 사용자 주문내역 부분에 생성됨
