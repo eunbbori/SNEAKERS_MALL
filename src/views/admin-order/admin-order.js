@@ -1,80 +1,55 @@
-// import * as Api from "/api.js";
-const productName = document.querySelector("#productName");
-const productDsc = document.querySelector("#productDsc");
-const productPrice = document.querySelector("#productPrice");
-const productSize = document.querySelector("#productSize");
-const productImg = document.querySelector("#productImg");
-const submitAddProduct = document.querySelector("#porductAddForm");
+const ordersContainer = document.querySelector(".orders-container");
+const btnRef = document.querySelector("#orderRefBtn");
 
-// async function handleSubmitAddProduct(e) {
-//   e.preventDefault();
-//   const name = productName.value;
-//   const dsc = productDsc.value;
-//   const price = productPrice.value;
-//   const size = productSize.value;
-//   const img = productImg.value;
-//   try {
-//     const data = { name, dsc, price, size, img };
-//     const result = await Api.post("/admin", data);
-//   } catch (err) {
-//     console.log(err.stack);
-//   }
-//   console.log(result);
-// }
-
-// async function handleSubmitAddProduct(e) {
-//   e.preventDefault();
-//   const name = productName.value;
-//   const dsc = productDsc.value;
-//   const price = productPrice.value;
-//   const size = productSize.value;
-//   const img = productImg.value;
-
-//   try {
-//     const data = { name, dsc, price, size, img };
-
-//     Api.post("./product.json", data);
-//   } catch (err) {
-//     console.error(err.stack);
-//     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
-//   }
-// }
-
-async function handleSubmitAddProduct(e) {
+const userOrderList = async function (e) {
   e.preventDefault();
-  const name = productName.value;
-  const dsc = productDsc.value;
-  const price = productPrice.value;
-  const size = productSize.value;
-  const img = productImg.value;
+  try {
+    const res = await fetch("./product.json");
+    const result = await res.json();
+    console.log(result);
+    result.map((e) => {
+      ordersContainer.insertAdjacentHTML(
+        "beforeend",
+        `<div class="columns orders-item">
+        <div class="column is-2">${e.userId}</div>
+        <div class="column is-4 product-name">${e.productName}</div>
+        <div class="column is-2">${e.account * e.productPrice}</div>
+        <div class="column is-2">
+          <div class="select" >
+            <select id="statusSelectBox-${e.userId}">
+             <option 
+              class="has-background-danger-light has-text-danger"
+              value=${e.orderState}>
+              ${e.orderState}
+              </option>
+              <option 
+              class="has-background-primary-light has-text-primary"
+              value=${e.orderState}>
+              ${e.orderState}
+              </option>
+              <option 
+              class="has-background-grey-light"
+              value=${e.orderState}>
+              ${e.orderState}
+              </option>
+            </select>
+          </div>
+          <div class="column is-2">
+            <button class="button" id="deleteButton-${
+              e.userId
+            }" >주문 취소</button>
+          </div>
+        </div>
+        <div class="column is-2">
+        <button class="button" id="deleteButton-${e.userId}" >주문 취소</button>
+        </div>
+      
+      </div>`
+      );
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-  const data = { name, dsc, price, size, img };
-  const bodyData = JSON.stringify(data);
-
-  const res = await fetch("./product.json", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: bodyData,
-  });
-
-  const result = await res.json();
-
-  return result;
-}
-
-// function handleSubmitAddProduct(e) {
-//   e.preventDefault();
-//   const name = productName.value;
-//   const dsc = productDsc.value;
-//   const price = productPrice.value;
-//   const size = productSize.value;
-//   const imgurl = productImg.value;
-
-//   const data = { name, dsc, price, size, imgurl };
-
-//   console.log(data);
-// }
-
-submitAddProduct.addEventListener("submit", handleSubmitAddProduct);
+btnRef.addEventListener("click", userOrderList);

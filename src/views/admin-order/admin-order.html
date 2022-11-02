@@ -24,8 +24,8 @@
     ></script>
 
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="admin.css" />
-    <script src="admin.js" type="module" defer></script>
+    <link rel="stylesheet" href="admin-order.css" />
+    <script src="admin-order.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
@@ -68,153 +68,111 @@
         </div>
       </div>
     </nav>
-    
-    <p class="title is-5 has-text-info">카테고리 관리</p>
-    <!-- 로그인 폼(Form) -->
-    <div class="login-form-container">
-      <form class="box login-form-box" id="categoryAddForm">
-        <div class="field">
-          <label class="label" for="categoryAdd">카테고리 추가</label>
-          <div class="control">
-            <input
-              class="input"
-              id="categoryAdd"
-              type="email"
-              placeholder="카테고리"
-              autocomplete="on"
-            />
-          </div>
-        </div>
-
- 
-
-        <button class="button is-info is-fullwidth addBtn" id="submitButton">
-          확인
-        </button>
-      </form>
-    
-
-
-      <form class="box login-form-box categoryUpdateForm" id="categoryUpdateContainer">
-
-
-        <div class="field mb-5">
-          <label class="label" for="categoryUpdate">카테고리 수정</label>
-          <div class="control">
-            <input
-              class="input"
-              id="categoryUpdate"
-              type="password"
-              placeholder="********"
-              autocomplete="on"
-            />
-          </div>
-        </div>
-
-        <button class="button is-info is-fullwidth updateBtn" id="submitButton">
-          확인
-        </button>
-      </form>
-    
-
-    
-      <form class="box login-form-box categoryDeleteForm" id="categoryDeleteForm">
-
-
-        <div class="field mb-5">
-          <label class="label" for="categoryDelte">카테고리 삭제</label>
-          <div class="control">
-            <input
-              class="input"
-              id="categoryDelte"
-              type="password"
-              placeholder="********"
-              autocomplete="on"
-            />
-          </div>
-        </div>
-
-        <button class="button is-info is-fullwidth deleteBtn" id="submitButton">
-          확인
-        </button>
-      </form>
-    </div>
-
-
-
-
-    <p class="title is-5 has-text-info">상품 관리</p>
+    <p class="title is-5 has-text-info">주문관련 기능</p>
     
     <div class="login-form-container productAddContainer">
       <form class="box login-form-box categoryDeleteForm" id="porductAddForm">
-        <div class="field mb-5">
-          <label class="label" for="productAdd">상품 추가</label>
-          <div class="control">
-            <input class='input' type="text" placeholder="상품이름" id="productName"autocomplete="on"/>
-            <input class='input' type="text" placeholder="설명" id="productDsc"autocomplete="on"/>
-            <input class='input' type="text" placeholder="가격" id="productPrice"autocomplete="on"/>
-            <input class='input' type="text" placeholder="사이즈" id="productSize" autocomplete="on"/>
-            <input
-              class="input"
-              id="productImg"
-              type="text"
-              placeholder="이미지 주소"
-              autocomplete="on"
-            />
-          </div>
-        </div>
-        <button class="button is-info is-fullwidth deleteBtn" id="submitAddProduct">
-          확인
-        </button>
-      </form>
-   
+  
+          <label class="label" for="orderRefBtn">주문조회</label>
 
-   
-      <form class="box login-form-box categoryDeleteForm" id="porductUpdateForm">
-
-
-        <div class="field mb-5">
-          <label class="label" for="productUpdate">상품 수정</label>
-          <div class="control">
-            <input
-              class="input"
-              id="productUpdate"
-              type="password"
-              placeholder=""
-              autocomplete="on"
-            />
-          </div>
-        </div>
-
-        <button class="button is-info is-fullwidth deleteBtn" id="submitButton">
-          확인
-        </button>
-      </form>
-
-
-      <form class="box login-form-box categoryDeleteForm" id="porductDeleteForm">
-
-
-        <div class="field mb-5">
-          <label class="label" for="productDelete">상품 삭제</label>
-          <div class="control">
-            <input
-              class="input"
-              id="productDelete"
-              type="password"
-              placeholder="상품이름"
-              autocomplete="on"
-            />
-          </div>
-        </div>
-
-        <button class="button is-info is-fullwidth deleteBtn" id="submitButton">
-          확인
+        <button class="button is-info is-fullwidth" id="orderRefBtn">
+          조회
         </button>
       </form>
     </div>
+    <div class="block account-header">
+      <h1 class="subtitle is-4">사용자 주문 내역</h1>
+    </div>
+    <nav class="level">
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">총주문수</p>
+          <p class="title" id="ordersCount">2</p>
+        </div>
+      </div>
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">상품준비중</p>
+          <p class="title" id="prepareCount">2</p>
+        </div>
+      </div>
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">상품배송중</p>
+          <p class="title" id="deliveryCount">0</p>
+        </div>
+      </div>
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">배송완료</p>
+          <p class="title" id="completeCount">0</p>
+        </div>
+      </div>
+    </nav>
 
+  <div class="container orders-container" id="ordersContainer">
+    <div class="columns notification is-info is-light is-mobile orders-top">
+      <div class="column is-2">유저아이디</div>
+      <div class="column is-2">상품이름</div>
+      <div class="column is-2">주문총액</div>
+      <div class="column is-2">상태관리</div>
+      <div class="column is-2">취소</div>
+    </div>
+  </div>
 
+  <div id="modal" class="modal">
+    <div class="modal-background" id="modalBackground"></div>
+    <div class="modal-content">
+      <div class="box">
+        <p class="mb-3">
+          주문 삭제 시 복구할 수 없습니다. 정말로 취소하시겠습니까?
+        </p>
 
+        <div class="buttons">
+          <button class="button mt-5" id="deleteCompleteButton" aria-label="close">
+            네
+          </button>
+          <button class="button is-primary mt-5" id="deleteCancelButton" aria-label="close">
+            아니오
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <button class="modal-close is-large" id="modalCloseButton" aria-label="close"></button>
+  </div>  
   </body>
 </html>
+<!--작업 영역 삭제요망  -->
+
+<div class="columns orders-item">
+  <div class="column is-2">${e.userId}</div>
+  <div class="column is-4 product-name">${e.productName}</div>
+  <div class="column is-2">${e.account*e.productPrice}</div>
+  <div class="column is-2">
+    <div class="select" >
+      <select id="statusSelectBox-${_id}">
+       <option 
+        class="has-background-danger-light has-text-danger"
+        value=${e.orderState}>
+        ${e.orderState}
+        </option>
+        <option 
+        class="has-background-primary-light has-text-primary"
+        value=${e.orderState}>
+        ${e.orderState}
+        </option>
+        <option 
+        class="has-background-grey-light"
+        value=${e.orderState}>
+        ${e.orderState}
+        </option>
+      </select>
+    </div>
+    <div class="column is-2">
+      <button class="button" id="deleteButton-${e.userId}" >주문 취소</button>
+    </div>
+  </div>
+  <div class="column is-2">${e.userId}</div>
+
+</div>
