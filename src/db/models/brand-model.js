@@ -13,6 +13,13 @@ export class BrandModel {
     const createdNewBrand = await Brand.create(brandInfo);
     return createdNewBrand;
   }
+
+  async update(name, newName) {
+    const updatedBrand = await Brand.updateOne({name: name}, 
+      {name: newName}
+    );
+    return updatedBrand;
+  }
 } 
 
 const brandModel = new BrandModel();
