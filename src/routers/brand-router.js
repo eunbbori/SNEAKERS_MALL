@@ -58,6 +58,25 @@ brandRouter.post("/:name", loginRequired, async function (req, res, next) {
   }
 });
 
+// 브랜드 삭제 api
+brandRouter.delete("/:name", loginRequired, async function (req, res, next) {
+  try {
+    const name = req.params.name; 
 
+    const { deletedCount } = await brandService.deleteBrand(name)
+
+    if(deletedCount === 1){
+      res.status(200).json({
+        result: true
+      });
+    }else{
+      throw new Error(
+        "예상치 못한 오류 발생 관리자에게 문의해주세요"
+      );
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
 export { brandRouter };

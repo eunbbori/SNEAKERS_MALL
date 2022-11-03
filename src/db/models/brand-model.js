@@ -20,6 +20,11 @@ export class BrandModel {
     );
     return updatedBrand;
   }
+
+  async delete(name) {
+    const deletedBrand = await Brand.deleteOne({name});
+    return deletedBrand;
+  }
 } 
 
 const brandModel = new BrandModel();
