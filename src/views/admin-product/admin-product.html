@@ -103,9 +103,9 @@
           </button>
         </div>
       </form>
-   
+    </div>
 
-   
+    <div class="login-form-container productAddContainer">
       <form class="box login-form-box categoryDeleteForm" id="productUpdateForm">
 
 
@@ -126,30 +126,31 @@
           확인
         </button>
       </form>
-
-
+    </div>
+    <div class="login-form-container productAddContainer">
       <form class="box login-form-box categoryDeleteForm" id="porductDeleteForm">
 
 
         <div class="field mb-5">
-          <label class="label" for="productDelete">상품 삭제</label>
+          <label class="label" for="submitBtnRef">상품 삭제</label>
           <div class="control">
-            <input
-              class="input"
-              id="productDelete"
-              type="password"
-              placeholder="상품이름"
-              autocomplete="on"
-            />
+
           </div>
         </div>
 
-        <button class="button is-info is-fullwidth deleteBtn" id="submitButton">
-          확인
+        <button class="button is-info is-fullwidth deleteBtn" id="submitBtnRef">
+          조회
         </button>
       </form>
+     
     </div>
-
+    <div class="container orders-container" id="ordersContainer">
+      <div class="columns notification is-info is-light is-mobile orders-top">
+        <div class="column is-4">상품이름</div>
+        <div class="column is-4">상품코드</div>
+        <div class="column is-4">취소</div>
+      </div>
+    </div>
 
 
   </body>
