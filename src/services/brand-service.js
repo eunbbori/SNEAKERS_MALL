@@ -43,6 +43,12 @@ class BrandService {
     const deletedBrand = await this.brandModel.delete(name);
     return deletedBrand
   }
+
+  //브랜드 조회 
+  async getBrandList() {
+    const brandList = await this.brandModel.getList();
+    return brandList
+  }
 }
 
 const brandService = new BrandService(brandModel);

@@ -79,4 +79,14 @@ brandRouter.delete("/:name", loginRequired, async function (req, res, next) {
   }
 });
 
+// 브랜드 조회 api
+brandRouter.get("/", async function (req, res, next) {
+  try {
+    const brandList = await brandService.getBrandList();
+    res.status(200).json(brandList);
+  } catch (error) {
+    next(error);
+  }
+})
+
 export { brandRouter };

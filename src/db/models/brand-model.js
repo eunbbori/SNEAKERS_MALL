@@ -25,6 +25,12 @@ export class BrandModel {
     const deletedBrand = await Brand.deleteOne({name});
     return deletedBrand;
   }
+
+  async getList() {
+    const brandList = await Brand.find({});
+    return brandList;
+  }
+  
 } 
 
 const brandModel = new BrandModel();
