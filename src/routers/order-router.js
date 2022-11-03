@@ -4,16 +4,21 @@ import { Router } from "express";
 import { orderService } from "../services";
 const orderRouter = Router();
 
-// 사용자 주문조회 API
-orderRouter.get('/', async (req, res) => {
-    const order = await orderService.getOrder();
-    res.status(200).json(order);
+// 사용자 주문조회 GET: /api/order/userId
+orderRouter.get('/:userId', async (req, res, next) => {
+    try {
+        const { userId } = req.params;
+        const order = await orderService.getOrderByUserId(userId);
+        res.status(200).json(order);
+    }catch(err){
+        next(err)
+    }
 })
 
 
-// 주문추가 API
-orderRouter.post('/',async (req, res, next) => {
-    try{
+// 사용자 주문추가 POST: /api/order
+orderRouter.post('/', async (req, res, next) => {
+    try {
         const { userId, name, address, tel, account, orderList} = req.body
         const newOrder = await orderService.addOrder(userId, name, address, tel, account, orderList);
         return res.status(201).json(newOrder);
@@ -22,7 +27,13 @@ orderRouter.post('/',async (req, res, next) => {
     }
 });
 
-// 관리자 주문조회 API
+
+// 관리자 주문조회 GET: /api/order
+orderRouter.get('/', async (req, res) => {
+    const orders = await orderService.getOrderAll();
+    res.status(200).json(orders);
+})
+
 
 // 주문수정 API
 

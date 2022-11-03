@@ -9,11 +9,12 @@ export class OrderModel {
         return createdNewOrder;
     }
     async findAll() {
-        const order = await Order.find({});
-        return order;
+        const orders = await Order.find({}).sort({createdAt: "desc"});
+        return orders;
     }
-    async findById(orderId) {
-        const order = await Order.findOne({ _id: orderId });
+    async findByUserId(userId) {
+        const order = await Order.find({ userId: userId })
+            .sort({createdAt: "desc"});
         return order;
     }
     async update({ orderId, update }) {

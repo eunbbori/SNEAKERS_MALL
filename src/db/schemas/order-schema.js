@@ -23,7 +23,7 @@ const OrderSchema = new Schema(
             required: true,
         },
         orderList: {
-            type: String,
+            type: Object,
             required: true,
         },
         orderState: {
