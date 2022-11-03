@@ -27,8 +27,8 @@ productRouter.post("/", loginRequired, async function (req, res, next) {
       price,
       stock,
     } = req.body;
+
     const newProduct = await productService.addProduct({
-      code,
       brand,
       name,
       imageUrl,
