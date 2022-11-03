@@ -37,7 +37,7 @@ async function categoryAddFormHandler(e) {
   const bodyData = JSON.stringify(data);
   console.log(bodyData);
   try {
-    await fetch("/api/brand", {
+    const res = await fetch("/api/brand", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,9 +46,16 @@ async function categoryAddFormHandler(e) {
       },
       body: bodyData,
     });
+    if (!res.ok) {
+      const errorContent = await res.json();
+      const { reason } = errorContent;
+
+      throw new Error(reason);
+    }
+
     categoryAddForm.reset();
   } catch (err) {
-    console.log(err.stack);
+    alert(err);
   }
   categoryAddForm.reset();
 }
