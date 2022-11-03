@@ -3,7 +3,7 @@
     "lastPage": 2,
     "totalCount": 30,
 
-    "category": [
+    "brand": [
         {
             "name": "NIKE"
         },
@@ -20,35 +20,35 @@
 
     "items": [
         {
-            "brandName": "nike",
-            "productName": "jordan1",
+            "brand": "nike",
+            "name": "jordan1",
             "price": "10000",
-            "productId": "p1",
-            "type": "MEN"
+            "code": "p1",
+            "category": "MEN"
         },
         {
-            "brandName": "puma",
-            "productName": "unknownShoes",
+            "brand": "puma",
+            "name": "unknownShoes",
             "price": "110000",
-            "productId": "p2"
+            "code": "p2"
         },
         {
-            "brandName": "nike",
-            "productName": "airmax",
+            "brand": "nike",
+            "name": "airmax",
             "price": "20000",
-            "productId": "p3" 
+            "code": "p3" 
         },
         {
-            "brandName": "adidas",
-            "productName": "superstar",
+            "brand": "adidas",
+            "name": "superstar",
             "price": "3000",
-            "productId": "p4" 
+            "code": "p4" 
         },
         {
-            "brandName": "adidas",
-            "productName": "superstar",
+            "brand": "adidas",
+            "name": "superstar",
             "price": "3000",
-            "productId": "p5" 
+            "code": "p5" 
         }
     ]
 }

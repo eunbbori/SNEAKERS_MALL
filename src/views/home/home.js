@@ -7,13 +7,12 @@
  * @description 초기 실행 함수
  */
 async function init() {
-  const {currentPage, lastPage, totalCount, items, category} = await getServerData();
+  const {currentPage, lastPage, totalCount, items, brand} = await getServerData();
   
 
-  setBrandList(category)
+  setBrandList(brand)
   makeProductList(items)
   pagination({currentPage, lastPage, totalCount})
-
 }
 
 
@@ -86,31 +85,31 @@ function pagination({currentPage, lastPage, totalCount}) {
 function makeProductList(items) {  // 각 data마다 html을 생성하여 data를 삽입
   selectElement('.productList').innerHTML = '';
   items.forEach(item => {
-      const brandName = item.brandName;
-      const productName = item.productName;
+      const brandName = item.brand;
+      const name = item.name;
       const price = item.price;
-      const productId = item.productId;
+      const code = item.code;
       selectElement('.productList').insertAdjacentHTML(
         'beforeend',
-        `<li class="product" id="${productId}">
-        <a href="/product/:${productId}">
+        `<li class="product" id="${code}">
+        <a href="/product/:${code}">
         <img src="../elice-rabbit.png">
         <div>
         <p class="brandName">브랜드</p>
-        <p class="productName">상품명</p>
+        <p class="name">상품명</p>
         <p class="price">가격</p>
         </div>
         </a>
         </li>`
       )
-        selectElement(`#${productId} > a > div > .brandName`).innerHTML = brandName
-        selectElement(`#${productId} > a > div > .productName`).innerHTML = productName
-        selectElement(`#${productId} > a > div > .price`).innerHTML = price
+        selectElement(`#${code} > a > div > .brandName`).innerHTML = brandName
+        selectElement(`#${code} > a > div > .name`).innerHTML = name
+        selectElement(`#${code} > a > div > .price`).innerHTML = price
     }
   )
 }
-function setBrandList(category) {
-  category.forEach(brand => {
+function setBrandList(brand) {
+  brand.forEach(brand => {
     const brandName = brand.name;
     const li = document.createElement('li')
     li.addEventListener('click', brandFilter)
@@ -129,7 +128,7 @@ function selectElement(selector) {    //selector에 선택자를 포함한 str�
 async function brandFilter() {
   const brandName = this.firstChild.id;
   const {items} = await getServerData()
-  const filtering = items.filter(item => item.brandName ===  brandName.toLowerCase())
+  const filtering = items.filter(item => item.brand ===  brandName.toLowerCase())
   makeProductList(filtering)
 }
 
@@ -143,20 +142,20 @@ selectElement('.categoryList').addEventListener('mouseleave', () => {
 
 selectElement('#MEN').addEventListener('click', async() => {
   const {items} = await getServerData()
-  const filtering = items.filter(item => item.type === "MEN")
+  const filtering = items.filter(item => item.category === "MEN")
   console.log(filtering)
   makeProductList(filtering)
 })
 
 selectElement('#WOMEN').addEventListener('click', async() => {
   const {items} = await getServerData()
-  const filtering = items.filter(item => item.type === "WOMEN")
+  const filtering = items.filter(item => item.category === "WOMEN")
   console.log(filtering)
   makeProductList(filtering)
 })
 selectElement('#KIDS').addEventListener('click', async() => {
   const {items} = await getServerData()
-  const filtering = items.filter(item => item.type === "KIDS")
+  const filtering = items.filter(item => item.category === "KIDS")
   console.log(filtering)
   makeProductList(filtering)
 })
