@@ -4,10 +4,12 @@ const orderCount = document.querySelector("#ordersCount");
 const prepareCount = document.querySelector("#prepareCount");
 const deliveryCount = document.querySelector("#deliveryCount");
 const completeCount = document.querySelector("#completeCount");
+const modal = document.querySelector("#modal");
+const deleteCancelBtn = document.querySelector("#deleteCancelButton");
 const addCommas = (n) => {
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
-
+let orderIdToDelete;
 const userOrderList = async function (e) {
   e.preventDefault();
   try {
@@ -47,13 +49,13 @@ const userOrderList = async function (e) {
               </option>
               <option 
               class="has-background-primary-light has-text-primary"
-              ${e.orderState === "상품 준비중" ? "selected" : ""}
+              ${e.orderState === "상품 배송중" ? "selected" : ""}
               value="상품 배송중">
               상품 배송중
               </option>
               <option 
               class="has-background-grey-light"
-              ${e.orderState === "상품 준비중" ? "selected" : ""}
+              ${e.orderState === "배송완료" ? "selected" : ""}
               value="배송완료">
               배송완료
               </option>
@@ -66,7 +68,13 @@ const userOrderList = async function (e) {
       
       </div>`
       );
+      const deleteButton = document.querySelector(`#deleteButton-${e.userId}`);
+      deleteButton.addEventListener("click", () => {
+        orderIdToDelete = e.userId;
+        openModal();
+      });
     });
+
     orderCount.innerText = addCommas(results.length);
     prepareCount.innerText = addCommas(summary.prepareCount);
     deliveryCount.innerText = addCommas(summary.deliveryCount);
@@ -77,3 +85,15 @@ const userOrderList = async function (e) {
 };
 
 btnRef.addEventListener("click", userOrderList);
+deleteCancelBtn.addEventListener("click", cancelDelete);
+function cancelDelete() {
+  orderIdToDelete = "";
+  closeModal();
+}
+
+function openModal() {
+  modal.classList.add("is-active");
+}
+function closeModal() {
+  modal.classList.remove("is-active");
+}

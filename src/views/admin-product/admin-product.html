@@ -54,7 +54,8 @@
           <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
             <ul id="navbar">
               <li><a href="/admin-order">주문관리</a></li>
-             
+              <li><a href="/admin-category">카테고리 관리</a></li>
+              <li><a href="/admin-user">사용자 정보 관리</a></li>
               <li>
                 <a href="#cart" aria-current="page">
                   <span class="icon">
@@ -69,76 +70,6 @@
       </div>
     </nav>
     
-    <p class="title is-5 has-text-info">카테고리 관리</p>
-    <!-- 로그인 폼(Form) -->
-    <div class="login-form-container">
-      <form class="box login-form-box" id="categoryAddForm">
-        <div class="field">
-          <label class="label" for="categoryAdd">카테고리 추가</label>
-          <div class="control">
-            <input
-              class="input"
-              id="categoryAdd"
-              type="email"
-              placeholder="카테고리"
-              autocomplete="on"
-            />
-          </div>
-        </div>
-
- 
-
-        <button class="button is-info is-fullwidth addBtn" id="submitButton">
-          확인
-        </button>
-      </form>
-    
-
-
-      <form class="box login-form-box categoryUpdateForm" id="categoryUpdateContainer">
-
-
-        <div class="field mb-5">
-          <label class="label" for="categoryUpdate">카테고리 수정</label>
-          <div class="control">
-            <input
-              class="input"
-              id="categoryUpdate"
-              type="password"
-              placeholder="********"
-              autocomplete="on"
-            />
-          </div>
-        </div>
-
-        <button class="button is-info is-fullwidth updateBtn" id="submitButton">
-          확인
-        </button>
-      </form>
-    
-
-    
-      <form class="box login-form-box categoryDeleteForm" id="categoryDeleteForm">
-
-
-        <div class="field mb-5">
-          <label class="label" for="categoryDelte">카테고리 삭제</label>
-          <div class="control">
-            <input
-              class="input"
-              id="categoryDelte"
-              type="password"
-              placeholder="********"
-              autocomplete="on"
-            />
-          </div>
-        </div>
-
-        <button class="button is-info is-fullwidth deleteBtn" id="submitButton">
-          확인
-        </button>
-      </form>
-    </div>
 
 
 
@@ -162,9 +93,9 @@
               placeholder="이미지 주소"
               autocomplete="on"
             />
-           <input class='input' type="text" placeholder="상품코드" id="productCode" autocomplete="on"/>
-           <input class='input' type="text" placeholder="재고" id="productStock" autocomplete="on"/>
-           <input class='input' type="text" placeholder="카테고리" id="productCategory" autocomplete="on"/>
+            <input class='input' type="text" placeholder="상품코드" id="productCode" autocomplete="on"/>
+            <input class='input' type="text" placeholder="재고" id="productStock" autocomplete="on"/>
+            <input class='input' type="text" placeholder="카테고리" id="productCategory" autocomplete="on"/>
           </div>
         </div>
         <div class="mt-5">
@@ -173,9 +104,9 @@
           </button>
         </div>
       </form>
-   
+    </div>
 
-   
+    <div class="login-form-container productAddContainer">
       <form class="box login-form-box categoryDeleteForm" id="productUpdateForm">
 
 
@@ -196,30 +127,34 @@
           확인
         </button>
       </form>
-
-
+    </div>
+    <div class="login-form-container productAddContainer">
       <form class="box login-form-box categoryDeleteForm" id="porductDeleteForm">
 
 
         <div class="field mb-5">
-          <label class="label" for="productDelete">상품 삭제</label>
+          <label class="label" for="submitBtnRef">상품 삭제</label>
           <div class="control">
-            <input
-              class="input"
-              id="productDelete"
-              type="password"
-              placeholder="상품이름"
-              autocomplete="on"
-            />
+
           </div>
         </div>
 
-        <button class="button is-info is-fullwidth deleteBtn" id="submitButton">
-          확인
+        <button class="button is-info is-fullwidth deleteBtn" id="submitBtnRef">
+          조회
         </button>
       </form>
+     
     </div>
 
+
+
+    <div class="container product-container" id="ordersContainer">
+      <div class="columns notification is-info is-light is-mobile orders-top">
+        <div class="column is-4">상품이름</div>
+        <div class="column is-4">상품코드</div>
+        <div class="column is-4">취소</div>
+      </div>
+    </div>
 
 
   </body>
