@@ -65,7 +65,6 @@ function pagination({currentPage, lastPage, totalCount}) {
 	  li.insertAdjacentHTML("beforeend", `<a href='#js-bottom' id='page-${i}' data-num='${i}'>${i}</a>`);
     li.addEventListener('click', () => {alert(i)})
 	  fragmentPage.appendChild(li);
-    
   }
 
   if (last < lastPage) {
@@ -85,6 +84,7 @@ function pagination({currentPage, lastPage, totalCount}) {
 }
 
 function makeProductList(items) {  // 각 data마다 html을 생성하여 data를 삽입
+  selectElement('.productList').innerHTML = '';
   items.forEach(item => {
       const brandName = item.brandName;
       const productName = item.productName;
@@ -112,9 +112,12 @@ function makeProductList(items) {  // 각 data마다 html을 생성하여 data�
 function setBrandList(category) {
   category.forEach(brand => {
     const brandName = brand.name;
-    selectElement('.categoryList').insertAdjacentHTML(
-      'beforeend', `<li><a href="" id="${brandName}">${brandName}</a></li>`
+    const li = document.createElement('li')
+    li.addEventListener('click', brandFilter)
+    li.insertAdjacentHTML(
+      'beforeend', `<span id="${brandName}">${brandName}</span>`
     )
+    selectElement('.categoryList').appendChild(li)
   })
 }
 
@@ -123,7 +126,12 @@ function selectElement(selector) {    //selector에 선택자를 포함한 str�
   return document.querySelector(selector)
 }
 
-
+async function brandFilter() {
+  const brandName = this.firstChild.id;
+  const {items} = await getServerData()
+  const filtering = items.filter(item => item.brandName ===  brandName.toLowerCase())
+  makeProductList(filtering)
+}
 
 
 selectElement('#brand').addEventListener('mouseenter', () => {
@@ -133,6 +141,25 @@ selectElement('.categoryList').addEventListener('mouseleave', () => {
   selectElement('.categoryList').classList.add('hidden')
 })
 
+selectElement('#MEN').addEventListener('click', async() => {
+  const {items} = await getServerData()
+  const filtering = items.filter(item => item.type === "MEN")
+  console.log(filtering)
+  makeProductList(filtering)
+})
+
+selectElement('#WOMEN').addEventListener('click', async() => {
+  const {items} = await getServerData()
+  const filtering = items.filter(item => item.type === "WOMEN")
+  console.log(filtering)
+  makeProductList(filtering)
+})
+selectElement('#KIDS').addEventListener('click', async() => {
+  const {items} = await getServerData()
+  const filtering = items.filter(item => item.type === "KIDS")
+  console.log(filtering)
+  makeProductList(filtering)
+})
 
 
 init();
