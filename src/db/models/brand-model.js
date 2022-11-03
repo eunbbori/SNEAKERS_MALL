@@ -4,8 +4,16 @@ import { BrandSchema } from '../schemas/brand-schema';
 const Brand = model("brands", BrandSchema);
 
 export class BrandModel {
-  
-}
+  async findByName(name){
+    const brand = await Brand.findOne({ name });
+    return brand;
+  }
+
+  async create(brandInfo) {
+    const createdNewBrand = await Brand.create(brandInfo);
+    return createdNewBrand;
+  }
+} 
 
 const brandModel = new BrandModel();
 
