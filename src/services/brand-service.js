@@ -38,6 +38,11 @@ class BrandService {
     return newBrand
   }
 
+  //브랜드 삭제 
+  async deleteBrand(name) {
+    const deletedBrand = await this.brandModel.delete(name);
+    return deletedBrand
+  }
 }
 
 const brandService = new BrandService(brandModel);
