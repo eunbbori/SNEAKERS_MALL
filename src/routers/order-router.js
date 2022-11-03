@@ -8,7 +8,7 @@ const orderRouter = Router();
 orderRouter.get('/:userId', async (req, res, next) => {
     try {
         const { userId } = req.params;
-        const order = await orderService.getOrderById(userId);
+        const order = await orderService.getOrderByUserId(userId);
         res.status(200).json(order);
     }catch(err){
         next(err)

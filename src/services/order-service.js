@@ -18,7 +18,7 @@ class OrderService {
     }
 
     // 주문 조회: 사용자는 개인페이지에서 주문내역 조회가능
-    async getOrderById(userId) {
+    async getOrderByUserId(userId) {
         const myOrders = await this.orderModel.findByUserId(userId);
         if (!myOrders) {
             throw new Error(
