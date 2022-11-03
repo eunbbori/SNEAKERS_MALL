@@ -69,5 +69,6 @@ productRouter.get("/", async function (req, res, next) {
     next(error);
   }
 });
+
 //더미
 export { productRouter };
