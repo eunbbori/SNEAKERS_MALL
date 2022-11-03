@@ -27,8 +27,8 @@ productRouter.post("/", loginRequired, async function (req, res, next) {
       price,
       stock,
     } = req.body;
+
     const newProduct = await productService.addProduct({
-      code,
       brand,
       name,
       imageUrl,
@@ -70,5 +70,17 @@ productRouter.get("/", async function (req, res, next) {
   }
 });
 
-//더미
+// 상품 상세 조회 api
+productRouter.get('/:code', async function (req, res, next) {
+  try {
+    const { code } = req.params;
+
+    const productInfo = await productService.getProductDetail(code);
+    
+    res.status(200).json(productInfo);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export { productRouter };
