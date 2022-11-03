@@ -3,6 +3,14 @@ const categoryAddInput = document.querySelector("#categoryAdd");
 const categoryDeleteForm = document.querySelector("#categoryDeleteForm");
 const categorySelectBox = document.querySelector("#brandSelect");
 
+//카테고리 삭제기능 드롭다운 속성값 추가 핸들러 카테고리 경로로 get요청을 보내 json으로 값을 가져옴 map()으로 뿌려줄 예정
+//카테고리 추가 이벤트가 발생 할 시 해당 함수를 다시 실행하여 드롭다운 매뉴를 바꿔줌(연쇄과정 )
+// async function  brandSelectHandler(){
+//   const res=await fetch('/add/category',{
+
+//   })
+// }
+
 function categoryAddFormHandler(e) {
   e.preventDefault();
   const category = categoryAddInput.value;
