@@ -9,7 +9,7 @@
 async function init() {
   const {currentPage, lastPage, totalCount, items} = await getServerData();
   
-  makeProductList()
+  makeProductList(items)
   pagination({currentPage, lastPage, totalCount})
 
 }
@@ -40,18 +40,18 @@ function pagination({currentPage, lastPage, totalCount}) {
  
   if (totalCount <= 20) return; 
 
-	var pageGroup = Math.ceil(currentPage / 10);
+	let pageGroup = Math.ceil(currentPage / 10);
 	
-	var last = pageGroup * 10;
+	let last = pageGroup * 10;
 	if (last > lastPage) last = lastPage;
-	var first = last - (10 - 1) <= 0 ? 1 : last - (10 - 1);
+	let first = last - (10 - 1) <= 0 ? 1 : last - (10 - 1);
 
 	const fragmentPage = document.createDocumentFragment();
   if (pageGroup > 1) {
-	  var allpreli = document.createElement('li');
+	  const allpreli = document.createElement('li');
 	  allpreli.insertAdjacentHTML("beforeend", `<a href='#js-bottom' id='allprev'>&lt;&lt;</a>`);
 	
-	  var preli = document.createElement('li');
+	  const preli = document.createElement('li');
 	  preli.insertAdjacentHTML("beforeend", `<a href='#js-ottom' id='prev'>&lt;</a>`);
 	
 	  fragmentPage.appendChild(allpreli);
@@ -67,10 +67,10 @@ function pagination({currentPage, lastPage, totalCount}) {
   }
 
   if (last < lastPage) {
-	  var allendli = document.createElement('li');
+	  const allendli = document.createElement('li');
 	  allendli.insertAdjacentHTML("beforeend", `<a href='#js-bottom'  id='allnext'>&gt;&gt;</a>`);
 	
-	  var endli = document.createElement('li');
+	  const endli = document.createElement('li');
 	  endli.insertAdjacentHTML("beforeend", `<a  href='#js-bottom'  id='next'>&gt;</a>`);
 	
 	  fragmentPage.appendChild(endli);
@@ -82,31 +82,31 @@ function pagination({currentPage, lastPage, totalCount}) {
     
 }
 
-function makeProductList() {  // 각 data마다 html을 생성하여 data를 삽입
-  // showProduct().then((data) => {
-  //   data.items.forEach((item) => {
-  //     const brandName = item.brandName;
-  //     const productName = item.productName;
-  //     const price = item.price;
-  //     const productId = item.productId;
-  //     selectElement('.productList').insertAdjacentHTML(
-  //       'beforeend',
-  //       `<li class="product" id="${productId}">
-  //       <a href="/product/:${productId}">
-  //       <img src="../elice-rabbit.png">
-  //       <div>
-  //       <p class="brandName">브랜드</p>
-  //       <p class="productName">상품명</p>
-  //       <p class="price">가격</p>
-  //       </div>
-  //       </a>
-  //       </li>`
-  //     )
-  //       selectElement(`#${productId} > a > div > .brandName`).innerHTML = brandName
-  //       selectElement(`#${productId} > a > div > .productName`).innerHTML = productName
-  //       selectElement(`#${productId} > a > div > .price`).innerHTML = price
-  //   })
-  // })
+function makeProductList(items) {  // 각 data마다 html을 생성하여 data를 삽입
+  console.log(items)
+  items.forEach(item => {
+      const brandName = item.brandName;
+      const productName = item.productName;
+      const price = item.price;
+      const productId = item.productId;
+      selectElement('.productList').insertAdjacentHTML(
+        'beforeend',
+        `<li class="product" id="${productId}">
+        <a href="/product/:${productId}">
+        <img src="../elice-rabbit.png">
+        <div>
+        <p class="brandName">브랜드</p>
+        <p class="productName">상품명</p>
+        <p class="price">가격</p>
+        </div>
+        </a>
+        </li>`
+      )
+        selectElement(`#${productId} > a > div > .brandName`).innerHTML = brandName
+        selectElement(`#${productId} > a > div > .productName`).innerHTML = productName
+        selectElement(`#${productId} > a > div > .price`).innerHTML = price
+    }
+  )
 }
 
 function selectElement(selector) {    //selector에 선택자를 포함한 str을 넣어줘서 html요소를 반환한다.
