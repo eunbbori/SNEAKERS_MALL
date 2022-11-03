@@ -32,6 +32,12 @@ class ProductService {
       products: paginationProducts
     };
   }
+
+   //상품 상세 조회
+   async getProductDetail(code) {
+    const product = await this.productModel.findByCode(code);
+    return product;
+  }
 }
 
 const productService = new ProductService(productModel);
