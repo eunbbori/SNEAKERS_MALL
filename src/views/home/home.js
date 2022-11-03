@@ -7,8 +7,10 @@
  * @description 초기 실행 함수
  */
 async function init() {
-  const {currentPage, lastPage, totalCount, items} = await getServerData();
+  const {currentPage, lastPage, totalCount, items, category} = await getServerData();
   
+
+  setBrandList(category)
   makeProductList(items)
   pagination({currentPage, lastPage, totalCount})
 
@@ -83,7 +85,6 @@ function pagination({currentPage, lastPage, totalCount}) {
 }
 
 function makeProductList(items) {  // 각 data마다 html을 생성하여 data를 삽입
-  console.log(items)
   items.forEach(item => {
       const brandName = item.brandName;
       const productName = item.productName;
@@ -108,6 +109,15 @@ function makeProductList(items) {  // 각 data마다 html을 생성하여 data�
     }
   )
 }
+function setBrandList(category) {
+  category.forEach(brand => {
+    const brandName = brand.name;
+    selectElement('.categoryList').insertAdjacentHTML(
+      'beforeend', `<li><a href="" id="${brandName}">${brandName}</a></li>`
+    )
+  })
+}
+
 
 function selectElement(selector) {    //selector에 선택자를 포함한 str을 넣어줘서 html요소를 반환한다.
   return document.querySelector(selector)
@@ -117,14 +127,11 @@ function selectElement(selector) {    //selector에 선택자를 포함한 str�
 
 
 selectElement('#brand').addEventListener('mouseenter', () => {
-  console.log('a')
   selectElement('.categoryList').classList.remove('hidden')
 })
 selectElement('.categoryList').addEventListener('mouseleave', () => {
-  console.log('a')
   selectElement('.categoryList').classList.add('hidden')
 })
-
 
 
 
