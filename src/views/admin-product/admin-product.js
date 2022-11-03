@@ -7,9 +7,10 @@ const productCode = document.querySelector("#productCode");
 const productBrand = document.querySelector("#productBrand");
 const productStock = document.querySelector("#productStock");
 const productCategory = document.querySelector("#productCategory");
-const prodcutDeleteInput = document.querySelector("#productDelete");
 const submitAddProduct = document.querySelector("#productAddForm");
-const submitDleteForm = document.querySelector("#porductDeleteForm");
+const submitDeleteProduct = document.querySelector("#porductDeleteForm");
+const deleteRef = document.querySelector(".product-container");
+
 // async function handleSubmitAddProduct(e) {
 //   e.preventDefault();
 //   const name = productName.value;
@@ -97,45 +98,28 @@ async function handleSubmitAddProduct(e) {
   }
 }
 
-// function handleSubmitAddProduct(e) {
-//   e.preventDefault();
-//   const name = productName.value;
-//   const dsc = productDsc.value;
-//   const price = productPrice.value;
-//   const size = productSize.value;
-//   const imgurl = productImg.value;
-
-//   const data = { name, dsc, price, size, imgurl };
-
-//   console.log(data);
-// }
-
-// function handleSubmitAddProduct(e) {
-//   e.preventDefault();
-//   const name = productName.value;
-
-//   const data = { name };
-
-//   console.log(data);
-// }
-
-// function handleSubmitDeleteProduct(e) {
-//   e.preventDefault();
-//   const productValue = prodcutDeleteInput.value;
-//   try {
-//     await fetch(`/api/product/${productValue}`, {
-//       method: "DELETE",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization:
-//           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzYwYjQ4MWJjMGZiY2I1YWFhNDYxMmMiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY2NzI4MjIwNH0.pAegQIKEaZmGFznaEablnGuF-1iDFLZs9OgmW4EYFbE",
-//       },
-//     });
-//     submitDleteForm.reset();
-//   } catch (err) {
-//     console.log(err.stack);
-//   }
-// }
+async function handleSubmitRef(e) {
+  e.preventDefault();
+  const res = await fetch("/app/product", {
+    headers: {
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzYwYjQ4MWJjMGZiY2I1YWFhNDYxMmMiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY2NzI4MjIwNH0.pAegQIKEaZmGFznaEablnGuF-1iDFLZs9OgmW4EYFbE",
+    },
+  });
+  const results = await res.json();
+  console.log(results);
+  // results.map((e) => {
+  //   ordersContainer.insertAdjacentHTML(
+  //     "beforeend",
+  //     `<div class="columns orders-item">
+  //     <div class="column is-4">${e.name}</div>
+  //     <div class="column is-4 product-name">${e.code}</div>
+  //     <button class="button" id="deleteButton-${e.userId}" >주문 취소</button>
+  //     </div>
+  //   </div>`
+  //   );
+  // });
+}
 
 submitAddProduct.addEventListener("submit", handleSubmitAddProduct);
-// submitDleteForm.addEventListener("submit", handleSubmitDeleteProduct);
+submitDeleteProduct.addEventListener("submit", handleSubmitRef);
