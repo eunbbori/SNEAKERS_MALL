@@ -2,38 +2,38 @@ import { Schema } from "mongoose";
 
 const OrderSchema = new Schema(
     {
-        orderId: {
-            type: Number,
-            required: true,
-        },
         userId: {
             type: String,
             required: true,
         },
-        orderRec: {
+        name: {
             type: String,
             required: true,
         },
-        orderAddr: {
+        address: {
             type: String,
             required: true,
         },
-        orderTel: {
+        tel: {
             type: String,
             required: true,
         },
-        orderAccount: {
-            type: Number,
+        account: {
+            type: String,
             required: true,
         },
-        orderRegDate: {
-            type: Date,
+        orderList: {
+            type: Object,
             required: true,
         },
         orderState: {
             type: String,
             required: true,
         },
+    },
+    {
+        collection: "order",
+        timestamps: true,
     }
 );
 
