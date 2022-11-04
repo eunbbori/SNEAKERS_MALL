@@ -40,9 +40,9 @@ class ProductService {
   }
 
   //상품 조회
-  async getProductList(page, perPage, category) {
-    const total = await this.productModel.total(category);
-    const paginationProducts = await this.productModel.paginationProducts(page, perPage, category);
+  async getProductList(params) {
+    const total = await this.productModel.total(params);
+    const paginationProducts = await this.productModel.paginationProducts(params);
 
     return {
       total: total,
