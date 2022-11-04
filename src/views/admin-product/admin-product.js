@@ -8,7 +8,9 @@ const productBrand = document.querySelector("#productBrand");
 const productStock = document.querySelector("#productStock");
 const productCategory = document.querySelector("#productCategory");
 const submitAddProduct = document.querySelector("#productAddForm");
-
+const submitDeleteProduct = document.querySelector("#porductDeleteForm");
+const deleteRef = document.querySelector(".product-container");
+const prodcutRefInput = document.querySelector("#productRefInput");
 // async function handleSubmitAddProduct(e) {
 //   e.preventDefault();
 //   const name = productName.value;
@@ -96,25 +98,35 @@ async function handleSubmitAddProduct(e) {
   }
 }
 
-// function handleSubmitAddProduct(e) {
-//   e.preventDefault();
-//   const name = productName.value;
-//   const dsc = productDsc.value;
-//   const price = productPrice.value;
-//   const size = productSize.value;
-//   const imgurl = productImg.value;
+async function handleSubmitRef(e) {
+  e.preventDefault();
+  const name = prodcutRefInput.value;
+  try {
+    const res = await fetch("/api/product", {
+      // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
+      headers: {
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzYwYjQ4MWJjMGZiY2I1YWFhNDYxMmMiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY2NzI4MjIwNH0.pAegQIKEaZmGFznaEablnGuF-1iDFLZs9OgmW4EYFbE",
+      },
+      body: name,
+    });
+    const results = await res.json();
+    console.log(results);
+    // results.map((e) => {
+    //   ordersContainer.insertAdjacentHTML(
+    //     "beforeend",
+    //     `<div class="columns orders-item">
+    //     <div class="column is-4"><figure class="image is-96x96"><img src=${e.imgUrl}></figure><div>${e.name}</div></div>
+    //     <div class="column is-4 product-name">${e.code}</div>
+    //     <button class="button" id="deleteButton-${e.userId}" >주문 취소</button>
+    //     </div>
+    //   </div>`
+    //   );
+    // });
+  } catch (err) {
+    console.log(err);
+  }
+}
 
-//   const data = { name, dsc, price, size, imgurl };
-
-//   console.log(data);
-// }
-
-// function handleSubmitAddProduct(e) {
-//   e.preventDefault();
-//   const name = productName.value;
-
-//   const data = { name };
-
-//   console.log(data);
-// }
 submitAddProduct.addEventListener("submit", handleSubmitAddProduct);
+submitDeleteProduct.addEventListener("submit", handleSubmitRef);

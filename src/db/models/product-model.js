@@ -13,6 +13,32 @@ export class ProductModel {
     const createdNewProduct = await Product.create(productInfo);
     return createdNewProduct;
   }
+
+  async total(filter) {
+    return await Product.countDocuments(filter);
+  }
+
+  async paginationProducts({ page, perPage, ...filter }){
+    const products = await Product.find(filter)
+      .sort({regDate : -1})
+      .skip(perPage * (page -1))
+      .limit(perPage);
+
+    return products;
+  }
+
+  async update({ code, update }) {
+    const filter = { code : code };
+    const option = { returnOriginal: false };
+    const updatedProduct = await Product.findOneAndUpdate(filter, update, option);
+
+    return updatedProduct;
+  }
+
+  async delete(code) {
+    const deletedBrand = await Product.deleteOne({ code });
+    return deletedBrand;
+  }
 }
 
 const productModel = new ProductModel();
