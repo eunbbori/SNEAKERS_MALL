@@ -67,6 +67,12 @@ class ProductService {
     const newProduct = await this.productModel.update(code, updatedProduct);
     return newProduct
   }
+
+  //상품 삭제 
+  async deleteProduct(code) {
+    const deletedProduct = await this.productModel.delete(code);
+    return deletedProduct
+  }
 }
 
 const productService = new ProductService(productModel);
