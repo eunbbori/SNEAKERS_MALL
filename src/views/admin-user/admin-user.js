@@ -35,7 +35,7 @@ async function getUsersContainer() {
     usersContainer.insertAdjacentHTML(
       "beforeend",
       `<div class="columns orders-item">
-      <div class="column is-2">${e.createdAt}</div>
+      <div class="column is-2">${e.createdAt.split("T")[0]}</div>
       <div class="column is-2 product-name">${e.email}</div>
       <div class="column is-2">${e.fullName}</div>
       <div class="column is-2">
