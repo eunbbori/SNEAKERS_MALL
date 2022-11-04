@@ -107,33 +107,12 @@
     </div>
 
     <div class="login-form-container productAddContainer">
-      <form class="box login-form-box categoryDeleteForm" id="productUpdateForm">
-
-
-        <div class="field mb-5">
-          <label class="label" for="productUpdate">상품 수정</label>
-          <div class="control">
-            <input
-              class="input"
-              id="productUpdate"
-              type="password"
-              placeholder=""
-              autocomplete="on"
-            />
-          </div>
-        </div>
-
-        <button class="button is-info is-fullwidth deleteBtn" id="submitButton">
-          확인
-        </button>
-      </form>
-    </div>
-    <div class="login-form-container productAddContainer">
       <form class="box login-form-box categoryDeleteForm" id="porductDeleteForm">
 
 
         <div class="field mb-5">
-          <label class="label" for="submitBtnRef">상품 삭제</label>
+          <label class="label" for="submitBtnRef">상품 삭제/수정</label>
+          <input class="input" type="text" placeholder="상품이름" id="productRefInput" autocomplete="on"/>
           <div class="control">
 
           </div>
@@ -150,9 +129,10 @@
 
     <div class="container product-container" id="ordersContainer">
       <div class="columns notification is-info is-light is-mobile orders-top">
-        <div class="column is-4">상품이름</div>
-        <div class="column is-4">상품코드</div>
-        <div class="column is-4">취소</div>
+        <div class="column is-4">상품</div>
+        <div class="column is-4">브랜드</div>
+        <div class="column is-2">수정</div>
+        <div class="column is-2">취소</div>
       </div>
     </div>
 
