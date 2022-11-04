@@ -37,8 +37,10 @@ export class ProductModel {
     return products;
   }
 
-  async update(code, newProduct) {
-    const updatedProduct = await Product.updateOne({ code }, newProduct);
+  async update({ code, update }) {
+    const filter = { code : code };
+    const option = { returnOriginal: false };
+    const updatedProduct = await Product.findOneAndUpdate(filter, update, option);
 
     return updatedProduct;
   }

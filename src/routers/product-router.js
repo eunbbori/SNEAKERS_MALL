@@ -105,7 +105,7 @@ productRouter.put("/:code", loginRequired, async function (req, res, next) {
       price,
       stock } = req.body;
 
-    const { matchedCount } = await productService.updateProduct(
+    const product = await productService.updateProduct(
       code,
       {
       brand,
@@ -119,13 +119,11 @@ productRouter.put("/:code", loginRequired, async function (req, res, next) {
      }
     );
 
-    if( matchedCount == 1 ){
-      res.status(200).json({
-        result: true
-      });
+    if(product) {
+      res.status(200).json(product);
     }else {
       throw new Error(
-        // "예상치 못한 오류 발생 관리자에게 문의해주세요"
+        "해당 코드에 대한 Product가 존재하지 않습니다."
       );
     }
   } catch (error) {
