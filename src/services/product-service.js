@@ -55,6 +55,18 @@ class ProductService {
     const product = await this.productModel.findByCode(code);
     return product;
   }
+
+   //상품 수정 
+   async updateProduct(code, updatedProduct) {
+    const product = await this.productModel.findByCode(code); 
+    if (!product) {
+      throw new Error(
+        "코드에 대한 Product를 찾을 수 없습니다."
+      );
+    }
+    const newProduct = await this.productModel.update(code, updatedProduct);
+    return newProduct
+  }
 }
 
 const productService = new ProductService(productModel);
