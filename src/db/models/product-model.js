@@ -27,6 +27,13 @@ export class ProductModel {
 
     return products;
   }
+
+  async update(code, newProduct) {
+    const updatedProduct = await Product.updateOne({ code }, newProduct);
+
+    return updatedProduct;
+  }
+
 }
 
 const productModel = new ProductModel();

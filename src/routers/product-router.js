@@ -83,4 +83,52 @@ productRouter.get("/:code", async function (req, res, next) {
   }
 });
 
+// 상품 수정 api
+productRouter.put("/:code", loginRequired, async function (req, res, next) {
+  try {
+    // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
+    if (is.emptyObject(req.body)) {
+      throw new Error(
+        "headers의 Content-Type을 application/json으로 설정해주세요"
+      );
+    }
+    const { code }  = req.params; 
+    const {  
+      brand,
+      name,
+      imageUrl,
+      content,
+      category,
+      size,
+      price,
+      stock } = req.body;
+
+    const { matchedCount } = await productService.updateProduct(
+      code,
+      {
+      brand,
+      name,
+      imageUrl,
+      content,
+      category,
+      size,
+      price,
+      stock
+     }
+    );
+
+    if( matchedCount == 1 ){
+      res.status(200).json({
+        result: true
+      });
+    }else {
+      throw new Error(
+        // "예상치 못한 오류 발생 관리자에게 문의해주세요"
+      );
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
 export { productRouter };
