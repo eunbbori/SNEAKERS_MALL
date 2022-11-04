@@ -14,7 +14,6 @@ async function init() {
   // pagination({currentPage, lastPage, totalCount})
 }
 
-
 function getServerData() { //홈페이지 api요청
   const res = fetch('/api/product?page=1')
     .then(res => res.json())
@@ -40,13 +39,6 @@ function getServerDataBrand(brand) { //category get요청
     return res; 
 }
 
-
-
-
-
-
-
-
 async function getDataFromApi() {
   // 예시 URI입니다. 현재 주어진 프로젝트 코드에는 없는 URI입니다.
   const data = await Api.get("/api/user/data");
@@ -54,9 +46,8 @@ async function getDataFromApi() {
   console.log({ data });
 }
 
-
 function pagination({currentPage, lastPage, totalCount}) {
- 
+
   if (totalCount <= 20) return; 
 
 	let pageGroup = Math.ceil(currentPage / 10);
@@ -97,7 +88,6 @@ function pagination({currentPage, lastPage, totalCount}) {
 
     document.getElementById('js-pagination').appendChild(fragmentPage);
 		// 페이지 목록 생성0
-    
 }
 
 function makeProductList(items) {  // 각 data마다 html을 생성하여 data를 삽입
@@ -107,11 +97,12 @@ function makeProductList(items) {  // 각 data마다 html을 생성하여 data�
       const name = item.name;
       const price = item.price;
       const code = item.code;
+      const img = item.imageUrl;
       selectElement('.productList').insertAdjacentHTML(
         'beforeend',
         `<li class="product">
         <a href="/product/:${code}">
-        <img src="../elice-rabbit.png">
+        <img src="${img}">
         <div>
         <p class="brandName" id="${code}brand">브랜드</p>
         <p class="name" id="${code}name">상품명</p>
@@ -126,6 +117,7 @@ function makeProductList(items) {  // 각 data마다 html을 생성하여 data�
     }
   )
 }
+
 function setBrandList(brand) {
   brand.forEach(brand => {
     const brandName = brand.name;
@@ -137,12 +129,12 @@ function setBrandList(brand) {
     selectElement('.categoryList').appendChild(li)
   })
 }
+
 async function brandFilter() {
   const brandName = this.firstChild.id;
   const {items} = await getServerDataBrand()
   makeProductList(items)
 }
-
 
 function selectElement(selector) {    //selector에 선택자를 포함한 str을 넣어줘서 html요소를 반환한다.
   return document.querySelector(selector)
@@ -151,11 +143,10 @@ function selectElementId(id) {
   return document.getElementById(id)
 }
 
-
-
 selectElement('#brand').addEventListener('mouseenter', () => {
   selectElement('.categoryList').classList.remove('hidden')
 })
+
 selectElement('.categoryList').addEventListener('mouseleave', () => {
   selectElement('.categoryList').classList.add('hidden')
 })
@@ -169,10 +160,10 @@ selectElement('#WOMEN').addEventListener('click', async() => {
   const {items} = await getServerDataCategory('WOMEN')
   makeProductList(items)
 })
+
 selectElement('#KIDS').addEventListener('click', async() => {
   const {items} = await getServerDataCategory('KIDS')
   makeProductList(items)
 })
-
 
 init();
