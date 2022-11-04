@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>쇼핑-n팀</title>
+    <title>snekersMall</title>
     <!-- 아이콘 -->
     <link
       rel="icon"
@@ -22,9 +22,9 @@
       src="https://kit.fontawesome.com/9daa42bcef.js"
       crossorigin="anonymous"
     ></script>
+
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="home.css" />
-    <script src="home.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
@@ -32,8 +32,8 @@
       <div class="container mt-3">
         <div class="navbar-brand">
           <a class="navbar-item" href="/">
-            <img src="/elice-rabbit.png" width="30" height="30" />
-            <span class="has-text-link">쇼핑-n팀</span>
+            <img src="../elice-rabbit.png" width="30" height="30" />
+            <span class="has-text-link">Elice-MART</span>
           </a>
 
           <a
@@ -53,7 +53,8 @@
           <ul id="navbar">
             <li><a href="/login">로그인</a></li>
             <li><a href="/register">회원가입</a></li>
-            <li><a href="/admin">관리자</a></li>
+            <li><a href="/admin-product">관리자</a></li>
+            <li><a href="/mypage">마이페이지</a></li>
             <li>
               <a href="#cart" aria-current="page">
                 <span class="icon">
@@ -66,14 +67,28 @@
         </div>
       </div>
     </nav>
-
-    <div class="div-container">
-      <div class="landing" id="landingDiv">
-        <h1>랜딩 페이지</h1>
-      </div>
-      <div class="greeting" id="greetingDiv">
-        <h1>안녕하세요!</h1>
-      </div>
+    <div >
+      <ul class="categoryNav">
+        <li id="brand"><span>BRAND</span></li>
+        <li id="MEN"><span>MEN</span></li>
+        <li id="WOMEN"><span>WOMEN</span></li>
+        <li id="KIDS"><span>KIDS</span></li>
+      </ul>
     </div>
-  </body>
+    <div>
+      <ul class="categoryList hidden">
+        
+      </ul>
+    </div>
+    <div class="container">
+      <ul class="productList">
+        
+      </ul>    
+    </div>
+    <ul class="pageFrame" id="js-pagination">
+
+    </ul>
+    <script src="home.js" type="module" defer></script>
+
+</body>
 </html>
