@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SneakersMall</title>
+    <style>
+        th,
+        td {
+            padding: 20px;
+        }
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+
+            opacity: 1;
+
+        }
+        #goToCart {
+            width:60px;
+            margin-left:auto;
+            display:block;
+        }
+    </style>
+    <script src="product.js" type="module" defer></script>
+
+</head>
+
+<body>
+    <span><a href="/cart"><img src="./cart-image.png" alt="cart" id="goToCart"/></a></span>
+    <div><img id="gImage" src="" width="500px" alt="sneakers" /></div>
+    <br/>
+    <div>
+        <span id="goodsName" style="font-weight:bolder;font-size:large;">상품명</span> <span id="productType" style="font-weight: lighter;font-size:small;">women</span>
+        <table style="border: 2px solid white;">
+            <tr>
+                <th>상품가격</th>
+                <td id="goodsPrice"></td>
+            </tr>
+            <tr>
+                <th>브랜드명</th>
+                <td id="brandName"></td>
+            </tr>
+            <tr>
+                <th>상품코드</th>
+                <td id="goodsCode"></td>
+            </tr>
+            <tr>
+                <th>사이즈</th>
+                <td id="productSize"></td>
+            </tr>
+            <!-- <tr>
+                <th>구매수량</th>
+                <td><input type="number" min="1" max="99" step="1" value="1" id="count" required /></td>
+            </tr> -->
+            <tr>
+                <td><button type="button" id="cartButton">장바구니</button>
+                    <button type="button" id="purchaseButton">바로주문</button>
+                </td>
+            </tr>
+            
+        </table>
+        <p id="content">상품설명~~~</p>
+    </div>
+</body>
+
+</html>
