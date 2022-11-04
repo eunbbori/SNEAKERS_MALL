@@ -14,18 +14,20 @@ export class ProductModel {
     return createdNewProduct;
   }
 
-  async total({ category, brand }) {
+  async total({ category, brand, name }) {
     const filterObject = {};
     if(category) filterObject.category = category;
     if(brand) filterObject.brand = brand;
+    if(name) filterObject.name = new RegExp(name);
     
     return await Product.countDocuments(filterObject);
   }
 
-  async paginationProducts({ page, perPage, category, brand }){
+  async paginationProducts({ page, perPage, category, brand, name }){
     const filterObject = {};
     if(category) filterObject.category = category;
     if(brand) filterObject.brand = brand;
+    if(name) filterObject.name = new RegExp(name); 
 
     const products = await Product.find(filterObject)
       .sort({regDate : -1})
