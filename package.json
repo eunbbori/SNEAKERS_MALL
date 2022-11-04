@@ -5,8 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon index.js --exec babel-node",
-    "doc": "jsdoc -c jsdoc.json"
+    "start": "nodemon index.js --exec babel-node"
   },
   "dependencies": {
     "@sindresorhus/is": "^4.6.0",
@@ -24,7 +23,6 @@
     "@babel/node": "^7.16.8",
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
-    "jsdoc": "^3.6.11",
     "nodemon": "^2.0.15"
   }
 }
