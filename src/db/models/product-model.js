@@ -34,6 +34,10 @@ export class ProductModel {
     return updatedProduct;
   }
 
+  async delete(code) {
+    const deletedBrand = await Product.deleteOne({ code });
+    return deletedBrand;
+  }
 }
 
 const productModel = new ProductModel();
