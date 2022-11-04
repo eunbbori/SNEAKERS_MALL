@@ -32,6 +32,7 @@ const userOrderList = async function (e) {
     //     summary.completeCount += 1;
     //   }
     // }
+    //주석 제거
     // results.map((e) => {
     //   ordersContainer.insertAdjacentHTML(
     //     "beforeend",
