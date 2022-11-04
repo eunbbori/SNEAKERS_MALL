@@ -1,9 +1,22 @@
-import { Router } from "express";
 
-// 폴더에서 import하면, 자동으로 폴더의 index.js에서 가져옴
+/**
+ * @class order-router
+ */
+import { Router } from "express";
 import { orderService } from "../services";
+
+/**
+ * express module
+ * @const
+ */
 const orderRouter = Router();
 
+
+
+/**
+ * get, api/order/userId
+ * @param userId
+ */
 // 사용자 주문조회 GET: /api/order/userId
 orderRouter.get('/:userId', async (req, res, next) => {
     try {
@@ -15,7 +28,16 @@ orderRouter.get('/:userId', async (req, res, next) => {
     }
 })
 
-
+/**
+ * post, api/order
+ * @param userId - 사용자 id
+ * @param name - 수령인
+ * @param address - 수령 주소
+ * @param tel - 수령인 연락처
+ * @param account - 총액
+ * @param orderList - 주문 목록
+ * @return object - code 201
+ */
 // 사용자 주문추가 POST: /api/order
 orderRouter.post('/', async (req, res, next) => {
     try {
