@@ -50,13 +50,14 @@ productRouter.get("/", async function (req, res, next) {
   try {
     const page = Number(req.query.page || 1);
     const perPage = 20;
-    const { category, brand} = req.query;
+    const { category, brand, name } = req.query;
 
     const { total, products } = await productService.getProductList({
       page,
       perPage,
       category,
-      brand
+      brand,
+      name
     });
     const totalPage = Math.ceil(total / perPage);
 
