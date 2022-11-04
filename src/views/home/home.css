@@ -5,7 +5,11 @@
   height: 100vh;
 }
 .productList {
+  margin-top: 10px;
   display: flex;
+}
+.product {
+  max-width: 300px;
 }
 .categoryNav {
   display: flex;
