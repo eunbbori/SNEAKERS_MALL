@@ -26,17 +26,17 @@
         <hr />
         <table>
             <tr>
-                <th><label for="userName">이름</label></th>
-                <td><input type="text" id="userID" placeholder="홍길동" autocomplete="on" required /></td>
+                <th>이름</th>
+                <td><input type="text" id="userName"></td>
             </tr>
             <tr>
-                <th><label for="userPhoneNumber">휴대폰번호</label></th>
-                <td><input type="number" id="userPhoneNumber" placeholder="01012345678" autocomplete="on" required />
+                <th>휴대폰번호</th>
+                <td><input type="text" id="userPhoneNumber" />
                 </td>
             </tr>
             <tr>
-                <th><label for="userEmail">이메일</label></th>
-                <td><input type="email" id="userEmail" placeholder="abc@example.com" autocomplete="on" required /></td>
+                <th>이메일</th>
+                <td><input type="text" id="userEmail" /></td>
             </tr>
         </table>
     </div>
@@ -46,16 +46,16 @@
         <hr />
         <table>
             <tr>
-                <th><label for="receiverName">이름</label></th>
-                <td><input type="text" id="userID" placeholder="홍길동" autocomplete="on" required /></td>
+                <th>이름</th>
+                <td><input type="text" id="receiverName" placeholder="홍길동" autocomplete="on" required /></td>
             </tr>
             <tr>
-                <th><label for="receiverPhoneNumber">휴대폰번호</label></th>
+                <th>휴대폰번호</th>
                 <td><input type="tel" id="receiverPhoneNumber" placeholder="-없이 입력해 주세요." autocomplete="on" required />
                 </td>
             </tr>
             <tr>
-                <th><label for="address">주소</label></th>
+                <th>주소</th>
                 <td>
                     <p><input id="address" type="text" placeholder="주소를 입력해 주세요." /></p>
                 </td>
@@ -84,6 +84,10 @@
                         </option>
                         <option value="6" class="select-option">직접 입력</option>
                     </select>
+                        <div id="customRequestContainer">
+                            <p><input id="customRequest" type="text" maxlength="50" placeholder="최대 50자 입력이 가능합니다." autocomplete="on" /></p>
+                        </div>
+                    
                 </td>
             </tr>
         </table>
@@ -113,7 +117,7 @@
         </table>
         <button id="checkoutButton">결제하기</button>
     </div>
-
+    
 </body>
 
 </html>

@@ -19,7 +19,6 @@ const addToCartButton = document.getElementById('cartButton');
 const goodsContent = document.getElementById('content');
 const purchaseButton = document.getElementById('purchaseButton');
 const goToCart=document.getElementById('goToCart');
-
 recieveData();
 
 async function recieveData() {
@@ -36,7 +35,7 @@ async function recieveData() {
             size.innerText = data.size;
             goodsType.innerText = data.category;
             goodsContent.innerText = data.content;
-            
+
             const product=data;
            
             addToCartButton.addEventListener("click", async () => {
