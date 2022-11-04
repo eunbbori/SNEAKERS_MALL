@@ -48,10 +48,9 @@ orderRouter.post('/user', async (req, res, next) => {
 
 // [사용자 주문수정 필요없음, 삭제만 필요함]
 
-// DELETE: api/order/:userId?id=orderId
+// DELETE: api/order?id=orderId
 // 사용자가 주문을 취소할 수 있습니다.
 orderRouter.delete('/user', async (req, res) => {
-    const { userId } = req.params;
     const orderId = req.query.id;
     const result = await orderService.deleteOrder(orderId);
     res.status(201).json(result);
@@ -97,7 +96,6 @@ orderRouter.put('/admin', async (req, res, next) => {
 // DELETE: api/order/admin?id=orderId
 // 관리자가 주문을 삭제할 수 있습니다.
 orderRouter.delete('/admin', async (req, res) => {
-    const { userId } = req.params;
     const orderId = req.query.id;
     const result = await orderService.deleteOrderAdmin(orderId);
     res.status(201).json(result);

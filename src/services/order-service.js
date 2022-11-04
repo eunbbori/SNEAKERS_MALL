@@ -20,19 +20,18 @@ class OrderService {
     // 주문 조회: 사용자는 개인페이지에서 주문내역 조회가능
     async getOrderByUserId(userId) {
         const myOrders = await this.orderModel.findByUserId(userId);
-        if (!myOrders) {
-            throw new Error(
-                "주문 내역이 없습니다."
-            );
-        }
         return myOrders
     }
+
+    // 주문 조회: orderId로 주문내역 조회가능
     async getOrderByOrderId(orderId) {
         const myOrder = await this.orderModel.findByOrderId(orderId);
         if (!myOrder) {
-            throw new Error(
-                "주문 내역이 없습니다."
-            );
+            const message = {
+                "acknowledged": false,
+                "message": "주문내역이 없습니다."
+            }
+            return message
         }
         return myOrder
     }
@@ -40,11 +39,6 @@ class OrderService {
     // 관리자 주문 조회
     async getOrderAll() {
         const orders = await this.orderModel.findAll();
-        if (!orders) {
-            throw new Error(
-                "주문 내역이 없습니다."
-            );
-        }
         return orders;
     }
 
@@ -56,37 +50,31 @@ class OrderService {
 
     // 사용자 주문 취소: 사용자는 개인페이지에서 주문내역 취소가능
     async deleteOrder(orderId) {
-
-        // 사용자의 경우, orderId 기준으로 현재 배송상태 조회
-        const exist = await orderModel.existOrder(orderId)
-        if(exist === 0) {
-            throw new Error(
-                "orderId에 해당하는 주문정보가 없습니다."
-            );
+        try {
+            const { orderState } = await orderModel.findByOrderId(orderId);
+            if (orderState !== '상품 준비중') {
+                const message = {
+                    "acknowledged": false,
+                    "message": "상품 준비가 완료되어, 주문을 취소할 수 없습니다."
+                }
+                return message
+            }
+            const result = await orderModel.deleteOrder(orderId);
+            return result
+        } catch(err) {
+            return err
         }
-        const { orderState } = await orderModel.findByOrderId(orderId);
-
-        if(!orderState) {
-            throw new Error(
-                "orderId에 해당하는 주문정보가 없습니다."
-            );
-        }
-        if (orderState !== '상품 준비중') {
-            throw new Error(
-                "상품 준비가 완료되어, 주문을 취소할 수 없습니다."
-            );
-        }
-        const result = await orderModel.deleteOrder(orderId);
-        return result
     }
 
     // 관리자 주문 삭제: 관리자는 관리페이지에서 주문내역 삭제가능
     async deleteOrderAdmin(orderId) {
         const result = await orderModel.deleteOrder(orderId);
-        if (result !== true) {
-            throw new Error(
-                "삭제에 실패했습니다. 주문ID를 확인해주세요."
-            );
+        if (result.deletedCount !== 1) {
+            const message = {
+                "acknowledged": false,
+                "message": "삭제에 실패했습니다. 주문 ID를 확인해주세요."
+            }
+            return message
         }
         return result
     }
