@@ -14,13 +14,12 @@ export class ProductModel {
     return createdNewProduct;
   }
 
-  async total(category) {
-    const total = await Product.countDocuments({ category: category });
-    return total;
+  async total(filter) {
+    return await Product.countDocuments(filter);
   }
 
-  async paginationProducts(page, perPage, category){
-    const products = await Product.find({ category }) 
+  async paginationProducts({ page, perPage, ...filter }){
+    const products = await Product.find(filter)
       .sort({regDate : -1})
       .skip(perPage * (page -1))
       .limit(perPage);
@@ -28,8 +27,10 @@ export class ProductModel {
     return products;
   }
 
-  async update(code, newProduct) {
-    const updatedProduct = await Product.updateOne({ code }, newProduct);
+  async update({ code, update }) {
+    const filter = { code : code };
+    const option = { returnOriginal: false };
+    const updatedProduct = await Product.findOneAndUpdate(filter, update, option);
 
     return updatedProduct;
   }

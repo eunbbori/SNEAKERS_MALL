@@ -40,9 +40,9 @@ class ProductService {
   }
 
   //상품 조회
-  async getProductList(page, perPage, category) {
-    const total = await this.productModel.total(category);
-    const paginationProducts = await this.productModel.paginationProducts(page, perPage, category);
+  async getProductList(params) {
+    const total = await this.productModel.total(params);
+    const paginationProducts = await this.productModel.paginationProducts(params);
 
     return {
       total: total,
@@ -58,13 +58,10 @@ class ProductService {
 
    //상품 수정 
    async updateProduct(code, updatedProduct) {
-    const product = await this.productModel.findByCode(code); 
-    if (!product) {
-      throw new Error(
-        "코드에 대한 Product를 찾을 수 없습니다."
-      );
-    }
-    const newProduct = await this.productModel.update(code, updatedProduct);
+    const newProduct = await this.productModel.update({
+      code,
+      update: updatedProduct
+    });
     return newProduct
   }
 
