@@ -456,7 +456,7 @@ async function doCheckout() {
             });
         }
         // 전체 주문을 등록함
-        const orderData = await post("/api/order", {
+        const orderData = await post("/api/order/user", {
             "userId":userEmail.value,
             "name": receiverName,
             address,

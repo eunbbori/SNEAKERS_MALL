@@ -26,8 +26,9 @@ viewsRouter.use(
   "/mypage/mypage-userInfo",
   serveStatic("/mypage/mypage-userInfo", "mypage-userInfo")
 );
-//viewsRouter.use("/product", serveStatic("product"));
-
+viewsRouter.use("/product", serveStatic("product", "product"));
+viewsRouter.use("/order/complete", serveStatic("/order/complete","complete")
+  );
 // views 폴더의 최상단 파일인 rabbit.png, api.js 등을 쓸 수 있게 함
 viewsRouter.use("/", serveStatic(""));
 

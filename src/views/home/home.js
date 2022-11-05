@@ -101,7 +101,7 @@ function makeProductList(items) {  // 각 data마다 html을 생성하여 data�
       selectElement('.productList').insertAdjacentHTML(
         'beforeend',
         `<li class="product">
-        <a href="/product/${code}">
+        <a href="/product/">
         <img src="${img}">
         <div>
         <p class="brandName" id="${code}brand">브랜드</p>
