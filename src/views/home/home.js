@@ -111,17 +111,18 @@ function getServerDataBrand(brand) {
 
 function renderPagination({ currentPage, totalPage }) {
   selectElementId("js-pagination").innerHTML = "";
-  let disabledPage = currentPage;
-  const displayCountPage = 5;
-  let pageGroup = Math.ceil(currentPage / displayCountPage);
+  let disabledPage = currentPage; // 현재 위치한 페이지 버튼을 비활성화 시키기 위한 변수
+  const displayCountPage = 5; //몇 페이지씩 보여줄지 정하는 상수
+  let pageGroup = Math.ceil(currentPage / displayCountPage); // 나타내고 있는 페이지들 묶음
+  let lastNumberPerPage = pageGroup * displayCountPage; // 나타내고 있는 마지막 페이지
 
-  let lastNumberPerPage = pageGroup * displayCountPage;
   if (lastNumberPerPage > totalPage) lastNumberPerPage = totalPage;
+
+  // 나타내고 있는 첫번째 페이지
   let first =
     lastNumberPerPage - (displayCountPage - 1) <= 0
       ? 1
       : lastNumberPerPage - (displayCountPage - 1);
-
   const fragmentPage = document.createDocumentFragment();
   if (pageGroup > 1) {
     // const allpreli = document.createElement("li");
@@ -130,7 +131,7 @@ function renderPagination({ currentPage, totalPage }) {
     //   `<button class="pagination-link" id='allprev'>&lt;&lt;</button>`
     // );
 
-    const prevLi = document.createElement("li");
+    const prevLi = document.createElement("li"); //이전 페이지 생성
     prevLi.addEventListener("click", async () => {
       const { currentPage, totalPage, items } = await fetchProductList(
         first - 1
@@ -165,7 +166,6 @@ function renderPagination({ currentPage, totalPage }) {
     fragmentPage.appendChild(li);
   }
 
-  //
   if (lastNumberPerPage < totalPage) {
     const nextLi = document.createElement("li");
     nextLi.addEventListener("click", async () => {
