@@ -20,6 +20,7 @@ viewsRouter.use(
 );
 viewsRouter.use("/admin-user", serveStatic("admin-user", "admin-user"));
 viewsRouter.use("/cart", serveStatic("cart", "cart"));
+viewsRouter.use("/order", serveStatic("order", "order"));
 viewsRouter.use("/mypage", serveStatic("mypage", "mypage"));
 viewsRouter.use(
   "/mypage/mypage-userInfo",
