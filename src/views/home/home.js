@@ -91,7 +91,7 @@ function pagination({currentPage, lastPage, totalCount}) {
 }
 
 function makeProductList(items) {  // 각 data마다 html을 생성하여 data를 삽입
-  // selectElement('.productList').innerHTML = '';
+  selectElement('.productList').innerHTML = '';
   items.forEach(item => {
       const brandName = item.brand;
       const name = item.name;
