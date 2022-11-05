@@ -7,121 +7,121 @@
  * @description 초기 실행 함수
  */
 async function init() {
-    const { totalCount, items } = await getServerData()
-    const brand = await getbrandData()
-    setBrandList(brand)
-    makeProductList(items)
-    // pagination({currentPage, lastPage, totalCount})
+  const { totalCount, items } = await getServerData();
+  const brand = await getbrandData();
+  setBrandList(brand);
+  makeProductList(items);
+  // pagination({currentPage, lastPage, totalCount})
 }
 
 function getServerData() {
-    //홈페이지 api요청
-    const res = fetch('/api/product?page=1')
-        .then((res) => res.json())
-        .then((item) => item)
-    return res
+  //홈페이지 api요청
+  const res = fetch("/api/product?page=1")
+    .then((res) => res.json())
+    .then((item) => item);
+  return res;
 }
 function getbrandData() {
-    //홈페이지 brand목록 데이터 가져오기
-    const res = fetch('/api/brand')
-        .then((res) => res.json())
-        .then((item) => item)
-    return res
+  //홈페이지 brand목록 데이터 가져오기
+  const res = fetch("/api/brand")
+    .then((res) => res.json())
+    .then((item) => item);
+  return res;
 }
 function getServerDataCategory(category) {
-    //category get요청
-    const res = fetch(`/api/product?page=1&category=${category}`)
-        .then((res) => res.json())
-        .then((item) => item)
-    return res
+  //category get요청
+  const res = fetch(`/api/product?page=1&category=${category}`)
+    .then((res) => res.json())
+    .then((item) => item);
+  return res;
 }
 function getServerDataBrand(brand) {
-    //category get요청
-    const res = fetch(`/api/product?page=1&brand=${brand}`)
-        .then((res) => res.json())
-        .then((item) => item)
-    return res
+  //category get요청
+  const res = fetch(`/api/product?page=1&brand=${brand}`)
+    .then((res) => res.json())
+    .then((item) => item);
+  return res;
 }
 
 async function getDataFromApi() {
-    // 예시 URI입니다. 현재 주어진 프로젝트 코드에는 없는 URI입니다.
-    const data = await Api.get('/api/user/data')
+  // 예시 URI입니다. 현재 주어진 프로젝트 코드에는 없는 URI입니다.
+  const data = await Api.get("/api/user/data");
 
-    console.log({ data })
+  console.log({ data });
 }
 
 function pagination({ currentPage, lastPage, totalCount }) {
-    if (totalCount <= 20) return
+  if (totalCount <= 20) return;
 
-    let pageGroup = Math.ceil(currentPage / 10)
+  let pageGroup = Math.ceil(currentPage / 10);
 
-    let last = pageGroup * 10
-    if (last > lastPage) last = lastPage
-    let first = last - (10 - 1) <= 0 ? 1 : last - (10 - 1)
+  let last = pageGroup * 10;
+  if (last > lastPage) last = lastPage;
+  let first = last - (10 - 1) <= 0 ? 1 : last - (10 - 1);
 
-    const fragmentPage = document.createDocumentFragment()
-    if (pageGroup > 1) {
-        const allpreli = document.createElement('li')
-        allpreli.insertAdjacentHTML(
-            'beforeend',
-            `<a href='#js-bottom' id='allprev'>&lt;&lt;</a>`
-        )
+  const fragmentPage = document.createDocumentFragment();
+  if (pageGroup > 1) {
+    const allpreli = document.createElement("li");
+    allpreli.insertAdjacentHTML(
+      "beforeend",
+      `<a href='#js-bottom' id='allprev'>&lt;&lt;</a>`
+    );
 
-        const preli = document.createElement('li')
-        preli.insertAdjacentHTML(
-            'beforeend',
-            `<a href='#js-ottom' id='prev'>&lt;</a>`
-        )
+    const preli = document.createElement("li");
+    preli.insertAdjacentHTML(
+      "beforeend",
+      `<a href='#js-ottom' id='prev'>&lt;</a>`
+    );
 
-        fragmentPage.appendChild(allpreli)
-        fragmentPage.appendChild(preli)
-    }
+    fragmentPage.appendChild(allpreli);
+    fragmentPage.appendChild(preli);
+  }
 
-    for (let i = first; i <= last; i++) {
-        const li = document.createElement('li')
-        li.insertAdjacentHTML(
-            'beforeend',
-            `<a href='#js-bottom' id='page-${i}' data-num='${i}'>${i}</a>`
-        )
-        li.addEventListener('click', () => {
-            alert(i)
-        })
-        fragmentPage.appendChild(li)
-    }
+  for (let i = first; i <= last; i++) {
+    const li = document.createElement("li");
+    li.insertAdjacentHTML(
+      "beforeend",
+      `<a href='#js-bottom' id='page-${i}' data-num='${i}'>${i}</a>`
+    );
+    li.addEventListener("click", () => {
+      alert(i);
+    });
+    fragmentPage.appendChild(li);
+  }
 
-    if (last < lastPage) {
-        const allendli = document.createElement('li')
-        allendli.insertAdjacentHTML(
-            'beforeend',
-            `<a href='#js-bottom'  id='allnext'>&gt;&gt;</a>`
-        )
+  if (last < lastPage) {
+    const allendli = document.createElement("li");
+    allendli.insertAdjacentHTML(
+      "beforeend",
+      `<a href='#js-bottom'  id='allnext'>&gt;&gt;</a>`
+    );
 
-        const endli = document.createElement('li')
-        endli.insertAdjacentHTML(
-            'beforeend',
-            `<a  href='#js-bottom'  id='next'>&gt;</a>`
-        )
+    const endli = document.createElement("li");
+    endli.insertAdjacentHTML(
+      "beforeend",
+      `<a  href='#js-bottom'  id='next'>&gt;</a>`
+    );
 
-        fragmentPage.appendChild(endli)
-        fragmentPage.appendChild(allendli)
-    }
+    fragmentPage.appendChild(endli);
+    fragmentPage.appendChild(allendli);
+  }
 
-    document.getElementById('js-pagination').appendChild(fragmentPage)
-    // 페이지 목록 생성0
+  document.getElementById("js-pagination").appendChild(fragmentPage);
+  // 페이지 목록 생성0
 }
 
 function makeProductList(items) {
-    // 각 data마다 html을 생성하여 data를 삽입
-    selectElement('.productList').innerHTML = ''
-    items.forEach((item) => {
-        makeCardElement(item)
-    })
+  // 각 data마다 html을 생성하여 data를 삽입
+  selectElement(".productList").innerHTML = "";
+  items.forEach((item) => {
+    renderProductCard(item);
+  });
 }
-function makeCardElement(item) {
-    const { brand: brandName, name, price, code, imageUrl } = item
-    selectElement('.productList').insertAdjacentHTML(
-        'beforeend',
-        `<li class="product" id="${code}Li">
+function renderProductCard(item) {
+  const { brand: brandName, name, price, code, imageUrl } = item;
+  selectElement(".productList").insertAdjacentHTML(
+    "beforeend",
+    `<li class="product" id="${code}Li">
         <a href="/product/${code}">
         <img src="${imageUrl}">
         <div>
@@ -131,60 +131,60 @@ function makeCardElement(item) {
         </div>
         </a>
         </li>`
-    )
-    selectElementId(`${code}brand`).innerHTML = brandName
-    selectElementId(`${code}name`).innerHTML = name
-    selectElementId(`${code}price`).innerHTML = price
+  );
+  selectElementId(`${code}brand`).innerHTML = brandName;
+  selectElementId(`${code}name`).innerHTML = name;
+  selectElementId(`${code}price`).innerHTML = price;
 }
 
 function setBrandList(brand) {
-    brand.forEach((brand) => {
-        const brandName = brand.name
-        const li = document.createElement('li')
-        li.addEventListener('click', brandFilter)
-        li.insertAdjacentHTML(
-            'beforeend',
-            `<span id="${brandName}">${brandName}</span>`
-        )
-        selectElement('.categoryList').appendChild(li)
-    })
+  brand.forEach((brand) => {
+    const brandName = brand.name;
+    const li = document.createElement("li");
+    li.addEventListener("click", brandFilter);
+    li.insertAdjacentHTML(
+      "beforeend",
+      `<span id="${brandName}">${brandName}</span>`
+    );
+    selectElement(".categoryList").appendChild(li);
+  });
 }
 
 async function brandFilter() {
-    const brandName = this.firstChild.id
-    const { items } = await getServerDataBrand()
-    makeProductList(items)
+  const brandName = this.firstChild.id;
+  const { items } = await getServerDataBrand();
+  makeProductList(items);
 }
 
 function selectElement(selector) {
-    //selector에 선택자를 포함한 str을 넣어줘서 html요소를 반환한다.
-    return document.querySelector(selector)
+  //selector에 선택자를 포함한 str을 넣어줘서 html요소를 반환한다.
+  return document.querySelector(selector);
 }
 function selectElementId(id) {
-    return document.getElementById(id)
+  return document.getElementById(id);
 }
 
-selectElement('#brand').addEventListener('mouseenter', () => {
-    selectElement('.categoryList').classList.remove('hidden')
-})
+selectElement("#brand").addEventListener("mouseenter", () => {
+  selectElement(".categoryList").classList.remove("hidden");
+});
 
-selectElement('.categoryList').addEventListener('mouseleave', () => {
-    selectElement('.categoryList').classList.add('hidden')
-})
+selectElement(".categoryList").addEventListener("mouseleave", () => {
+  selectElement(".categoryList").classList.add("hidden");
+});
 
-selectElement('#MEN').addEventListener('click', async () => {
-    const { items } = await getServerDataCategory('MEN')
-    makeProductList(items)
-})
+selectElement("#MEN").addEventListener("click", async () => {
+  const { items } = await getServerDataCategory("MEN");
+  makeProductList(items);
+});
 
-selectElement('#WOMEN').addEventListener('click', async () => {
-    const { items } = await getServerDataCategory('WOMEN')
-    makeProductList(items)
-})
+selectElement("#WOMEN").addEventListener("click", async () => {
+  const { items } = await getServerDataCategory("WOMEN");
+  makeProductList(items);
+});
 
-selectElement('#KIDS').addEventListener('click', async () => {
-    const { items } = await getServerDataCategory('KIDS')
-    makeProductList(items)
-})
+selectElement("#KIDS").addEventListener("click", async () => {
+  const { items } = await getServerDataCategory("KIDS");
+  makeProductList(items);
+});
 
-init()
+init();
