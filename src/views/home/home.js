@@ -11,7 +11,6 @@ async function init() {
   const brand = await getbrandData();
   setBrandList(brand);
   makeProductList(items);
-  compareUserRole();
   // pagination({currentPage, lastPage, totalCount})
 }
 
@@ -115,10 +114,10 @@ function makeProductList(items) {
   // 각 data마다 html을 생성하여 data를 삽입
   selectElement(".productList").innerHTML = "";
   items.forEach((item) => {
-    makeCardElement(item);
+    renderProductCard(item);
   });
 }
-function makeCardElement(item) {
+function renderProductCard(item) {
   const { brand: brandName, name, price, code, imageUrl } = item;
   selectElement(".productList").insertAdjacentHTML(
     "beforeend",
@@ -187,31 +186,5 @@ selectElement("#KIDS").addEventListener("click", async () => {
   const { items } = await getServerDataCategory("KIDS");
   makeProductList(items);
 });
-
-function compareUserRole() {
-  const token = sessionStorage.getItem("token");
-  if (!token) return;
-  if (token) {
-    selectElementId("navbar").innerHTML = "";
-    selectElementId("navbar").insertAdjacentHTML(
-      "beforeend",
-      `
-          <li><a href="/" id="logout">로그아웃</a></li>
-            <li><a href="/admin-product">관리자</a></li>
-            <li><a href="/mypage">마이페이지</a></li>
-            <li>
-              <a href="/cart" aria-current="page">
-                <span class="icon">
-                  <i class="fas fa-cart-shopping"></i>
-                </span>
-                <span>카트</span>
-              </a>
-            </li>`
-    );
-    selectElementId("logout").addEventListener("click", () => {
-      sessionStorage.removeItem("token");
-    });
-  }
-}
 
 init();
