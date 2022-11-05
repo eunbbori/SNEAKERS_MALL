@@ -10,6 +10,7 @@
 }
 .product {
   max-width: 300px;
+  min-height: 400px;
 }
 .categoryNav {
   display: flex;

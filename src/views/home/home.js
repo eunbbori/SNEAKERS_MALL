@@ -91,7 +91,7 @@ function pagination({currentPage, lastPage, totalCount}) {
 }
 
 function makeProductList(items) {  // 각 data마다 html을 생성하여 data를 삽입
-  selectElement('.productList').innerHTML = '';
+  // selectElement('.productList').innerHTML = '';
   items.forEach(item => {
       const brandName = item.brand;
       const name = item.name;
@@ -101,7 +101,7 @@ function makeProductList(items) {  // 각 data마다 html을 생성하여 data�
       selectElement('.productList').insertAdjacentHTML(
         'beforeend',
         `<li class="product">
-        <a href="/product/:${code}">
+        <a href="/product/${code}">
         <img src="${img}">
         <div>
         <p class="brandName" id="${code}brand">브랜드</p>
