@@ -1,34 +1,34 @@
 .div-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 .productList {
-    margin-top: 10px;
-    display: flex;
+  margin-top: 10px;
+  display: flex;
 }
 .product {
-    max-width: 300px;
-    min-height: 400px;
+  max-width: 300px;
+  min-height: 400px;
 }
 .categoryNav {
-    display: flex;
-    justify-content: space-around;
-    border: blueviolet solid 1px;
+  display: flex;
+  justify-content: space-around;
+  border: blueviolet solid 1px;
 }
 .categoryList {
-    background-color: rgba(203, 203, 173, 0.3);
-    width: 150px;
-    position: absolute;
-    z-index: 99;
+  background-color: rgba(203, 203, 173, 0.3);
+  width: 150px;
+  position: absolute;
+  z-index: 99;
 
-    /* animation-name: brand;
+  /* animation-name: brand;
   animation-duration: 1s;
   overflow: hidden; */
 }
 .hidden {
-    display: none;
+  display: none;
 }
 /* @keyframes brand{
   from {
@@ -39,8 +39,12 @@
   }
 } */
 .pageFrame {
-    width: 40vw;
-    justify-content: space-between;
-    display: flex;
-    margin: 0 auto;
+  width: 40vw;
+  justify-content: space-between;
+  display: flex;
+  margin: 0 auto;
+}
+
+button {
+  cursor: pointer;
 }
