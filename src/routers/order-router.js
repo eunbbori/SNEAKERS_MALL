@@ -1,12 +1,13 @@
 import { Router } from "express";
 import is from "@sindresorhus/is";
 import { orderService } from "../services";
+import { loginRequired, checkRole } from "../middlewares";
 const orderRouter = Router();
 
 
 // GET: /api/order/user/:userId
 // 사용자별 주문목록 전체를 조회할 수 있습니다.
-orderRouter.get('/user/:userId', async (req, res, next) => {
+orderRouter.get('/user', loginRequired, async (req, res, next) => {
     try {
         const { userId } = req.params;
         const order = await orderService.getOrderByUserId(userId);
@@ -18,7 +19,7 @@ orderRouter.get('/user/:userId', async (req, res, next) => {
 
 // GET: /api/order/user?id=orderId
 // 주문 id로 고객의 주문목록을 조회할 수 있습니다.
-orderRouter.get('/user', async (req, res, next) => {
+orderRouter.get('/user', loginRequired, async (req, res, next) => {
     try {
         const orderId = req.query.id;
         const order = await orderService.getOrderByOrderId(orderId);
@@ -30,7 +31,7 @@ orderRouter.get('/user', async (req, res, next) => {
 
 // POST: /api/order/user
 // 사용자 주문을 추가할 수 있습니다.
-orderRouter.post('/user', async (req, res, next) => {
+orderRouter.post('/user', loginRequired, async (req, res, next) => {
     try {
         // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
         if (is.emptyObject(req.body)) {
@@ -50,7 +51,7 @@ orderRouter.post('/user', async (req, res, next) => {
 
 // DELETE: api/order?id=orderId
 // 사용자가 주문을 취소할 수 있습니다.
-orderRouter.delete('/user', async (req, res) => {
+orderRouter.delete('/user', loginRequired, async (req, res) => {
     const orderId = req.query.id;
     const result = await orderService.deleteOrder(orderId);
     res.status(201).json(result);
@@ -60,12 +61,12 @@ orderRouter.delete('/user', async (req, res) => {
 
 //========================================================
 
-
+// 관리자 기능에는 checkRole 미들웨어 추가해야 함.
 
 
 // GET: /api/order/admin
 // 관리자가 모든 고객의 주문목록을 조회할 수 있습니다.
-orderRouter.get('/admin', async (req, res, next) => {
+orderRouter.get('/admin', loginRequired, async (req, res, next) => {
     try{
         const orders = await orderService.getOrderAll();
         res.status(200).json(orders);
@@ -76,7 +77,7 @@ orderRouter.get('/admin', async (req, res, next) => {
 
 // PUT: /api/order/admin?id=orderId
 // 관리자가 주문상태를 수정할 수 있습니다.
-orderRouter.put('/admin', async (req, res, next) => {
+orderRouter.put('/admin', loginRequired, async (req, res, next) => {
     try{
         // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
         if (is.emptyObject(req.body)) {
@@ -95,7 +96,7 @@ orderRouter.put('/admin', async (req, res, next) => {
 
 // DELETE: api/order/admin?id=orderId
 // 관리자가 주문을 삭제할 수 있습니다.
-orderRouter.delete('/admin', async (req, res) => {
+orderRouter.delete('/admin', loginRequired, async (req, res) => {
     const orderId = req.query.id;
     const result = await orderService.deleteOrderAdmin(orderId);
     res.status(201).json(result);
