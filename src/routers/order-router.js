@@ -5,11 +5,11 @@ import { loginRequired, checkRole } from "../middlewares";
 const orderRouter = Router();
 
 
-// GET: /api/order/user/:userId
+// GET: /api/order/user
 // 사용자별 주문목록 전체를 조회할 수 있습니다.
 orderRouter.get('/user', loginRequired, async (req, res, next) => {
     try {
-        const { userId } = req.params;
+        const userId = req.currentUserId;
         const order = await orderService.getOrderByUserId(userId);
         res.status(200).json(order);
     }catch(err){
@@ -39,7 +39,8 @@ orderRouter.post('/user', loginRequired, async (req, res, next) => {
                 "headers의 Content-Type을 application/json으로 설정해주세요"
             );
         }
-        const { userId, name, address, tel, account, orderList} = req.body
+        const userId = req.currentUserId;
+        const { name, address, tel, account, orderList} = req.body;
         const newOrder = await orderService.addOrder(userId, name, address, tel, account, orderList);
         res.status(201).json(newOrder);
     }catch(err){
