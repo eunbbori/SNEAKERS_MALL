@@ -8,10 +8,6 @@ export class OrderModel {
         const createdNewOrder = await Order.create(orderInfo);
         return createdNewOrder;
     }
-    async existOrder(orderId){
-        const count = await Order.find({"_id" : orderId}).count();
-        return count
-    }
     async findAll() {
         const order = await Order.find({})
             .sort({createdAt: "desc"});
