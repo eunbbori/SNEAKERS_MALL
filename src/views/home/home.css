@@ -49,3 +49,17 @@
 button {
   cursor: pointer;
 }
+
+.categoryNav > li {
+  width: 100%;
+  text-align: center;
+}
+.categoryNav > li > a {
+  width: 100%;
+  text-align: center;
+}
+
+.product-image {
+  max-width: 225px;
+  min-height: 225px;
+}
