@@ -236,7 +236,7 @@ function renderProductCard(item) {
     "beforeend",
     `<li class="product" id="${code}Li">
         <a href="/product/${code}">
-        <img src="${imageUrl}">
+        <img class="product-image " src="${imageUrl}">
         <div>
         <p class="brandName" id="${code}brand">브랜드</p>
         <p class="name" id="${code}name">상품명</p>
@@ -316,7 +316,13 @@ function selectElementId(id) {
 selectElement("#brand").addEventListener("mouseenter", () => {
   selectElement(".categoryList").classList.remove("hidden");
 });
+selectElement("#brand").addEventListener("mouseleave", () => {
+  selectElement(".categoryList").classList.add("hidden");
+});
 
+selectElement(".categoryList").addEventListener("mouseenter", () => {
+  selectElement(".categoryList").classList.remove("hidden");
+});
 selectElement(".categoryList").addEventListener("mouseleave", () => {
   selectElement(".categoryList").classList.add("hidden");
 });

@@ -19,11 +19,16 @@ function getOrderData() {
 function setOrderList(orderlist) {
   orderlist.forEach((order) => {
     const orderListContainer = document.querySelector(".orderList");
-    const productName = order.productName;
-    const quantity = order.orderList[0].quantity;
+    // const productName = order.productName;
+    // const quantity = order.orderList[0].quantity;
     const date = order.createdAt;
     const orderState = order.orderState;
     const orderId = order._id;
+    const orderListString = order.orderList
+      .map((item) => {
+        return `<p>${item.productCode}, ${item.quantity}</p>`;
+      })
+      .join("");
 
     const li = document.createElement("li");
     li.classList.add("stateList");
@@ -32,14 +37,16 @@ function setOrderList(orderlist) {
     cancelBtn.classList.add("cancelBtn");
     cancelBtn.innerText = "주문 취소";
     cancelBtn.addEventListener("click", orderCancel);
+
     li.insertAdjacentHTML(
       "beforeend",
       `
-                <p id="date">${date}</p>
-                <p id="orderInfor">${productName}, ${quantity}개</p>
-                <p id="orderState">${orderState}</p>
+                <p id="${orderId}date">${date}</p>
+                <div>${orderListString}</div>
+                <p id="${orderId}orderState">${orderState}</p>
             `
     );
+
     li.appendChild(cancelBtn);
     orderListContainer.appendChild(li);
   });
