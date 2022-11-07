@@ -132,11 +132,32 @@ class UserService {
 
     return user;
   }
-
+  
   //사용자 삭제(탈퇴) 
   async deleteUser(userId) {
     const deletedUser = await this.userModel.delete(userId);
     return deletedUser
+  }
+
+  // 관리자 - 사용자 권한 정보 수정  
+  async updateRole(userId, role) {
+    // 우선 해당 id의 유저가 db에 있는지 확인
+    let user = await this.userModel.findById(userId);
+
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!user) {
+      throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
+    }
+    // 업데이트 진행
+    user = await this.userModel.update({
+      userId,
+      update: {
+        role: role
+      },
+    });
+
+    return user;
+    
   }
 }
 

@@ -87,7 +87,6 @@ userRouter.get("/user", loginRequired, async function(req, res, next) {
   }
 })
 
-
 // 사용자 정보 수정
 // (예를 들어 /api/users/abc12345 로 요청하면 req.params.userId는 'abc12345' 문자열로 됨)
 userRouter.patch(
@@ -188,5 +187,30 @@ userRouter.delete("/admin/users/:userId", loginRequired, isAdmin, async function
     next(error);
   }
 });
+
+
+// 관리자 - 사용자 권한 수정 (일반/관리자)
+userRouter.patch("/admin/users/:userId", loginRequired, isAdmin, async function (req, res, next) {
+    try {
+      // content-type 을 application/json 로 프론트에서
+      // 설정 안 하고 요청하면, body가 비어 있게 됨.
+      if (is.emptyObject(req.body)) {
+        throw new Error(
+          "headers의 Content-Type을 application/json으로 설정해주세요"
+        );
+      }
+
+      const userId = req.params.userId;
+
+      const role = req.body.role;
+
+      const updatedUserRole = await userService.updateRole(userId, role);
+
+      res.status(200).json(updatedUserRole);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 export { userRouter };
