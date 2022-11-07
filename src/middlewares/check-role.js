@@ -1,12 +1,8 @@
-import { userService } from "../services";
-
 async function checkRole(req, res, next) {
 	try {
-		const userId = req.currentUserId;
-		console.log('check-role', userId);
+		const role = req.currentRole;
 
 		// role 체크
-		const role = await userService.checkRole(userId);
 		if (role !=='admin') {
 			res.status(403).json({
 				result: "forbidden-approach",
