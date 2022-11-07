@@ -151,7 +151,27 @@ userRouter.patch(
 userRouter.delete("/users",loginRequired, async function (req, res, next) {
   try {
     const userId = req.currentUserId;
-    console.log(userId);
+
+    const { deletedCount } = await userService.deleteUser(userId)
+
+    if(deletedCount === 1){
+      res.status(200).json({
+        result: true
+      });
+    }else{
+      throw new Error(
+        "예상치 못한 오류 발생 관리자에게 문의해주세요"
+      );
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 관리자 - 사용자 삭제(탈퇴시키는) api
+userRouter.delete("/admin/users/:userId",loginRequired, async function (req, res, next) {
+  try {
+    const userId = req.params.userId;
 
     const { deletedCount } = await userService.deleteUser(userId)
 
