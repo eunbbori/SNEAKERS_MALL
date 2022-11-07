@@ -281,14 +281,42 @@ function addAllElements() {
 
 //주문 고객정보에 data를 넣음.
 async function recieveData() {
-    await fetch('./loginUser.json')
-        .then(res => res.json())
-        .then(data => {
-            userName.value = data.fullName;
-            userPhoneNumber.value = data.phoneNumber;
-            userEmail.value = data.email;
+    try{
+        const res = await fetch('/api/user', {
+            // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          });
+        
+          // 응답 코드가 4XX 계열일 때 (400, 403 등)
+          if (!res.ok) {
+            const errorContent = await res.json();
+            const { reason } = errorContent;
+        
+            throw new Error(reason);
+          }
+        
+          const result = await res.json();
+          
+          console.log(result);
+          userName.value = result.fullName;
+          userPhoneNumber.value = result.orderTel;
+          userEmail.value = result.phoneNumber;
+    }catch(err){
+        console.log(err);
+    }
+    
+      
+    // const data=await get('api/order/user');
+    // console.log(data);
+        // .then(res => res.json())
+        // .then(data => {
+            // userName.value = result.orderName;
+            // userPhoneNumber.value = result.orderTel;
+            // userEmail.value = result.email;
             
-        })
+        // })
 }
 
 //addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
@@ -457,7 +485,7 @@ async function doCheckout() {
         }
         // 전체 주문을 등록함
         const orderData = await post("/api/order/user", {
-            "userId":userEmail.value,
+            //"userId":userEmail.value,
             "name": receiverName,
             address,
             tel,
