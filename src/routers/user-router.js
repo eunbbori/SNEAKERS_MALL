@@ -1,7 +1,7 @@
 import { Router } from "express";
 import is from "@sindresorhus/is";
 // 폴더에서 import하면, 자동으로 폴더의 index.js에서 가져옴
-import { loginRequired } from "../middlewares";
+import { loginRequired, isAdmin } from "../middlewares";
 import { userService } from "../services";
 
 const userRouter = Router();
@@ -169,7 +169,7 @@ userRouter.delete("/users",loginRequired, async function (req, res, next) {
 });
 
 // 관리자 - 사용자 삭제(탈퇴시키는) api
-userRouter.delete("/admin/users/:userId",loginRequired, async function (req, res, next) {
+userRouter.delete("/admin/users/:userId", loginRequired, isAdmin, async function (req, res, next) {
   try {
     const userId = req.params.userId;
 
