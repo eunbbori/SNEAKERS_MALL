@@ -132,6 +132,12 @@ class UserService {
 
     return user;
   }
+
+  //사용자 삭제(탈퇴) 
+  async deleteUser(userId) {
+    const deletedUser = await this.userModel.delete(userId);
+    return deletedUser
+  }
 }
 
 const userService = new UserService(userModel);
