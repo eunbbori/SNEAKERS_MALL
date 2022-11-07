@@ -100,29 +100,33 @@ async function handleSubmitAddProduct(e) {
 
 async function handleSubmitRef(e) {
   e.preventDefault();
-  const name = prodcutRefInput.value;
+  const code = prodcutRefInput.value;
   try {
-    const res = await fetch("/api/product", {
+    const res = await fetch(`/api/product/${code}`, {
       // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
       headers: {
         Authorization:
           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzYwYjQ4MWJjMGZiY2I1YWFhNDYxMmMiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY2NzI4MjIwNH0.pAegQIKEaZmGFznaEablnGuF-1iDFLZs9OgmW4EYFbE",
       },
-      body: name,
     });
     const results = await res.json();
     console.log(results);
-    // results.map((e) => {
-    //   ordersContainer.insertAdjacentHTML(
-    //     "beforeend",
-    //     `<div class="columns orders-item">
-    //     <div class="column is-4"><figure class="image is-96x96"><img src=${e.imgUrl}></figure><div>${e.name}</div></div>
-    //     <div class="column is-4 product-name">${e.code}</div>
-    //     <button class="button" id="deleteButton-${e.userId}" >주문 취소</button>
-    //     </div>
-    //   </div>`
-    //   );
-    // });
+
+    ordersContainer.insertAdjacentHTML(
+      "beforeend",
+      `<div class="columns orders-item">
+        <div class="column is-2"><figure class="image is-96x96"><img src=${results.imageUrl}></figure></div>
+        <div class="column is-2">${results.name}</div>
+        <div class="column is-4 product-name">${results.brand}</div>
+        <div class="column is-2 update">
+        <button class="button" id="updateButton-${results.code}" > 수정</button>
+        </div>
+        <div class="column is-2">
+        <button class="button" id="deleteButton-${results.code}" > 취소</button>
+        </div>
+        </div>
+      </div>`
+    );
   } catch (err) {
     console.log(err);
   }
