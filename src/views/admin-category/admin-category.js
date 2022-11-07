@@ -59,6 +59,7 @@ async function categoryAddFormHandler(e) {
   } catch (err) {
     alert(err);
   }
+  brandSelectHandler();
   categoryAddForm.reset();
 }
 
@@ -78,8 +79,9 @@ async function categoryDeleteFormHandler(e) {
   } catch (err) {
     console.log(err.stack);
   }
+  brandSelectHandler();
 }
 categoryAddForm.addEventListener("submit", categoryAddFormHandler);
-categoryAddForm.addEventListener("submit", brandSelectHandler);
+// categoryAddForm.addEventListener("submit", brandSelectHandler);
 categoryDeleteForm.addEventListener("submit", categoryDeleteFormHandler);
-categoryDeleteForm.addEventListener("submit", brandSelectHandler);
+// categoryDeleteForm.addEventListener("submit", brandSelectHandler);
