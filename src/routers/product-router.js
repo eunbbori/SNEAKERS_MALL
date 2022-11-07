@@ -16,8 +16,17 @@ productRouter.post("/", loginRequired, async function (req, res, next) {
     }
 
     // req (request)의 body 에서 데이터 가져오기
-    const { brand, name, imageUrl, content, category, size, price, stock } =
-      req.body;
+    const {
+      code,
+      brand,
+      name,
+      imageUrl,
+      content,
+      category,
+      size,
+      price,
+      stock,
+    } = req.body;
 
     const newProduct = await productService.addProduct({
       brand,
@@ -49,7 +58,7 @@ productRouter.get("/", async function (req, res, next) {
       ...(perPage && { perPage }),
       ...(category && { category }),
       ...(brand && { brand }),
-      ...(name && { name }),
+      ...(name && { name })
     };
 
     const { total, products } = await productService.getProductList(toFilter);
@@ -88,11 +97,8 @@ productRouter.put("/:code", loginRequired, async function (req, res, next) {
         "headers의 Content-Type을 application/json으로 설정해주세요"
       );
     }
-    const { code } = req.params;
-    const { brand, name, imageUrl, content, category, size, price, stock } =
-      req.body;
-
-    const product = await productService.updateProduct(code, {
+    const { code }  = req.params; 
+    const {  
       brand,
       name,
       imageUrl,
@@ -100,13 +106,28 @@ productRouter.put("/:code", loginRequired, async function (req, res, next) {
       category,
       size,
       price,
-      stock,
-    });
+      stock } = req.body;
 
-    if (product) {
+    const product = await productService.updateProduct(
+      code,
+      {
+      brand,
+      name,
+      imageUrl,
+      content,
+      category,
+      size,
+      price,
+      stock
+     }
+    );
+
+    if(product) {
       res.status(200).json(product);
-    } else {
-      throw new Error("해당 코드에 대한 Product가 존재하지 않습니다.");
+    }else {
+      throw new Error(
+        "해당 코드에 대한 Product가 존재하지 않습니다."
+      );
     }
   } catch (error) {
     next(error);
@@ -116,16 +137,18 @@ productRouter.put("/:code", loginRequired, async function (req, res, next) {
 // 상품 삭제 api
 productRouter.delete("/:code", loginRequired, async function (req, res, next) {
   try {
-    const code = req.params.code;
+    const code = req.params.code; 
 
-    const { deletedCount } = await productService.deleteProduct(code);
+    const { deletedCount } = await productService.deleteProduct(code)
 
-    if (deletedCount === 1) {
+    if(deletedCount === 1){
       res.status(200).json({
-        result: true,
+        result: true
       });
-    } else {
-      throw new Error("예상치 못한 오류 발생 관리자에게 문의해주세요");
+    }else{
+      throw new Error(
+        "예상치 못한 오류 발생 관리자에게 문의해주세요"
+      );
     }
   } catch (error) {
     next(error);
