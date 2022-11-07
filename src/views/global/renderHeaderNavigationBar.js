@@ -14,7 +14,7 @@ function renderNavBar() {
     const myPageLiEl = createLiElement({
       text: "마이페이지",
       href: "/mypage",
-      id: "nav-logout",
+      id: "nav-mypage",
     });
     const logoutLiEl = createLiElement({
       text: "로그아웃",
