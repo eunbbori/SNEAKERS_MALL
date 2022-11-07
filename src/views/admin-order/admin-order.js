@@ -13,7 +13,13 @@ let orderIdToDelete;
 const userOrderList = async function (e) {
   e.preventDefault();
   try {
-    const res = await fetch("/api/order/admin");
+    const res = await fetch("/api/order/admin", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzYwYjQ4MWJjMGZiY2I1YWFhNDYxMmMiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY2NzI4MjIwNH0.pAegQIKEaZmGFznaEablnGuF-1iDFLZs9OgmW4EYFbE",
+      },
+    });
     const results = await res.json();
     console.log(results);
     const summary = {
