@@ -75,6 +75,19 @@ userRouter.get("/userlist", loginRequired, async function (req, res, next) {
   }
 });
 
+// userId에 해당하는 정보를 가져옴
+// GET api/user
+userRouter.get("/user", loginRequired, async function(req, res, next) {
+  try{
+    const userId = req.currentUserId;
+    const user = await userService.getUserById(userId);
+    res.status(200).json(user);
+  }catch (error){
+    next(error);
+  }
+})
+
+
 // 사용자 정보 수정
 // (예를 들어 /api/users/abc12345 로 요청하면 req.params.userId는 'abc12345' 문자열로 됨)
 userRouter.patch(
