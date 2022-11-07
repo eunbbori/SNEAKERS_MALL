@@ -5,7 +5,12 @@
   height: 100vh;
 }
 .productList {
+  margin-top: 10px;
   display: flex;
+}
+.product {
+  max-width: 300px;
+  min-height: 400px;
 }
 .categoryNav {
   display: flex;
@@ -38,4 +43,8 @@
   justify-content: space-between;
   display: flex;
   margin: 0 auto;
+}
+
+button {
+  cursor: pointer;
 }

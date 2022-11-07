@@ -5,113 +5,238 @@
 // import * as Api from "/api.js";
 /**
  * @description 초기 실행 함수
+ * 1. 상품리스트 조회 api 호출
+ * 2. 브랜드 리스트 조회 api 호출
+ * 3. 브랜드 목록 렌더링 함수 호출
+ * 4. 상품목록 렌더링 함수 호출
+ * 5. 페이지네이션 렌더링 함수 호출
+ *
  */
 async function init() {
-  const { totalCount, items} = await getServerData();
+  const { totalPage, currentPage, items } = await fetchProductList(1);
   const brand = await getbrandData();
-  setBrandList(brand)
-  makeProductList(items)
-  // pagination({currentPage, lastPage, totalCount})
+  setBrandList(brand);
+  makeProductList(items);
+  // -------------------------------------더미데이터 db생성 코드
+
+  // document.querySelector("#push100Data").addEventListener("click", async () => {
+  //   const dummyData = new Array(50).fill({
+  //     code: "",
+  //     name: "테스트 아이템",
+  //     content: "테스트 아이템설명 입니다.",
+  //     price: 200000,
+  //     size: 260,
+  //     imageUrl:
+  //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0_bWv7MYTnQ2_xsQ-TQdUQsVpJlqrOFXa7OvrBN7HDcaDOOaNcGAg8xYRpvCAjD7391k&usqp=CAU",
+  //     brand: "NIKE",
+  //     stock: 23,
+  //     category: "MEN",
+  //   });
+
+  //   dummyData.forEach(async (item, idx) => {
+  //     item.code = `TEST-PRODUCT-${idx}`;
+  //     item.name = `테스트 아이템-${idx}`;
+  //     const bodyData = JSON.stringify(item);
+
+  //     await fetch("/api/product", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization:
+  //           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzYwYjQ4MWJjMGZiY2I1YWFhNDYxMmMiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY2NzI4MjIwNH0.pAegQIKEaZmGFznaEablnGuF-1iDFLZs9OgmW4EYFbE",
+  //       },
+  //       body: bodyData,
+  //     });
+  //   });
+  // });
+  //-----------------------------------------------------------------------------------
+
+  renderPagination({ currentPage, totalPage });
 }
 
-
-function getServerData() { //홈페이지 api요청
-  const res = fetch('/api/product?page=1')
-    .then(res => res.json())
-    .then(item => item)
-    return res; 
-}
-function getbrandData() { //홈페이지 brand목록 데이터 가져오기
-  const res = fetch('/api/brand')
-    .then(res => res.json())
-    .then(item => item)
-    return res;
-}
-function getServerDataCategory(category) { //category get요청
-  const res = fetch(`/api/product?page=1&category=${category}`)
-    .then(res => res.json())
-    .then(item => item)
-    return res; 
-}
-function getServerDataBrand(brand) { //category get요청
-  const res = fetch(`/api/product?page=1&brand=${brand}`)
-    .then(res => res.json())
-    .then(item => item)
-    return res; 
+/**
+ * @description 상품 리스트 데이터를 호출하는 함수
+ * @param {*} page
+ * @returns
+ * {
+ *  items: [{}], - 상품 정보 리스트
+ *  totalPage: number - 총 페이지 개수
+ *  currentPage: number - 현재 페이지
+ *  totalCount: number  - 총 상품 개수
+ * }
+ */
+function fetchProductList(page) {
+  //홈페이지 api요청
+  const res = fetch(`/api/product?page=${page}`)
+    .then((res) => res.json())
+    .then((item) => item);
+  return res;
 }
 
-
-
-
-
-
-
-
-async function getDataFromApi() {
-  // 예시 URI입니다. 현재 주어진 프로젝트 코드에는 없는 URI입니다.
-  const data = await Api.get("/api/user/data");
-
-  console.log({ data });
+/**
+ * @description 홈페이지 brand목록 데 이터 가져오기
+ * @returns [{}, {}, ...]
+ */
+function getbrandData() {
+  const res = fetch("/api/brand")
+    .then((res) => res.json())
+    .then((item) => item);
+  return res;
 }
 
+/**
+ * @description category get요청
+ * @param {*} category
+ * @returns
+ */
+function getServerDataCategory(page, category) {
+  const res = fetch(`/api/product?page=${page}&category=${category}`)
+    .then((res) => res.json())
+    .then((item) => item);
+  return res;
+}
+/**
+ * @description
+ * 페이지 이동 버튼 생성 함수
+ * @param {*} param0
+ */
+function renderPagination({
+  currentPage,
+  totalPage,
+  brand = "",
+  category = "",
+}) {
+  selectElementId("js-pagination").innerHTML = "";
+  let disabledPage = currentPage; // 현재 위치한 페이지 버튼을 비활성화 시키기 위한 변수
+  const displayCountPage = 5; //몇 페이지씩 보여줄지 정하는 상수
+  let pageGroup = Math.ceil(currentPage / displayCountPage); // 나타내고 있는 페이지들 묶음
+  let lastNumberPerPage = pageGroup * displayCountPage; // 나타내고 있는 마지막 페이지
 
-function pagination({currentPage, lastPage, totalCount}) {
- 
-  if (totalCount <= 20) return; 
+  if (lastNumberPerPage > totalPage) lastNumberPerPage = totalPage;
 
-	let pageGroup = Math.ceil(currentPage / 10);
-	
-	let last = pageGroup * 10;
-	if (last > lastPage) last = lastPage;
-	let first = last - (10 - 1) <= 0 ? 1 : last - (10 - 1);
+  // 나타내고 있는 첫번째 페이지
+  let first =
+    lastNumberPerPage - (displayCountPage - 1) <= 0
+      ? 1
+      : lastNumberPerPage - (displayCountPage - 1);
+  const fragmentPage = document.createDocumentFragment();
 
-	const fragmentPage = document.createDocumentFragment();
+  //이전 페이지 버튼 생성
   if (pageGroup > 1) {
-	  const allpreli = document.createElement('li');
-	  allpreli.insertAdjacentHTML("beforeend", `<a href='#js-bottom' id='allprev'>&lt;&lt;</a>`);
-	
-	  const preli = document.createElement('li');
-	  preli.insertAdjacentHTML("beforeend", `<a href='#js-ottom' id='prev'>&lt;</a>`);
-	
-	  fragmentPage.appendChild(allpreli);
-	  fragmentPage.appendChild(preli);
-	}
+    const prevLi = document.createElement("li");
+    prevLi.addEventListener("click", async () => {
+      if (brand) {
+        const { currentPage, totalPage, items } = await getServerDataBrand(
+          first - 1,
+          brand
+        );
+        makeProductList(items);
+        renderPagination({ currentPage, totalPage, brand });
+      } else if (category) {
+        const { currentPage, totalPage, items } = await getServerDataCategory(
+          first - 1,
+          category
+        );
+        makeProductList(items);
+        renderPagination({ currentPage, totalPage, category });
+      } else {
+        const { currentPage, totalPage, items } = await fetchProductList(
+          first - 1
+        );
+        makeProductList(items);
+        renderPagination({ currentPage, totalPage });
+      }
+    });
+    prevLi.insertAdjacentHTML(
+      "beforeend",
+      `<button class="pagination-link" id='prev'>&lt;</button>`
+    );
 
-  for (let i = first; i <= last; i++) {
-	  const li = document.createElement("li");
-	  li.insertAdjacentHTML("beforeend", `<a href='#js-bottom' id='page-${i}' data-num='${i}'>${i}</a>`);
-    li.addEventListener('click', () => {alert(i)})
-	  fragmentPage.appendChild(li);
+    fragmentPage.appendChild(prevLi);
   }
 
-  if (last < lastPage) {
-	  const allendli = document.createElement('li');
-	  allendli.insertAdjacentHTML("beforeend", `<a href='#js-bottom'  id='allnext'>&gt;&gt;</a>`);
-	
-	  const endli = document.createElement('li');
-	  endli.insertAdjacentHTML("beforeend", `<a  href='#js-bottom'  id='next'>&gt;</a>`);
-	
-	  fragmentPage.appendChild(endli);
-	  fragmentPage.appendChild(allendli);
+  // 각 페이지 버튼 생성
+  for (let page = first; page <= lastNumberPerPage; page++) {
+    const li = document.createElement("li");
+    li.insertAdjacentHTML(
+      "beforeend",
+      `<button id='page-${page}' data-num='${page}' class="pagination-link" ${
+        currentPage === page ? "disabled" : ""
+      }>${page}</button>`
+    );
+    li.addEventListener("click", async () => {
+      selectElementId(`page-${disabledPage}`).removeAttribute("disabled");
+      selectElementId(`page-${page}`).setAttribute("disabled", "true");
+      disabledPage = page;
+      if (brand) {
+        const { items } = await getServerDataBrand(page, brand);
+        makeProductList(items);
+      } else if (category) {
+        const { items } = await getServerDataCategory(page, category);
+        makeProductList(items);
+      } else {
+        const { items } = await fetchProductList(page);
+        makeProductList(items);
+      }
+    });
+    fragmentPage.appendChild(li);
   }
 
-    document.getElementById('js-pagination').appendChild(fragmentPage);
-		// 페이지 목록 생성0
-    
+  // 다음 페이지 버튼 생성
+  if (lastNumberPerPage < totalPage) {
+    const nextLi = document.createElement("li");
+    nextLi.addEventListener("click", async () => {
+      if (brand) {
+        const { currentPage, totalPage, items } = await getServerDataBrand(
+          lastNumberPerPage + 1,
+          brand
+        );
+        makeProductList(items);
+        renderPagination({ currentPage, totalPage, brand });
+      } else if (category) {
+        const { currentPage, totalPage, items } = await getServerDataCategory(
+          lastNumberPerPage + 1,
+          category
+        );
+        makeProductList(items);
+        renderPagination({ currentPage, totalPage, category });
+      } else {
+        const { currentPage, totalPage, items } = await fetchProductList(
+          lastNumberPerPage + 1
+        );
+        makeProductList(items);
+        renderPagination({ currentPage, totalPage });
+      }
+    });
+    nextLi.insertAdjacentHTML(
+      "beforeend",
+      `<button class="pagination-link" id='next'>&gt;</button>`
+    );
+
+    fragmentPage.appendChild(nextLi);
+  }
+
+  document.getElementById("js-pagination").appendChild(fragmentPage);
 }
 
-function makeProductList(items) {  // 각 data마다 html을 생성하여 data를 삽입
-  selectElement('.productList').innerHTML = '';
-  items.forEach(item => {
-      const brandName = item.brand;
-      const name = item.name;
-      const price = item.price;
-      const code = item.code;
-      selectElement('.productList').insertAdjacentHTML(
-        'beforeend',
-        `<li class="product">
-        <a href="/product/:${code}">
-        <img src="../elice-rabbit.png">
+function makeProductList(items) {
+  selectElement(".productList").innerHTML = "";
+  items.forEach((item) => {
+    renderProductCard(item);
+  });
+}
+/**
+ * @description
+ * 각 data마다 html을 생성하여 data를 삽입
+ * @param {*} item
+ */
+function renderProductCard(item) {
+  const { brand: brandName, name, price, code, imageUrl } = item;
+  selectElement(".productList").insertAdjacentHTML(
+    "beforeend",
+    `<li class="product" id="${code}Li">
+        <a href="/product/${code}">
+        <img src="${imageUrl}">
         <div>
         <p class="brandName" id="${code}brand">브랜드</p>
         <p class="name" id="${code}name">상품명</p>
@@ -119,60 +244,108 @@ function makeProductList(items) {  // 각 data마다 html을 생성하여 data�
         </div>
         </a>
         </li>`
-      )
-        selectElementId(`${code}brand`).innerHTML = brandName
-        selectElementId(`${code}name`).innerHTML = name
-        selectElementId(`${code}price`).innerHTML = price
-    }
-  )
+  );
+  selectElementId(`${code}brand`).innerHTML = brandName;
+  selectElementId(`${code}name`).innerHTML = name;
+  selectElementId(`${code}price`).innerHTML = price;
 }
+
+/**
+ * @description
+ * brand 내비게이션에 마우스 올리면 확장되는 리스트 생성
+ * @param {*} brand
+ */
 function setBrandList(brand) {
-  brand.forEach(brand => {
+  brand.forEach((brand) => {
     const brandName = brand.name;
-    const li = document.createElement('li')
-    li.addEventListener('click', brandFilter)
+    const li = document.createElement("li");
+    li.addEventListener("click", brandFilter);
     li.insertAdjacentHTML(
-      'beforeend', `<span id="${brandName}">${brandName}</span>`
-    )
-    selectElement('.categoryList').appendChild(li)
-  })
+      "beforeend",
+      `<span id="${brandName}">${brandName}</span>`
+    );
+    selectElement(".categoryList").appendChild(li);
+  });
 }
+
+/**
+ * @description
+ * 브랜드 클릭하면 브랜드로 필터링된 아이템 요청
+ */
 async function brandFilter() {
   const brandName = this.firstChild.id;
-  const {items} = await getServerDataBrand()
-  makeProductList(items)
+  const { items, currentPage, totalPage } = await getServerDataBrand(
+    1,
+    brandName
+  );
+  makeProductList(items);
+  renderPagination({ currentPage, totalPage, brand: brandName });
 }
 
-
-function selectElement(selector) {    //selector에 선택자를 포함한 str을 넣어줘서 html요소를 반환한다.
-  return document.querySelector(selector)
+/**
+ *
+ * @param {*} brand
+ * @returns
+ */
+function getServerDataBrand(page, brand) {
+  //category get요청
+  const res = fetch(`/api/product?page=${page}&brand=${brand}`)
+    .then((res) => res.json())
+    .then((item) => item);
+  return res;
 }
+/**
+ * @description
+ * selector에 선택자를 포함한 str을 넣어줘서 html요소를 반환한다.
+ * @param {*} selector
+ * @returns
+ * 선택자에 맞는 DOM Element
+ */
+function selectElement(selector) {
+  return document.querySelector(selector);
+}
+/**
+ *
+ * @param {*} id
+ * @returns 해당하는 id를 가진 DOM Element
+ */
 function selectElementId(id) {
-  return document.getElementById(id)
+  return document.getElementById(id);
 }
 
+selectElement("#brand").addEventListener("mouseenter", () => {
+  selectElement(".categoryList").classList.remove("hidden");
+});
 
+selectElement(".categoryList").addEventListener("mouseleave", () => {
+  selectElement(".categoryList").classList.add("hidden");
+});
 
-selectElement('#brand').addEventListener('mouseenter', () => {
-  selectElement('.categoryList').classList.remove('hidden')
-})
-selectElement('.categoryList').addEventListener('mouseleave', () => {
-  selectElement('.categoryList').classList.add('hidden')
-})
+selectElement("#MEN").addEventListener("click", async () => {
+  const { items, currentPage, totalPage } = await getServerDataCategory(
+    1,
+    "MEN"
+  );
+  renderPagination({ currentPage, totalPage, category: "MEN" });
+  makeProductList(items);
+});
 
-selectElement('#MEN').addEventListener('click', async() => {
-  const {items} = await getServerDataCategory('MEN')
-  makeProductList(items)
-})
+selectElement("#WOMEN").addEventListener("click", async () => {
+  const { items, currentPage, totalPage } = await getServerDataCategory(
+    1,
+    "WOMEN"
+  );
+  renderPagination({ currentPage, totalPage, category: "WOMEN" });
+  makeProductList(items);
+});
 
-selectElement('#WOMEN').addEventListener('click', async() => {
-  const {items} = await getServerDataCategory('WOMEN')
-  makeProductList(items)
-})
-selectElement('#KIDS').addEventListener('click', async() => {
-  const {items} = await getServerDataCategory('KIDS')
-  makeProductList(items)
-})
-
+selectElement("#KIDS").addEventListener("click", async () => {
+  const { items, currentPage, totalPage } = await getServerDataCategory(
+    1,
+    "KIDS"
+  );
+  renderPagination({ currentPage, totalPage, category: "KIDS" });
+  makeProductList(items);
+});
 
 init();
