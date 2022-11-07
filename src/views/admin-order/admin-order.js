@@ -11,6 +11,7 @@ const addCommas = (n) => {
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 let orderIdToDelete;
+let orderIdToUpdate;
 const userOrderList = async function (e) {
   e.preventDefault();
   try {
@@ -49,7 +50,7 @@ const userOrderList = async function (e) {
         <div class="column is-2">${e.account}</div>
         <div class="column is-2">
           <div class="select" >
-            <select id="statusSelectBox-${e.userId}">
+            <select id="statusSelectBox-${e._id}">
              <option
               class="has-background-danger-light has-text-danger"
               ${e.orderState === "상품 준비중" ? "selected" : ""}
@@ -78,6 +79,20 @@ const userOrderList = async function (e) {
        </div>`
       );
       const deleteButton = document.querySelector(`#deleteButton-${e._id}`);
+      const selectBox = document.querySelector(`#statusSelectBox-${e._id}`);
+      selectBox.addEventListener("change", async () => {
+        const newRole = selectBox.value;
+        const data = { role: newRole };
+
+        await fetch(`/api/order/admin?id=${e._id}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzYwYjQ4MWJjMGZiY2I1YWFhNDYxMmMiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY2NzI4MjIwNH0.pAegQIKEaZmGFznaEablnGuF-1iDFLZs9OgmW4EYFbE",
+          },
+          body: data,
+        });
+      });
       deleteButton.addEventListener("click", () => {
         orderIdToDelete = e._id;
         openModal();
@@ -121,6 +136,7 @@ async function deleteOrderData(e) {
     alert(`주문정보 삭제 과정에서 오류가 발생하였습니다: ${err}`);
   }
 }
+
 btnRef.addEventListener("click", userOrderList);
 deleteCancelBtn.addEventListener("click", cancelDelete);
 deleteCompleteBtn.addEventListener("click", deleteOrderData);
