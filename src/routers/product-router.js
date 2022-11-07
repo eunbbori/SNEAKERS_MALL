@@ -17,7 +17,6 @@ productRouter.post("/", loginRequired, async function (req, res, next) {
 
     // req (request)의 body 에서 데이터 가져오기
     const {
-      code,
       brand,
       name,
       imageUrl,
