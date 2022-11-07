@@ -6,6 +6,7 @@ const deliveryCount = document.querySelector("#deliveryCount");
 const completeCount = document.querySelector("#completeCount");
 const modal = document.querySelector("#modal");
 const deleteCancelBtn = document.querySelector("#deleteCancelButton");
+const deleteCompleteBtn = document.querySelector("#deleteCompleteButton");
 const addCommas = (n) => {
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
@@ -42,7 +43,7 @@ const userOrderList = async function (e) {
     results.map((e) => {
       ordersContainer.insertAdjacentHTML(
         "beforeend",
-        `<div class="columns orders-item">
+        `<div class="columns orders-item" id="order-${e._id}">
         <div class="column is-2">${e.userId}</div>
         <div class="column is-2 product-name">${e.productName}</div>
         <div class="column is-2">${e.account}</div>
@@ -91,9 +92,38 @@ const userOrderList = async function (e) {
     console.log(err);
   }
 };
+async function deleteOrderData(e) {
+  e.preventDefault();
 
+  try {
+    await fetch(`/api/order/admin?id=${orderIdToDelete}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzYwYjQ4MWJjMGZiY2I1YWFhNDYxMmMiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY2NzI4MjIwNH0.pAegQIKEaZmGFznaEablnGuF-1iDFLZs9OgmW4EYFbE",
+      },
+    });
+    // await Api.delete("/api/orders", orderIdToDelete);
+
+    // 삭제 성공
+    alert("주문 정보가 삭제되었습니다.");
+
+    // 삭제한 아이템 화면에서 지우기
+    const deletedItem = document.querySelector(`#order-${orderIdToDelete}`);
+    deletedItem.remove();
+
+    // 전역변수 초기화
+    orderIdToDelete = "";
+
+    closeModal();
+  } catch (err) {
+    alert(`주문정보 삭제 과정에서 오류가 발생하였습니다: ${err}`);
+  }
+}
 btnRef.addEventListener("click", userOrderList);
 deleteCancelBtn.addEventListener("click", cancelDelete);
+deleteCompleteBtn.addEventListener("click", deleteOrderData);
 function cancelDelete() {
   orderIdToDelete = "";
   closeModal();
