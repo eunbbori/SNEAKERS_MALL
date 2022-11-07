@@ -1,4 +1,11 @@
-#customRequest{
-    display:none;
+#customRequest {
+  display: none;
 }
-
+th,
+td {
+  padding: 7px;
+}
+.payment {
+  border: solid black;
+  padding: 10px;
+}
