@@ -22,5 +22,4 @@ export * from "./models/cart-model";
 export * from "./models/product-model";
 export * from "./models/brand-model";
 export * from "./models/order-model";
-export * from "./models/orderDetail-model";
 export * from "./models/user-model";
