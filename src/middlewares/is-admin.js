@@ -1,8 +1,8 @@
-async function checkRole(req, res, next) {
+async function isAdmin(req, res, next) {
 	try {
 		const role = req.currentRole;
 
-		// role 체크
+		// role이 admin인지 체크
 		if (role !=='admin') {
 			res.status(403).json({
 				result: "forbidden-approach",
@@ -20,4 +20,4 @@ async function checkRole(req, res, next) {
 	}
 }
 
-export { checkRole };
+export { isAdmin };

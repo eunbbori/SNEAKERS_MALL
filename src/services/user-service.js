@@ -126,12 +126,6 @@ class UserService {
 
     return user;
   }
-
-  async checkRole(userId) {
-    let user = await this.userModel.findById(userId);
-    const role = user.role;
-    return role;
-  }
 }
 
 const userService = new UserService(userModel);
