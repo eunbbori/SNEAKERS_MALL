@@ -17,38 +17,38 @@ async function init() {
   const brand = await getbrandData();
   setBrandList(brand);
   makeProductList(items);
-  //-------------------------------------더미데이터 db생성 코드
+  // -------------------------------------더미데이터 db생성 코드
 
-  //   document.querySelector("#push100Data").addEventListener("click", async () => {
-  //     const dummyData = new Array(50).fill({
-  //       code: "",
-  //       name: "테스트 아이템",
-  //       content: "테스트 아이템설명 입니다.",
-  //       price: 200000,
-  //       size: 260,
-  //       imageUrl:
-  //         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0_bWv7MYTnQ2_xsQ-TQdUQsVpJlqrOFXa7OvrBN7HDcaDOOaNcGAg8xYRpvCAjD7391k&usqp=CAU",
-  //       brand: "NIKE",
-  //       stock: 23,
-  //       category: "MEN",
-  //     });
+  // document.querySelector("#push100Data").addEventListener("click", async () => {
+  //   const dummyData = new Array(50).fill({
+  //     code: "",
+  //     name: "테스트 아이템",
+  //     content: "테스트 아이템설명 입니다.",
+  //     price: 200000,
+  //     size: 260,
+  //     imageUrl:
+  //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0_bWv7MYTnQ2_xsQ-TQdUQsVpJlqrOFXa7OvrBN7HDcaDOOaNcGAg8xYRpvCAjD7391k&usqp=CAU",
+  //     brand: "NIKE",
+  //     stock: 23,
+  //     category: "MEN",
+  //   });
 
-  //     dummyData.forEach(async (item, idx) => {
-  //       item.code = `TEST-PRODUCT-${idx}`;
-  //       item.name = `테스트 아이템-${idx}`;
-  //       const bodyData = JSON.stringify(item);
+  //   dummyData.forEach(async (item, idx) => {
+  //     item.code = `TEST-PRODUCT-${idx}`;
+  //     item.name = `테스트 아이템-${idx}`;
+  //     const bodyData = JSON.stringify(item);
 
-  //       await fetch("/api/product", {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization:
-  //             "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzYwYjQ4MWJjMGZiY2I1YWFhNDYxMmMiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY2NzI4MjIwNH0.pAegQIKEaZmGFznaEablnGuF-1iDFLZs9OgmW4EYFbE",
-  //         },
-  //         body: bodyData,
-  //       });
+  //     await fetch("/api/product", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization:
+  //           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzYwYjQ4MWJjMGZiY2I1YWFhNDYxMmMiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY2NzI4MjIwNH0.pAegQIKEaZmGFznaEablnGuF-1iDFLZs9OgmW4EYFbE",
+  //       },
+  //       body: bodyData,
   //     });
   //   });
+  // });
   //-----------------------------------------------------------------------------------
 
   renderPagination({ currentPage, totalPage });

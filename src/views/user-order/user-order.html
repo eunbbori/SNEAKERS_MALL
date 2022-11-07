@@ -53,32 +53,29 @@
           <ul id="navbar">
             <li><a href="/login">로그인</a></li>
             <li><a href="/register">회원가입</a></li>
-            <li><a href="/admin-product">관리자</a></li>
             <li>
-              <a href="#cart" aria-current="page">
+              <a href="/cart" aria-current="page">
                 <span class="icon">
                   <i class="fas fa-cart-shopping"></i>
                 </span>
                 <span>카트</span>
               </a>
             </li>
-        </ul>
-    </div>
-</div>
-</nav>
+          </ul>
+        </div>
+      </div>
+    </nav>
     <div class="container">
-        <h2>주문목록</h2>
-        <ul class="List">
-            <li>날짜</li>
-            <li>주문정보</li>
-            <li>상태</li>
-            <li>신청</li>
-        </ul>
-        <ul class="orderList">
-            <li class="stateList">
-                
-            </li>
-        </ul>
+      <h2>주문목록</h2>
+      <ul class="List">
+        <li>날짜</li>
+        <li>주문정보</li>
+        <li>상태</li>
+        <li>신청</li>
+      </ul>
+      <ul class="orderList">
+        <li class="stateList"></li>
+      </ul>
     </div>
     <!-- 주문을 정말 취소할 지 묻는 Modal 창 -->
     <div id="modal" class="modal">
@@ -115,5 +112,10 @@
       ></button>
     </div>
     <script src="user-order.js"></script>
-</body>
+    <script
+      src="../global/renderHeaderNavigationBar.js"
+      type="module"
+      defer
+    ></script>
+  </body>
 </html>
