@@ -75,6 +75,19 @@ userRouter.get("/userlist", loginRequired, async function (req, res, next) {
   }
 });
 
+// userId에 해당하는 정보를 가져옴
+// GET api/user
+userRouter.get("/user", loginRequired, async function(req, res, next) {
+  try{
+    const userId = req.currentUserId;
+    const user = await userService.getUserById(userId);
+    res.status(200).json(user);
+  }catch (error){
+    next(error);
+  }
+})
+
+
 // 사용자 정보 수정
 // (예를 들어 /api/users/abc12345 로 요청하면 req.params.userId는 'abc12345' 문자열로 됨)
 userRouter.patch(
@@ -133,5 +146,47 @@ userRouter.patch(
     }
   }
 );
+
+// 사용자 삭제(탈퇴) api
+userRouter.delete("/users",loginRequired, async function (req, res, next) {
+  try {
+    const userId = req.currentUserId;
+
+    const { deletedCount } = await userService.deleteUser(userId)
+
+    if(deletedCount === 1){
+      res.status(200).json({
+        result: true
+      });
+    }else{
+      throw new Error(
+        "예상치 못한 오류 발생 관리자에게 문의해주세요"
+      );
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 관리자 - 사용자 삭제(탈퇴시키는) api
+userRouter.delete("/admin/users/:userId",loginRequired, async function (req, res, next) {
+  try {
+    const userId = req.params.userId;
+
+    const { deletedCount } = await userService.deleteUser(userId)
+
+    if(deletedCount === 1){
+      res.status(200).json({
+        result: true
+      });
+    }else{
+      throw new Error(
+        "예상치 못한 오류 발생 관리자에게 문의해주세요"
+      );
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
 export { userRouter };
