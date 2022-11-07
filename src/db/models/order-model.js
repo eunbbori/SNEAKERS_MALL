@@ -9,26 +9,20 @@ export class OrderModel {
         return createdNewOrder;
     }
     async findAll() {
-        const order = await Order.find({})
-            .sort({createdAt: "desc"});
-        return order;
+        const orders = await Order.find({}).sort({createdAt: "desc"});
+        return orders;
     }
     async findByUserId(userId) {
         const order = await Order.find({ userId: userId })
             .sort({createdAt: "desc"});
         return order;
     }
-    async findByOrderId(orderId) {
-        const order = await Order.findOne({ _id: orderId });
-        return order;
-    }
-    async updateState(orderId, newState) {
-        const result = await Order.findOneAndUpdate({ _id: orderId }, {orderState: newState}, { returnOriginal: false });
-        return result;
-    }
-    async deleteOrder(orderId) {
-        const result = await Order.deleteOne({_id: orderId});
-        return result;
+    async update({ orderId, update }) {
+        const filter = { _id: orderId };
+        const option = { returnOriginal: false };
+
+        const updatedOrder = await Order.findOneAndUpdate(filter, update, option);
+        return updatedOrder;
     }
 }
 const orderModel = new OrderModel();

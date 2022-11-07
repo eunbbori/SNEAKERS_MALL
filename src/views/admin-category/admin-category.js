@@ -25,7 +25,6 @@ async function brandSelectHandler() {
     });
     console.dir(results);
     console.log(`브랜드 가져오기 성공! `);
-    categoryDeleteForm.reset();
   } catch (err) {
     console.log(err.stack);
   }
@@ -55,7 +54,6 @@ async function categoryAddFormHandler(e) {
     }
 
     categoryAddForm.reset();
-    console.log("hi");
   } catch (err) {
     alert(err);
   }
