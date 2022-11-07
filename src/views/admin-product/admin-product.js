@@ -7,12 +7,26 @@ const productCode = document.querySelector("#productCode");
 const productBrand = document.querySelector("#productBrand");
 const productStock = document.querySelector("#productStock");
 const productCategory = document.querySelector("#productCategory");
+const updateBrand = document.querySelector("#brandInput");
+const updateName = document.querySelector("#nameInput");
+const updateUrl = document.querySelector("#imageUrlInput");
+const updateContent = document.querySelector("#contentInput");
+const updateCategory = document.querySelector("#categoryInput");
+const updateSize = document.querySelector("#sizeInput");
+const updatePrice = document.querySelector("#priceInput");
+const updateStock = document.querySelector("#stockInput");
+
 const submitAddProduct = document.querySelector("#productAddForm");
 const submitDeleteProduct = document.querySelector("#porductDeleteForm");
 const deleteRef = document.querySelector(".product-container");
 const prodcutRefInput = document.querySelector("#productRefInput");
 const deleteCancelButton = document.querySelector("#deleteCancelButton");
 const deleteCompleteButton = document.querySelector("#deleteCompleteButton");
+const modalDelete = document.querySelector("#modal1");
+const modalUpdate = document.querySelector("#modal2");
+const updateCompleteButoon = document.querySelector("#updateCompleteButton");
+const updateCancelButton = document.querySelector("#updateCancelButton");
+
 // async function handleSubmitAddProduct(e) {
 //   e.preventDefault();
 //   const name = productName.value;
@@ -47,7 +61,7 @@ const deleteCompleteButton = document.querySelector("#deleteCompleteButton");
 //   }
 // }
 let orderIdToDelete;
-
+let orderIdToUpdate;
 async function handleSubmitAddProduct(e) {
   e.preventDefault();
   const name = productName.value;
@@ -134,12 +148,19 @@ async function handleSubmitRef(e) {
         </div>
       </div>`
     );
+    const updateButton = document.querySelector(
+      `#updateButton-${results.code}`
+    );
+    updateButton.addEventListener("click", () => {
+      orderIdToUpdate = results.code;
+      openModal2();
+    });
     const deleteButton = document.querySelector(
       `#deleteButton-${results.code}`
     );
     deleteButton.addEventListener("click", () => {
       orderIdToDelete = results.code;
-      openModal();
+      openModal1();
     });
   } catch (err) {
     alert(err);
@@ -169,25 +190,93 @@ async function deleteOrderData(e) {
     // 전역변수 초기화
     orderIdToDelete = "";
 
-    closeModal();
+    closeModal1();
   } catch (err) {
     alert(`주문정보 삭제 과정에서 오류가 발생하였습니다: ${err}`);
   }
 }
 
-function cancelDelete() {
+async function updateOrderData(e) {
+  e.preventDefault();
+  //수정 input 값 확인 후 없으면 undefined return
+  const brand = updateBrand.value === "" ? undefined : updateBrand.value;
+  const name = updateName.value === "" ? undefined : updateName.value;
+  const imageUrl = updateUrl.value === "" ? undefined : updateUrl.value;
+  const content = updateContent.value === "" ? undefined : updateContent.value;
+  const category =
+    updateCategory.value === "" ? undefined : updateCategory.value;
+  const size = updateSize.value === "" ? undefined : updateSize.value;
+  const price = updatePrice.value === "" ? undefined : updatePrice.value;
+  const stock = updateStock.value === "" ? undefined : updateStock.value;
+  const data = {
+    brand,
+    name,
+    imageUrl,
+    content,
+    category,
+    size,
+    price,
+    stock,
+  };
+
+  const bodyData = JSON.stringify(data);
+  try {
+    await fetch(`/api/product/${orderIdToUpdate}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzYwYjQ4MWJjMGZiY2I1YWFhNDYxMmMiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY2NzI4MjIwNH0.pAegQIKEaZmGFznaEablnGuF-1iDFLZs9OgmW4EYFbE",
+      },
+      // body 추가
+      body: bodyData,
+    });
+    // await Api.delete("/api/orders", orderIdToDelete);
+
+    // 삭제 성공
+    alert("주문 정보가 수정되었습니다.");
+
+    // 삭제한 아이템 화면에서 지우기
+    const deletedItem = document.querySelector(`#order-${orderIdToUpdate}`);
+    deletedItem.remove();
+
+    // 전역변수 초기화
+    orderIdToUpdate = "";
+
+    closeModal2();
+  } catch (err) {
+    alert(`주문정보 수정 과정에서 오류가 발생하였습니다: ${err}`);
+  }
+}
+
+function cancelDelete1() {
   orderIdToDelete = "";
-  closeModal();
+  closeModal1();
 }
 
 // Modal 창 열기
-function openModal() {
-  modal.classList.add("is-active");
+function openModal1() {
+  modalDelete.classList.add("is-active");
 }
-function closeModal() {
-  modal.classList.remove("is-active");
+function closeModal1() {
+  modalDelete.classList.remove("is-active");
+}
+
+function cancelDelete2() {
+  orderIdToUpdate = "";
+  closeModal2();
+}
+
+// Modal 창 열기
+function openModal2() {
+  modalUpdate.classList.add("is-active");
+}
+function closeModal2() {
+  modalUpdate.classList.remove("is-active");
 }
 submitAddProduct.addEventListener("submit", handleSubmitAddProduct);
 submitDeleteProduct.addEventListener("submit", handleSubmitRef);
-deleteCancelButton.addEventListener("click", cancelDelete);
+deleteCancelButton.addEventListener("click", cancelDelete1);
 deleteCompleteButton.addEventListener("click", deleteOrderData);
+updateCancelButton.addEventListener("click", cancelDelete2);
+updateCompleteButoon.addEventListener("click", updateOrderData);
