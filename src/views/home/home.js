@@ -236,7 +236,7 @@ function renderProductCard(item) {
     "beforeend",
     `<li class="product" id="${code}Li">
         <a href="/product/${code}">
-        <img class="product-image" src="${imageUrl}">
+        <img class="product-image " src="${imageUrl}">
         <div>
         <p class="brandName" id="${code}brand">브랜드</p>
         <p class="name" id="${code}name">상품명</p>
