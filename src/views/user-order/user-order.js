@@ -32,7 +32,7 @@ function setOrderList(orderlist) {
     const orderId = order._id;
     const orderListString = order.orderList
       .map((item) => {
-        return `<p>${item.productCode}, ${item.quantity}</p>`;
+        return `<p>${item.productName}, ${item.quantity}개</p>`;
       })
       .join("");
 
