@@ -63,147 +63,88 @@
         </div>
       </div>
     </nav>
-    <div class="container">
-      <div class="block account-header">
-        <h1 class="subtitle is-4" id="securityTitle"></h1>
-      </div>
-      <div class="menu-container">
-        <div class="form-container">
-          <form class="box form-box" id="loginForm">
-            <div class="field">
-              <label class="label" for="fullNameInput">이름</label>
-              <div class="control">
-                <input
-                  class="input"
-                  id="fullNameInput"
-                  type="text"
-                  autocomplete="off"
-                  disabled=""
-                />
-                <!-- 토클 스위치 -->
-                <label class="switch">
-                  <input type="checkbox" id="fullNameToggle" />
-                  <span class="slider round"></span>
-                </label>
-              </div>
-            </div>
-
-            <div class="field">
-              <label class="label" for="passwordInput">비밀번호</label>
-              <div class="control">
-                <input
-                  class="input"
-                  id="passwordInput"
-                  type="password"
-                  autocomplete="off"
-                  disabled=""
-                />
-                <!-- 토클 스위치 -->
-                <label class="switch">
-                  <input type="checkbox" id="passwordToggle" />
-                  <span class="slider round"></span>
-                  <span class="info-text" style="opacity: 0">
-                    소셜 로그인의 경우는 비밀번호 설정이 불가합니다.
-                  </span>
-                </label>
-              </div>
-            </div>
-
-            <div class="field">
-              <label class="label" for="passwordConfirmInput"
-                >비밀번호 확인</label
-              >
-              <div class="control">
-                <input
-                  class="input"
-                  id="passwordConfirmInput"
-                  type="password"
-                  autocomplete="off"
-                  disabled=""
-                />
-              </div>
-            </div>
-
-            <div class="field">
-              <div class="field-label is-normal">
-                <label class="label label-address" for="address2">주소</label>
-              </div>
-              <div class="control">
-                <input
-                  class="input"
-                  id="addressInput"
-                  type="password"
-                  autocomplete="off"
-                  disabled=""
-                />
-                <!-- 토클 스위치 -->
-                <label class="switch">
-                  <input type="checkbox" id="addressToggle" />
-                  <span class="slider round"></span>
-                </label>
-              </div>
-            </div>
-
-            <div class="field">
-              <label class="label" for="phoneNumberInput">전화번호</label>
-              <div class="control">
-                <input
-                  class="input"
-                  id="phoneNumberInput"
-                  type="number"
-                  placeholder="- 없이 입력해 주세요."
-                  autocomplete="on"
-                  disabled=""
-                />
-                <!-- 토클 스위치 -->
-                <label class="switch">
-                  <input type="checkbox" id="phoneNumberToggle" />
-                  <span class="slider round"></span>
-                </label>
-              </div>
-            </div>
-
-            <button
-              class="button button-submit is-info is-fullwidth js-modal-trigger"
-              id="saveButton"
-              data-target="modal-js-example"
-            >
-              저장하기
+    <div id="modal2" class="modal is-active">
+      <div class="modal-background" id="modalBackground"></div>
+      <div class="modal-content">
+        <div class="box">
+          <p class="mb-3">
+            필수 비밀번호를 꼭 입력해주세요(미기입시 수정이 되지 않습니다!)
+          </p>
+          <label class="label" for="fullNameInput">사용자 이름</label>
+          <div class="control">
+            <input
+              class="input"
+              id="fullNameInput"
+              type="text"
+              placeholder="이름"
+              autocomplete="on"
+            />
+          </div>
+          <label class="label" for="passwordInput">비밀번호</label>
+          <div class="control">
+            <input
+              class="input"
+              id="passwordInput"
+              type="password"
+              placeholder="현재 비밀번호(필수 입력)"
+              autocomplete="on"
+            />
+            <input
+            class="input"
+            id="passwordChangeInput"
+            type="password"
+            placeholder="변경할 비밀번호"
+            autocomplete="on"
+          />
+          </div>
+      
+          <label class="label" for="addressInput">주소</label>
+          <div class="control">
+            <input
+              class="input"
+              id="postalCodeInput"
+              type="text"
+              placeholder="우편번호를 입력하세요."
+              autocomplete="on"
+            />
+            <input
+              class="input"
+              id="address1Input"
+              type="text"
+              placeholder="시를 입력하세요."
+              autocomplete="on"
+            />
+            <input
+              class="input"
+              id="address2Input"
+              type="text"
+              placeholder="구를 입력하세요."
+              autocomplete="on"
+            />
+          </div>
+          <label class="label" for="phoneNumberInput">연락처</label>
+          <div class="control">
+            <input
+              class="input"
+              id="phoneNumberInput"
+              type="text"
+              placeholder="010-xxxx-xxxx"
+              autocomplete="on"
+            />
+          </div>
+      
+          <div class="buttons">
+            <button class="button mt-5" id="updateCompleteButton" aria-label="close">
+              네
             </button>
-
-            <!-- 정보 수정을 완료하기 위해, 현재 비밀번호를 입력할 Modal 창 -->
-            <div id="modal" class="modal">
-              <div class="modal-background" id="modalBackground"></div>
-              <div class="modal-content">
-                <button
-                  class="delete is-large"
-                  id="modalCloseButton"
-                  aria-label="close"
-                ></button>
-                <div class="box">
-                  <p class="mb-3">현재 비밀번호를 입력해 주세요.</p>
-
-                  <input
-                    class="input is-link mb-3"
-                    id="currentPasswordInput"
-                    type="password"
-                    placeholder=""
-                    autocomplete="on"
-                  />
-                  <button
-                    class="button is-link mt-5"
-                    id="saveCompleteButton"
-                    aria-label="close"
-                  >
-                    저장 완료하기
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
+            <button class="button is-primary mt-5" id="updateCancelButton" aria-label="close">
+              아니오
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+  
+    </div> 
     <script
       src="../../global/renderHeaderNavigationBar.js"
       type="module"
