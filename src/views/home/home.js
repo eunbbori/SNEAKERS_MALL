@@ -13,10 +13,12 @@
  *
  */
 async function init() {
-  const { totalPage, currentPage, items } = await fetchProductList(1);
+  const { totalPage, currentPage, items } = await fetchProductList({ page: 1 });
   const brand = await getbrandData();
   setBrandList(brand);
   makeProductList(items);
+  renderPagination({ currentPage, totalPage });
+  selectElementId("nav-regDate").classList.add("is-active");
   // -------------------------------------더미데이터 db생성 코드
 
   // document.querySelector("#push100Data").addEventListener("click", async () => {
@@ -50,8 +52,6 @@ async function init() {
   //   });
   // });
   //-----------------------------------------------------------------------------------
-
-  renderPagination({ currentPage, totalPage });
 }
 
 /**
@@ -65,12 +65,64 @@ async function init() {
  *  totalCount: number  - 총 상품 개수
  * }
  */
-function fetchProductList(page) {
+function fetchProductList({ page, brand = "", category = "", sort = "" }) {
   //홈페이지 api요청
-  const res = fetch(`/api/product?page=${page}`)
-    .then((res) => res.json())
-    .then((item) => item);
-  return res;
+  if (!brand && !category && !sort) {
+    const res = fetch(`/api/product?page=${page}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("서버에러");
+        }
+        return res.json();
+      })
+      .then((item) => item)
+      .catch((err) => {
+        console.error(err);
+      });
+    return res;
+  }
+  if (brand) {
+    const res = fetch(`/api/product?page=${page}&brand=${brand}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("서버에러");
+        }
+        return res.json();
+      })
+      .then((item) => item)
+      .catch((err) => {
+        console.error(err);
+      });
+    return res;
+  }
+  if (category) {
+    const res = fetch(`/api/product?page=${page}&category=${category}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("서버에러");
+        }
+        return res.json();
+      })
+      .then((item) => item)
+      .catch((err) => {
+        console.error(err);
+      });
+    return res;
+  }
+  if (sort) {
+    const res = fetch(`/api/product?page=${page}&sort=${sort}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("서버에러");
+        }
+        return res.json();
+      })
+      .then((item) => item)
+      .catch((err) => {
+        console.error(err);
+      });
+    return res;
+  }
 }
 
 /**
@@ -85,17 +137,6 @@ function getbrandData() {
 }
 
 /**
- * @description category get요청
- * @param {*} category
- * @returns
- */
-function getServerDataCategory(page, category) {
-  const res = fetch(`/api/product?page=${page}&category=${category}`)
-    .then((res) => res.json())
-    .then((item) => item);
-  return res;
-}
-/**
  * @description
  * 페이지 이동 버튼 생성 함수
  * @param {*} param0
@@ -105,6 +146,7 @@ function renderPagination({
   totalPage,
   brand = "",
   category = "",
+  sort = "",
 }) {
   selectElementId("js-pagination").innerHTML = "";
   let disabledPage = currentPage; // 현재 위치한 페이지 버튼을 비활성화 시키기 위한 변수
@@ -126,23 +168,34 @@ function renderPagination({
     const prevLi = document.createElement("li");
     prevLi.addEventListener("click", async () => {
       if (brand) {
-        const { currentPage, totalPage, items } = await getServerDataBrand(
-          first - 1,
-          brand
-        );
+        const { currentPage, totalPage, items } = await fetchProductList({
+          page: first - 1,
+          brand: brand,
+        });
         makeProductList(items);
         renderPagination({ currentPage, totalPage, brand });
-      } else if (category) {
-        const { currentPage, totalPage, items } = await getServerDataCategory(
-          first - 1,
-          category
-        );
+      }
+      if (category) {
+        const { currentPage, totalPage, items } = await fetchProductList({
+          page: first - 1,
+          category: category,
+        });
         makeProductList(items);
         renderPagination({ currentPage, totalPage, category });
-      } else {
-        const { currentPage, totalPage, items } = await fetchProductList(
-          first - 1
-        );
+      }
+      if (sort) {
+        const { currentPage, totalPage, items } = await fetchProductList({
+          page: first - 1,
+          sort: sort,
+        });
+        makeProductList(items);
+        renderPagination({ currentPage, totalPage, sort });
+      }
+
+      if (!brand && !category && !sort) {
+        const { currentPage, totalPage, items } = await fetchProductList({
+          page: first - 1,
+        });
         makeProductList(items);
         renderPagination({ currentPage, totalPage });
       }
@@ -169,12 +222,24 @@ function renderPagination({
       selectElementId(`page-${page}`).setAttribute("disabled", "true");
       disabledPage = page;
       if (brand) {
-        const { items } = await getServerDataBrand(page, brand);
+        const { items } = await fetchProductList({ page: page, brand: brand });
         makeProductList(items);
-      } else if (category) {
-        const { items } = await getServerDataCategory(page, category);
+      }
+      if (category) {
+        const { items } = await fetchProductList({
+          page: page,
+          category: category,
+        });
         makeProductList(items);
-      } else {
+      }
+      if (sort) {
+        const { items } = await fetchProductList({
+          page: page,
+          sort: sort,
+        });
+        makeProductList(items);
+      }
+      if (!brand && !category && !sort) {
         const { items } = await fetchProductList(page);
         makeProductList(items);
       }
@@ -187,20 +252,30 @@ function renderPagination({
     const nextLi = document.createElement("li");
     nextLi.addEventListener("click", async () => {
       if (brand) {
-        const { currentPage, totalPage, items } = await getServerDataBrand(
-          lastNumberPerPage + 1,
-          brand
-        );
+        const { currentPage, totalPage, items } = await fetchProductList({
+          page: lastNumberPerPage + 1,
+          brand: brand,
+        });
         makeProductList(items);
         renderPagination({ currentPage, totalPage, brand });
-      } else if (category) {
-        const { currentPage, totalPage, items } = await getServerDataCategory(
-          lastNumberPerPage + 1,
-          category
-        );
+      }
+      if (category) {
+        const { currentPage, totalPage, items } = await fetchProductList({
+          page: lastNumberPerPage + 1,
+          category: category,
+        });
         makeProductList(items);
         renderPagination({ currentPage, totalPage, category });
-      } else {
+      }
+      if (sort) {
+        const { currentPage, totalPage, items } = await fetchProductList({
+          page: lastNumberPerPage + 1,
+          sort: sort,
+        });
+        makeProductList(items);
+        renderPagination({ currentPage, totalPage, sort });
+      }
+      if (!brand && !category && !sort) {
         const { currentPage, totalPage, items } = await fetchProductList(
           lastNumberPerPage + 1
         );
@@ -284,26 +359,18 @@ function setBrandList(brand) {
  */
 async function brandFilter() {
   const brandName = this.firstChild.id;
-  const { items, currentPage, totalPage } = await getServerDataBrand(
-    1,
-    brandName
-  );
+  const { items, currentPage, totalPage } = await fetchProductList({
+    page: 1,
+    brand: brandName,
+  });
   makeProductList(items);
   renderPagination({ currentPage, totalPage, brand: brandName });
 }
 
-/**
- *
- * @param {*} brand
- * @returns
- */
-function getServerDataBrand(page, brand) {
-  //category get요청
-  const res = fetch(`/api/product?page=${page}&brand=${brand}`)
-    .then((res) => res.json())
-    .then((item) => item);
-  return res;
+async function sortFilter() {
+  const { items, currentPage, totalPage } = await fetchProductList({});
 }
+
 /**
  * @description
  * selector에 선택자를 포함한 str을 넣어줘서 html요소를 반환한다.
@@ -338,29 +405,63 @@ selectElement(".categoryList").addEventListener("mouseleave", () => {
 });
 
 selectElement("#MEN").addEventListener("click", async () => {
-  const { items, currentPage, totalPage } = await getServerDataCategory(
-    1,
-    "MEN"
-  );
+  const { items, currentPage, totalPage } = await fetchProductList({
+    page: 1,
+    category: "MEN",
+  });
   renderPagination({ currentPage, totalPage, category: "MEN" });
   makeProductList(items);
 });
 
 selectElement("#WOMEN").addEventListener("click", async () => {
-  const { items, currentPage, totalPage } = await getServerDataCategory(
-    1,
-    "WOMEN"
-  );
+  const { items, currentPage, totalPage } = await fetchProductList({
+    page: 1,
+    category: "WOMEN",
+  });
   renderPagination({ currentPage, totalPage, category: "WOMEN" });
   makeProductList(items);
 });
 
 selectElement("#KIDS").addEventListener("click", async () => {
-  const { items, currentPage, totalPage } = await getServerDataCategory(
-    1,
-    "KIDS"
-  );
+  const { items, currentPage, totalPage } = await fetchProductList({
+    page: 1,
+    category: "KIDS",
+  });
   renderPagination({ currentPage, totalPage, category: "KIDS" });
+  makeProductList(items);
+});
+
+selectElementId("nav-regDate").addEventListener("click", async () => {
+  const { items, currentPage, totalPage } = await fetchProductList({
+    page: 1,
+  });
+  selectElementId("nav-regDate").classList.add("is-active");
+  selectElementId("nav-highPrice").classList.remove("is-active");
+  selectElementId("nav-lowPrice").classList.remove("is-active");
+
+  renderPagination({ currentPage, totalPage });
+  makeProductList(items);
+});
+selectElementId("nav-highPrice").addEventListener("click", async () => {
+  const { items, currentPage, totalPage } = await fetchProductList({
+    page: 1,
+    sort: "highPrice",
+  });
+  selectElementId("nav-highPrice").classList.add("is-active");
+  selectElementId("nav-regDate").classList.remove("is-active");
+  selectElementId("nav-lowPrice").classList.remove("is-active");
+  renderPagination({ currentPage, totalPage, sort: "highPrice" });
+  makeProductList(items);
+});
+selectElementId("nav-lowPrice").addEventListener("click", async () => {
+  const { items, currentPage, totalPage } = await fetchProductList({
+    page: 1,
+    sort: "lowPrice",
+  });
+  selectElementId("nav-lowPrice").classList.add("is-active");
+  selectElementId("nav-highPrice").classList.remove("is-active");
+  selectElementId("nav-regDate").classList.remove("is-active");
+  renderPagination({ currentPage, totalPage, sort: "lowPrice" });
   makeProductList(items);
 });
 
