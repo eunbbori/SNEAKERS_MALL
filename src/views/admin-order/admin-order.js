@@ -7,19 +7,20 @@ const completeCount = document.querySelector("#completeCount");
 const modal = document.querySelector("#modal");
 const deleteCancelBtn = document.querySelector("#deleteCancelButton");
 const deleteCompleteBtn = document.querySelector("#deleteCompleteButton");
+userOrderList();
 const addCommas = (n) => {
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
+
 let orderIdToDelete;
 let orderIdToUpdate;
-const userOrderList = async function (e) {
-  e.preventDefault();
+
+async function userOrderList(e) {
   try {
     const res = await fetch("/api/order/admin", {
       headers: {
         "Content-Type": "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzYwYjQ4MWJjMGZiY2I1YWFhNDYxMmMiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY2NzI4MjIwNH0.pAegQIKEaZmGFznaEablnGuF-1iDFLZs9OgmW4EYFbE",
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       },
     });
     const results = await res.json();
@@ -46,7 +47,7 @@ const userOrderList = async function (e) {
         "beforeend",
         `<div class="columns orders-item" id="order-${e._id}">
         <div class="column is-2">${e.name}</div>
-        <div class="column is-2 product-name">${e.productName}</div>
+        <div class="column is-2 product-name${e._id}"></div>
         <div class="column is-2">${e.account}</div>
         <div class="column is-2">
           <div class="select" >
@@ -78,6 +79,13 @@ const userOrderList = async function (e) {
 
        </div>`
       );
+      const productNameBox = document.querySelector(`.product-name${e._id}`);
+      e.orderList.map((e) => {
+        productNameBox.insertAdjacentHTML(
+          "beforeend",
+          `<p>${e.productName}(${e.quantity}),</p>`
+        );
+      });
       const deleteButton = document.querySelector(`#deleteButton-${e._id}`);
       const selectBox = document.querySelector(`#statusSelectBox-${e._id}`);
       selectBox.addEventListener("change", async () => {
@@ -112,7 +120,7 @@ const userOrderList = async function (e) {
   } catch (err) {
     console.log(err);
   }
-};
+}
 async function deleteOrderData(e) {
   e.preventDefault();
 
@@ -143,7 +151,6 @@ async function deleteOrderData(e) {
   }
 }
 
-btnRef.addEventListener("click", userOrderList);
 deleteCancelBtn.addEventListener("click", cancelDelete);
 deleteCompleteBtn.addEventListener("click", deleteOrderData);
 function cancelDelete() {
