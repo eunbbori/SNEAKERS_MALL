@@ -465,7 +465,8 @@ async function doCheckout() {
             const totalPrice = quantity * price;
             orderList.push({
                 "productCode":productId,
-                "quantity":quantity
+                "productName":summaryTitle,
+                "quantity":quantity,
             })
             // await post("/api/orderitem", {
             //     orderId,
@@ -516,6 +517,8 @@ async function doCheckout() {
         alert(`결제 중 문제가 발생하였습니다: ${err.message}`);
     }
 }
+
+
 
 
 // // // Daum 주소 API (사용 설명 https://postcode.map.daum.net/guide)
