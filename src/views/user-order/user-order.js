@@ -1,6 +1,5 @@
 async function init() {
   const dataArr = await getOrderData();
-  console.log(dataArr);
   setOrderList(dataArr);
   //   setOrderList(orderlist);
 }
@@ -11,13 +10,20 @@ function getOrderData() {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     },
   })
-    .then((res) => res.json())
-    .then((data) => data);
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("서버오류");
+      }
+      return res.json();
+    })
+    .then((data) => data)
+    .catch((err) => console.log(err));
   return res;
 }
 
 function setOrderList(orderlist) {
   orderlist.forEach((order) => {
+    console.log(order);
     const orderListContainer = document.querySelector(".orderList");
     // const productName = order.productName;
     // const quantity = order.orderList[0].quantity;
