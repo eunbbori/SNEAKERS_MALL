@@ -76,6 +76,19 @@ orderRouter.get('/admin', loginRequired, async (req, res, next) => {
     }
 })
 
+
+// GET: /api/order/state
+// 관리자가 주문상태를 확인할 수 있습니다.
+orderRouter.get('/state', async (req, res, next) => {
+    try{
+        const states = await orderService.getOrderStates();
+        res.status(200).json(states);
+    } catch(err){
+        next(err)
+    }
+})
+
+
 // PUT: /api/order/admin?id=orderId
 // 관리자가 주문상태를 수정할 수 있습니다.
 orderRouter.put('/admin', loginRequired, async (req, res, next) => {
