@@ -15,18 +15,6 @@ class CartService{
 		const getCart = await this.cartModel.findGroupByUserId(userId);
 		return getCart
 	}
-
-	// 장바구니 수정
-	// async updateCart(){
-	//
-	// }
-
-	// 장바구니 삭제
-	async deleteCart(cartId){
-		const result = await this.cartModel.deleteOrder(cartId);
-		return result
-	}
-
 }
 const cartService = new CartService(cartModel);
 export { cartService };

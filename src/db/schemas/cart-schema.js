@@ -6,31 +6,47 @@ const CartSchema = new Schema(
             type: String,
             required: true,
         },
-        productCode: {
+        brand: {
             type: String,
             required: true,
         },
-        productImage: {
+        category: {
             type: String,
             required: true,
         },
-        productName: {
+        code: {
             type: String,
             required: true,
         },
-        productType: {
+        content: {
             type: String,
             required: true,
         },
-        productPrice: {
+        imageUrl: {
             type: String,
             required: true,
         },
-        brandName: {
+        name: {
             type: String,
             required: true,
         },
-        goodsSize: {
+        price: {
+            type: Number,
+            required: true,
+        },
+        quantity: {
+            type: Number,
+            required: true,
+        },
+        regDate: {
+            type: String,
+            required: true,
+        },
+        size: {
+            type: Number,
+            required: true,
+        },
+        stock: {
             type: Number,
             required: true,
         },

@@ -13,25 +13,9 @@ export class CartModel {
 
 	// 장바구니 조회
 	async findGroupByUserId(userId) {
-		const order = await Cart.aggregate([
-			{
-				$match : {
-					"userId" :userId
-				}
-			},
-		]);
+		const order = await Cart.find({"userId" :userId}).sort({regDate: "desc"});
 		return order;
 	}
-
-	// // 장바구니 수정
-	// async updateCart() {
-	// 	return result;
-	// }
-	//
-	// // 장바구니 삭제
-	// async deleteCart() {
-	// 	return result;
-	// }
 }
 const cartModel = new CartModel();
 

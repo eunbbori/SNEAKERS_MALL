@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { cartService } from "../services";
-import { loginRequired, isMember } from "../middlewares";
+import { isMember } from "../middlewares";
 import is from "@sindresorhus/is";
 const cartRouter = Router();
 
@@ -18,15 +18,13 @@ cartRouter.post('/', isMember, async (req, res, next) =>{
 		}
 		const userId = req.currentUserId;
 		if (userId) {
-			console.log('회원', userId)
 			const cartData = req.body;
 			cartData.userId = req.currentUserId;
 			const cart = await cartService.addCart(cartData);
 			res.status(200).json(cart);
 		}
 		else {
-			console.log('비회원')
-			res.status(200).json({result: 'not member'});
+			res.status(200).json({message: 'not member'});
 		}
 	}catch(err){
 		next(err);
@@ -47,27 +45,5 @@ cartRouter.get('/', isMember, async (req, res, next) =>{
 		next(err);
 	}
 });
-
-
-// // 장바구니 수정
-// // PUT: api/cart
-// cartRouter.put('/', isMemberasync (req, res, next) =>{
-// 	try{
-//
-// 	}catch(err){
-// 		next(err);
-// 	};
-// });
-//
-// // 장바구니 삭제
-// // DELETE: api/cart
-// cartRouter.delete('/', async (req, res, next) =>{
-// 	try{
-//
-// 	}catch(err){
-// 		next(err);
-// 	};
-// });
-
 
 export { cartRouter };
