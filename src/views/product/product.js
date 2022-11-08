@@ -21,7 +21,97 @@ const addToCartButton = document.getElementById('cartButton')
 const goodsContent = document.getElementById('content')
 const purchaseButton = document.getElementById('purchaseButton')
 const goToCart = document.getElementById('goToCart')
+const likeBtn = document.getElementById('likeBtn')
+
+
 recieveData()
+
+async function likeBtnClick(e) {
+    const emptyHeart = e.currentTarget.getElementById('emptyHeart');
+    const fullHeart = e.currentTarget.getElementById('fullHeart');
+    emptyHeart.classList.toggle('hide');
+    fullHeart.classList.toggle('hide');
+}
+
+likeBtn.addEventListener('click', doLike);
+
+//로그인 체크
+const checkLogin = () => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+        // 현재 페이지의 url 주소 추출하기
+        const pathname = window.location.pathname;
+        const search = window.location.search;
+
+        // 로그인 후 다시 지금 페이지로 자동으로 돌아가도록 하기 위한 준비작업임.
+        window.location.replace(`/login?previouspage=${pathname + search}`);
+    }
+};
+
+
+async function doLike() {
+    checkLogin();
+    const res = await fetch('/api/user', {
+        // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
+        headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+    });
+
+    // 응답 코드가 4XX 계열일 때 (400, 403 등)
+    if (!res.ok) {
+        const errorContent = await res.json();
+        const { reason } = errorContent;
+
+        throw new Error(reason);
+    }
+
+    const result = await res.json();
+    const userEmail=result.email;
+    
+    if (likeBtn.classList.contains('like-fill')) { //좋아요 취소시,
+        likeBtn.classList.remove('like-fill');
+    } else {
+        likeBtn.classList.add('like-fill'); //좋아요 누를시,
+        await post("/api/like", {
+            "productCode":param,
+            "userId":userEmail
+        });
+
+    }
+    //console.log(code.innerText);
+}
+
+async function post(endpoint, data) {
+    const apiUrl = endpoint;
+    // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
+    // 예시: {name: "Kim"} => {"name": "Kim"}
+    const bodyData = JSON.stringify(data);
+    console.log(`%cPOST 요청: ${apiUrl}`, "color: #296aba;");
+    console.log(`%cPOST 요청 데이터: ${bodyData}`, "color: #296aba;");
+
+    const res = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+        body: bodyData,
+    });
+
+    // 응답 코드가 4XX 계열일 때 (400, 403 등)
+    if (!res.ok) {
+        const errorContent = await res.json();
+        const { reason } = errorContent;
+
+        throw new Error(reason);
+    }
+
+    const result = await res.json();
+
+    return result;
+}
+
 
 async function recieveData() {
     await fetch(`/api/product/${param}`)

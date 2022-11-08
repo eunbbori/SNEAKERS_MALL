@@ -17,6 +17,19 @@ function addAllEvents() {
   submitButton.addEventListener("click", handleSubmit);
 }
 
+const getUrlParams = () => {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+
+  const result = {};
+
+  for (const [key, value] of urlParams) {
+    result[key] = value;
+  }
+
+  return result;
+};
+
 // 로그인 진행
 async function handleSubmit(e) {
   e.preventDefault();
@@ -49,6 +62,13 @@ async function handleSubmit(e) {
 
     // 로그인 성공
 
+    const { previouspage } = getUrlParams();
+
+    if (previouspage) {
+      window.location.href = previouspage;
+
+      return;
+    }
     // 기본 페이지로 이동
     window.location.href = "/";
   } catch (err) {
