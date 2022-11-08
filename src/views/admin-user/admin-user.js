@@ -49,7 +49,7 @@ async function getUsersContainer() {
             </option>
             <option 
             class="has-background-primary-light has-text-primary"
-            ${e.role === "admin-user" ? "selected" : ""}
+            ${e.role === "admin" ? "selected" : ""}
             value="admin-user">
             관리자
             </option>
