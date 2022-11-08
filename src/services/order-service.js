@@ -36,6 +36,12 @@ class OrderService {
         return myOrder
     }
 
+    // 배송상태 조회: orderId로 배송상태 조회가능
+    async getOrderStates() {
+        const states = await this.orderModel.findGroupByState();
+        return states
+    }
+
     // 관리자 주문 조회
     async getOrderAll() {
         const orders = await this.orderModel.findAll();
