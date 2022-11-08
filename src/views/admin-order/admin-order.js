@@ -146,6 +146,7 @@ async function deleteOrderData(e) {
     orderIdToDelete = "";
 
     closeModal();
+    window.location.href = "http://localhost:5000/admin-order/";
   } catch (err) {
     alert(`주문정보 삭제 과정에서 오류가 발생하였습니다: ${err}`);
   }
