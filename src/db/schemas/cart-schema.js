@@ -2,23 +2,35 @@ import { Schema } from "mongoose";
 
 const CartSchema = new Schema(
     {
-        cartNum: {
-            type: Number,
-            required: true,
-        },
         userId: {
-            type: Number,
+            type: String,
             required: true,
         },
-        goodsNum: {
-            type: Number,
+        productCode: {
+            type: String,
             required: true,
         },
-        cartStock: {
-            type: Number,
+        productImage: {
+            type: String,
             required: true,
         },
-        cartRegDate: {
+        productName: {
+            type: String,
+            required: true,
+        },
+        productType: {
+            type: String,
+            required: true,
+        },
+        productPrice: {
+            type: String,
+            required: true,
+        },
+        brandName: {
+            type: String,
+            required: true,
+        },
+        goodsSize: {
             type: Number,
             required: true,
         },
