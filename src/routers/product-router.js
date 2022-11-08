@@ -41,7 +41,7 @@ productRouter.get("/", async function (req, res, next) {
   try {
     const page = Number(req.query.page || 1);
     const perPage = 20;
-    const { category, brand } = req.query;
+    const { category, brand, sort } = req.query;
     const name = new RegExp(req.query.name);
 
     const toFilter = {
@@ -51,6 +51,20 @@ productRouter.get("/", async function (req, res, next) {
       ...(brand && { brand }),
       ...(name && { name }),
     };
+    if( sort ) { 
+      toFilter.sort = {};
+      switch(sort) {
+        case 'regDate':
+          toFilter.sort.regDate = -1;
+          break;
+        case 'highPrice':
+          toFilter.sort.price = -1;
+          break;
+        case 'lowPrice':
+          toFilter.sort.price = 1;
+          break;
+      }
+    }
 
     const { total, products } = await productService.getProductList(toFilter);
     const totalPage = Math.ceil(total / perPage);
