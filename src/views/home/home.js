@@ -12,6 +12,7 @@
  * 5. 페이지네이션 렌더링 함수 호출
  *
  */
+import * as useful from "../useful-functions.js";
 async function init() {
   const { totalPage, currentPage, items } = await fetchProductList({ page: 1 });
   const brand = await getbrandData();
@@ -325,7 +326,7 @@ function renderProductCard(item) {
               <div class="media-content">
                 <p class="title is-6">${name}</p>
                 <p class="subtitle is-6">${brandName}</p>
-                <p class="subtitle is-6">${price}</p>
+                <p class="subtitle is-6">${useful.addCommas(price)} 원</p>
               </div>
             </div>
           </div>
