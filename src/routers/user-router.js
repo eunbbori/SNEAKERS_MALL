@@ -152,17 +152,22 @@ userRouter.patch(
 userRouter.delete("/users",loginRequired, async function (req, res, next) {
   try {
     const userId = req.currentUserId;
+    const password = req.body.password;
 
-    const { deletedCount } = await userService.deleteUser(userId)
+    const correct = await userService.checkUserPassword({ userId, password });
 
-    if(deletedCount === 1){
-      res.status(200).json({
-        result: true
-      });
-    }else{
-      throw new Error(
-        "예상치 못한 오류 발생 관리자에게 문의해주세요"
-      );
+    if (correct) {
+      const { deletedCount } = await userService.deleteUser(userId)
+
+      if(deletedCount === 1){
+        res.status(200).json({
+          result: true
+        });
+      }else{
+        throw new Error(
+          "예상치 못한 오류 발생 관리자에게 문의해주세요"
+        );
+      }
     }
   } catch (error) {
     next(error);
