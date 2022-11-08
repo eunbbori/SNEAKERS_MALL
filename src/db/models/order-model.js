@@ -22,12 +22,6 @@ export class OrderModel {
         const order = await Order.findOne({ _id: orderId });
         return order;
     }
-    async findGroupByState() {
-        const order = await Order.aggregate([
-            {"$group" : {_id:"$orderState", count:{$sum:1}}}
-        ]);
-        return order;
-    }
     async updateState(orderId, newState) {
         const result = await Order.findOneAndUpdate({ _id: orderId }, {orderState: newState}, { returnOriginal: false });
         return result;
