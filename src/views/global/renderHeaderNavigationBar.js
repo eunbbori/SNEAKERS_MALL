@@ -9,7 +9,6 @@ async function renderNavBar() {
   if (!token) return;
   if (token) {
     const { role } = await isAdmin();
-    console.log(role);
     // 로그인 상태
     navBarEl.innerHTML = "";
     const myPageLiEl = createLiElement({
