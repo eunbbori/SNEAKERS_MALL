@@ -11,7 +11,8 @@
 }
 .product {
   max-width: 300px;
-  min-height: 400px;
+  width: 250px;
+  margin: 5px;
 }
 .categoryNav {
   display: flex;
@@ -43,7 +44,7 @@
   width: 40vw;
   justify-content: space-between;
   display: flex;
-  margin: 0 auto;
+  margin-top: 70px;
 }
 
 button {
@@ -59,7 +60,7 @@ button {
   text-align: center;
 }
 
-.product-image {
-  max-width: 225px;
+/* .product-image {
+  max-width: 300px;
   min-height: 225px;
-}
+} */
