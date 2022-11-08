@@ -54,10 +54,10 @@ function setOrderList(orderlist) {
 
 async function orderCancel() {
   const orderId = this.parentNode.id;
-  await fetch(`/api/order/${orderId}`, {
+  await fetch(`/api/order/user?id=${orderId}`, {
     method: "DELETE",
     headers: {
-      "Content-Type": "application/json",
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     },
   });
   this.parentNode.remove();
