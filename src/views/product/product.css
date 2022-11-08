@@ -6,3 +6,8 @@ input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   opacity: 1;
 }
+
+.like-fill{
+  background-color:rgb(238, 55, 83);
+  color:white;
+}

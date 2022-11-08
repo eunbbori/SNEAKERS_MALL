@@ -17,13 +17,13 @@ export const checkLogin = () => {
 // 숫자에 쉼표를 추가함. (10000 -> 10,000)
 export const addCommas = (n) => {
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  };
+};
 
-  // 13,000원, 2개 등의 문자열에서 쉼표, 글자 등 제외 후 숫자만 뺴냄
+// 13,000원, 2개 등의 문자열에서 쉼표, 글자 등 제외 후 숫자만 뺴냄
 // 예시: 13,000원 -> 13000, 20,000개 -> 20000
 export const convertToNumber = (string) => {
     return parseInt(string.replace(/(,|개|원)/g, ""));
-  };
+};
 
 
 /////////////////indexed-db.js///////////////////////////////
@@ -34,39 +34,39 @@ let database;
 // Promise로 감싸 반환함.
 const openDatabase = () => {
     const db = new Promise((resolve, reject) => {
-      const onRequest = indexedDB.open("shopping", 1);
-      onRequest.onupgradeneeded = () => {
-        console.log("indexeddb의 업그레이드가 이루어집니다.");
-        const database = onRequest.result;
-  
-        database.createObjectStore("cart", {
-          autoIncrement: true,
-        });
-  
-        database.createObjectStore("order", {
-          autoIncrement: true,
-        });
-      };
-  
-      onRequest.onsuccess = async () => {
-        console.log("indexeddb가 정상적으로 시작되었습니다.");
-  
-        resolve(onRequest.result);
-      };
-  
-      onRequest.onerror = () => {
-        const err = onRequest.error;
-        console.log(
-          `indexeddb를 시작하는 과정에서 오류가 발생하였습니다: ${err}`
-        );
-  
-        reject(err);
-      };
+        const onRequest = indexedDB.open("shopping", 1);
+        onRequest.onupgradeneeded = () => {
+            console.log("indexeddb의 업그레이드가 이루어집니다.");
+            const database = onRequest.result;
+
+            database.createObjectStore("cart", {
+                autoIncrement: true,
+            });
+
+            database.createObjectStore("order", {
+                autoIncrement: true,
+            });
+        };
+
+        onRequest.onsuccess = async () => {
+            console.log("indexeddb가 정상적으로 시작되었습니다.");
+
+            resolve(onRequest.result);
+        };
+
+        onRequest.onerror = () => {
+            const err = onRequest.error;
+            console.log(
+                `indexeddb를 시작하는 과정에서 오류가 발생하였습니다: ${err}`
+            );
+
+            reject(err);
+        };
     });
-  
+
     return db;
-  };
-  
+};
+
 // indexedDB에 저장된 값을 가져옴
 const getFromDb = async (storeName, key = "") => {
     // database 변수가 아직 초기화가 되어있지 않다면,
@@ -180,28 +180,28 @@ const deleteFromDb = async (storeName, key = "") => {
 // async function get(endpoint, params = "") {
 //     const apiUrl = `${endpoint}/${params}`;
 //     console.log(`%cGET 요청: ${apiUrl} `, "color: #a25cd1;");
-  
+
 //     const res = await fetch(apiUrl, {
 //       // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
 //       headers: {
 //         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
 //       },
 //     });
-  
+
 //     // 응답 코드가 4XX 계열일 때 (400, 403 등)
 //     if (!res.ok) {
 //       const errorContent = await res.json();
 //       const { reason } = errorContent;
-  
+
 //       throw new Error(reason);
 //     }
-  
+
 //     const result = await res.json();
-  
+
 //     return result;
 //   }
 
-  // api 로 POST 요청 (/endpoint 로, JSON 데이터 형태로 요청함)
+// api 로 POST 요청 (/endpoint 로, JSON 데이터 형태로 요청함)
 async function post(endpoint, data) {
     const apiUrl = endpoint;
     // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
@@ -209,29 +209,29 @@ async function post(endpoint, data) {
     const bodyData = JSON.stringify(data);
     console.log(`%cPOST 요청: ${apiUrl}`, "color: #296aba;");
     console.log(`%cPOST 요청 데이터: ${bodyData}`, "color: #296aba;");
-  
+
     const res = await fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-      body: bodyData,
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+        body: bodyData,
     });
-  
+
     // 응답 코드가 4XX 계열일 때 (400, 403 등)
     if (!res.ok) {
-      const errorContent = await res.json();
-      const { reason } = errorContent;
-  
-      throw new Error(reason);
+        const errorContent = await res.json();
+        const { reason } = errorContent;
+
+        throw new Error(reason);
     }
-  
+
     const result = await res.json();
-  
+
     return result;
-  }
-  
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -281,42 +281,42 @@ function addAllElements() {
 
 //주문 고객정보에 data를 넣음.
 async function recieveData() {
-    try{
+    try {
         const res = await fetch('/api/user', {
             // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
             headers: {
-              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+                Authorization: `Bearer ${sessionStorage.getItem("token")}`,
             },
-          });
-        
-          // 응답 코드가 4XX 계열일 때 (400, 403 등)
-          if (!res.ok) {
+        });
+
+        // 응답 코드가 4XX 계열일 때 (400, 403 등)
+        if (!res.ok) {
             const errorContent = await res.json();
             const { reason } = errorContent;
-        
+
             throw new Error(reason);
-          }
-        
-          const result = await res.json();
-          
-          console.log(result);
-          userName.value = result.fullName;
-          userPhoneNumber.value = result.orderTel;
-          userEmail.value = result.phoneNumber;
-    }catch(err){
+        }
+
+        const result = await res.json();
+
+        console.log(result);
+        userName.value = result.fullName;
+        userPhoneNumber.value = result.phoneNumber;
+        userEmail.value = result.email;
+    } catch (err) {
         console.log(err);
     }
-    
-      
+
+
     // const data=await get('api/order/user');
     // console.log(data);
-        // .then(res => res.json())
-        // .then(data => {
-            // userName.value = result.orderName;
-            // userPhoneNumber.value = result.orderTel;
-            // userEmail.value = result.email;
-            
-        // })
+    // .then(res => res.json())
+    // .then(data => {
+    // userName.value = result.orderName;
+    // userPhoneNumber.value = result.orderTel;
+    // userEmail.value = result.email;
+
+    // })
 }
 
 //addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
@@ -423,23 +423,23 @@ function handleRequestChange(e) {
 
 // 결제 진행
 async function doCheckout() {
-    const receiverName= receiverNameInput.value; //수령인이름
+    const receiverName = receiverNameInput.value; //수령인이름
     const tel = receiverPhoneNumberInput.value; //수령인휴대번호
     //const postalCode = postalCodeInput.value;
     //const address1 = address1Input.value;
     //const address2 = address2Input.value;   
-    const address=addressInput.value; //수령인주소
+    const address = addressInput.value; //수령인주소
     const requestType = requestSelectBox.value; //1-6
     const customRequest = customRequestInput.value; //직접입력
     const summaryTitle = productsTitleElem.innerText; //구매할 상품 이름
     const account = convertToNumber(orderTotalElem.innerText); //총 결제예정금액
     const { selectedIds } = await getFromDb("order", "summary");
-    const orderList=[];
+    const orderList = [];
 
-    if (!receiverName || !tel|| !address) {
+    if (!receiverName || !tel || !address) {
         return alert("배송지 정보를 모두 입력해 주세요.");
     }
-    
+
     // 요청사항의 종류에 따라 request 문구가 달라짐
     let request;
     if (requestType === "0") {
@@ -458,15 +458,15 @@ async function doCheckout() {
     //     receiverName,
     //     receiverPhoneNumber,
     // };
-    
+
     try {
         for (const productId of selectedIds) {
-            const { quantity,price } = await getFromDb("cart", productId);
+            const { quantity, price, name } = await getFromDb("cart", productId);
             const totalPrice = quantity * price;
             orderList.push({
-                "productCode":productId,
-                "productName":summaryTitle,
-                "quantity":quantity,
+                "productCode": productId,
+                "productName": name,
+                "quantity": quantity,
             })
             // await post("/api/orderitem", {
             //     orderId,
@@ -497,7 +497,7 @@ async function doCheckout() {
         const orderId = orderData._id;
 
         // 제품별로 주문아이템을 등록함
-        
+
 
         // 입력된 배송지정보를 유저db에 등록함
         // const data = {
