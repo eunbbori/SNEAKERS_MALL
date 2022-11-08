@@ -22,10 +22,16 @@ const OrderSchema = new Schema(
             type: String,
             required: true,
         },
-        orderList: {
-            type: Object,
-            required: true,
-        },
+        orderList: [
+            {
+                productCode: {type: String, required: true},
+                productName: {type: String, required: true},
+                quantity: {type: Number, required: true}
+            },
+            {
+                _id: false,
+            }
+        ],
         orderState: {
             type: String,
             required: true,
