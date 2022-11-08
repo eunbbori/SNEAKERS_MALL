@@ -41,7 +41,8 @@ productRouter.get("/", async function (req, res, next) {
   try {
     const page = Number(req.query.page || 1);
     const perPage = 20;
-    const { category, brand, sort } = req.query;
+    const { category, brand } = req.query;
+    const sort = req.query.sort || 'regDate';
     const name = new RegExp(req.query.name);
 
     const toFilter = {
