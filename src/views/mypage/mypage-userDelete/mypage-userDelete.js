@@ -21,43 +21,37 @@ function addAllEvents() {
 // db에서 회원정보 삭제
 async function deleteUserData(e) {
   e.preventDefault();
-
-  const password = passwordInput.value;
-  const data = { password };
-  const bodyData = JSON.stringify(data);
   try {
-    // 우선 입력된 비밀번호가 맞는지 확인 (틀리면 에러 발생함)
-    const userToDelete = await fetch("/api/user/password/check", {
-      method: "POST",
+    const password = passwordInput.value;
+    const data = { password };
+    const bodyData = JSON.stringify(data);
+
+    // if (!userToDelete.ok) {
+    //   registerForm.reset();
+    //   throw new Error("비밀번호가 일치 하지 않습니다 다시 입력하세요");
+    // }
+    // const { _id } = userToDelete;
+
+    // 삭제 진행
+    const userDelete = await fetch(`/api/users`, {
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       },
       body: bodyData,
     });
-    console.dir(userToDelete);
-    // if (!userToDelete.ok) {
-    //   registerForm.reset();
-    //   throw new Error("비밀번호가 일치 하지 않습니다 다시 입력하세요");
-    // }
-    const { _id } = userToDelete;
-
-    // 삭제 진행
-    await fetch(`/api/users:${_id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-    });
-
+    if (!userDelete.ok) {
+      registerForm.reset();
+      throw new Error("비밀번호가 일치 하지 않습니다 다시 입력하세요");
+    }
     // 삭제 성공
     alert("회원 정보가 안전하게 삭제되었습니다.");
 
     // 토큰 삭제
-    // sessionStorage.removeItem("token");
+    sessionStorage.removeItem("token");
 
-    // window.location.href = "/";
+    window.location.href = "/";
   } catch (err) {
     alert(`회원정보 삭제 과정에서 오류가 발생하였습니다: ${err}`);
 
