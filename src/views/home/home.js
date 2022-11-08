@@ -236,18 +236,27 @@ function renderProductCard(item) {
     "beforeend",
     `<li class="product" id="${code}Li">
         <a href="/product/${code}">
-        <img class="product-image " src="${imageUrl}">
-        <div>
-        <p class="brandName" id="${code}brand">브랜드</p>
-        <p class="name" id="${code}name">상품명</p>
-        <p class="price" id="${code}price">가격</p>
-        </div>
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-1by1">
+              <img class="product-image"
+                src="${imageUrl}"
+                alt="Placeholder image"
+              />
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-6">${name}</p>
+                <p class="subtitle is-6">${brandName}</p>
+                <p class="subtitle is-6">${price}</p>
+              </div>
+            </div>
+          </div>
         </a>
         </li>`
   );
-  selectElementId(`${code}brand`).innerHTML = brandName;
-  selectElementId(`${code}name`).innerHTML = name;
-  selectElementId(`${code}price`).innerHTML = price;
 }
 
 /**
