@@ -19,6 +19,16 @@
   justify-content: space-around;
   border: blueviolet solid 1px;
 }
+.categoryNav > li {
+  width: 100%;
+}
+.has-dropdown > a {
+  width: 100%;
+  justify-content: center;
+}
+.categoryNav > li > a {
+  justify-content: center;
+}
 .categoryList {
   background-color: rgba(203, 203, 173, 0.3);
   width: 150px;
@@ -49,15 +59,6 @@
 
 button {
   cursor: pointer;
-}
-
-.categoryNav > li {
-  width: 100%;
-  text-align: center;
-}
-.categoryNav > li > a {
-  width: 100%;
-  text-align: center;
 }
 
 /* .product-image {

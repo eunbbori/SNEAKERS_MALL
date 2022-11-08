@@ -267,13 +267,14 @@ function renderProductCard(item) {
 function setBrandList(brand) {
   brand.forEach((brand) => {
     const brandName = brand.name;
-    const li = document.createElement("li");
-    li.addEventListener("click", brandFilter);
-    li.insertAdjacentHTML(
+    const aTag = document.createElement("a");
+    aTag.classList.add("navbar-item");
+    aTag.addEventListener("click", brandFilter);
+    aTag.insertAdjacentHTML(
       "beforeend",
       `<span id="${brandName}">${brandName}</span>`
     );
-    selectElement(".categoryList").appendChild(li);
+    selectElement(".navbar-dropdown").appendChild(aTag);
   });
 }
 
