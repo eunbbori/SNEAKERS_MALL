@@ -16,12 +16,29 @@ import { renderPagination } from "./pagination.js";
  */
 import * as useful from "../useful-functions.js";
 
-const categortArray = ["MEN", "WOMEN", "KIDS"];
+const categoryArray = ["MEN", "WOMEN", "KIDS"];
 const selectedFilter = {
   category: "",
   brand: "",
   sort: "",
 };
+const filterArray = [
+  {
+    selectedId: "regDate",
+    able1: "highPrice",
+    able2: "lowPrice",
+  },
+  {
+    selectedId: "highPrice",
+    able1: "regDate",
+    able2: "lowPrice",
+  },
+  {
+    selectedId: "lowPrice",
+    able1: "highPrice",
+    able2: "regDate",
+  },
+];
 
 async function init() {
   const { totalPage, currentPage, items } = await fetchProductList({ page: 1 });
@@ -30,8 +47,9 @@ async function init() {
   setBrandList(brand);
   makeProductList(items);
   renderPagination({ currentPage, totalPage, sort: "regDate" });
-  selectElementId("nav-regDate").classList.add("is-active");
-  categortArray.forEach((categoryId) => createEvent(categoryId));
+  selectElementId("regDate").classList.add("is-active");
+  categoryArray.forEach((categoryId) => createCategoryEvent(categoryId));
+  filterArray.forEach((filterObject) => createFilterEvent(filterObject));
   // -------------------------------------더미데이터 db생성 코드
 
   // document.querySelector("#push100Data").addEventListener("click", async () => {
@@ -143,16 +161,26 @@ function setBrandList(brand) {
  */
 async function brandFilter() {
   const brandName = this.firstChild.id;
+  selectedFilter.brand = brandName;
   const { items, currentPage, totalPage } = await fetchProductList({
     page: 1,
     brand: brandName,
+    sort: selectedFilter.sort,
+    category: selectedFilter.category,
   });
   makeProductList(items);
-  renderPagination({ currentPage, totalPage, brand: brandName });
-}
-
-async function sortFilter() {
-  const { items, currentPage, totalPage } = await fetchProductList({});
+  renderPagination({
+    currentPage,
+    totalPage,
+    brand: brandName,
+    category: selectedFilter.category,
+    sort: selectedFilter.sort,
+  });
+  selectElementId("filter-brand").classList.remove("hidden");
+  selectElementId(
+    "filter-brand-span"
+  ).innerHTML = `${brandName}<button class="delete is-small" id="delete-filter-brand"></button>`;
+  deleteFilterBtnEvent();
 }
 
 /**
@@ -174,63 +202,96 @@ export function selectElementId(id) {
   return document.getElementById(id);
 }
 
-// selectElement("#brand").addEventListener("mouseenter", () => {
-//   selectElement(".categoryList").classList.remove("hidden");
-// });
-// selectElement("#brand").addEventListener("mouseleave", () => {
-//   selectElement(".categoryList").classList.add("hidden");
-// });
-
-// selectElement(".categoryList").addEventListener("mouseenter", () => {
-//   selectElement(".categoryList").classList.remove("hidden");
-// });
-// selectElement(".categoryList").addEventListener("mouseleave", () => {
-//   selectElement(".categoryList").classList.add("hidden");
-// });
-
-function createEvent(elementId) {
+function createCategoryEvent(elementId) {
   selectElement(`#${elementId}`).addEventListener("click", async () => {
+    selectedFilter.category = elementId;
     const { items, currentPage, totalPage } = await fetchProductList({
       page: 1,
-      category: `${elementId}`,
+      category: elementId,
+      brand: selectedFilter.brand,
+      sort: selectedFilter.sort,
     });
-    renderPagination({ currentPage, totalPage, category: `${elementId}` });
+    renderPagination({
+      currentPage,
+      totalPage,
+      category: elementId,
+      brand: selectedFilter.brand,
+      sort: selectedFilter.sort,
+    });
     makeProductList(items);
+    selectElementId("filter-category").classList.remove("hidden");
+    selectElementId("filter-category-span").innerHTML = `${elementId}<button
+    class="delete is-small"
+    id="delete-filter-category"
+  ></button>`;
+    deleteFilterBtnEvent();
   });
 }
 
-selectElementId("nav-regDate").addEventListener("click", async () => {
-  const { items, currentPage, totalPage } = await fetchProductList({
-    page: 1,
-  });
-  selectElementId("nav-regDate").classList.add("is-active");
-  selectElementId("nav-highPrice").classList.remove("is-active");
-  selectElementId("nav-lowPrice").classList.remove("is-active");
+function createFilterEvent({ selectedId, able1, able2 }) {
+  selectElementId(selectedId).addEventListener("click", async () => {
+    const { items, currentPage, totalPage } = await fetchProductList({
+      page: 1,
+      sort: selectedId,
+      category: selectedFilter.category,
+      brand: selectedFilter.brand,
+    });
+    selectElementId(selectedId).classList.add("is-active");
+    selectElementId(able1).classList.remove("is-active");
+    selectElementId(able2).classList.remove("is-active");
 
-  renderPagination({ currentPage, totalPage, sort: "regDate" });
-  makeProductList(items);
-});
-selectElementId("nav-highPrice").addEventListener("click", async () => {
-  const { items, currentPage, totalPage } = await fetchProductList({
-    page: 1,
-    sort: "highPrice",
+    renderPagination({
+      currentPage,
+      totalPage,
+      sort: selectedId,
+      brand: selectedFilter.brand,
+      category: selectedFilter.category,
+    });
+    makeProductList(items);
+    selectedFilter.sort = selectedId;
   });
-  selectElementId("nav-highPrice").classList.add("is-active");
-  selectElementId("nav-regDate").classList.remove("is-active");
-  selectElementId("nav-lowPrice").classList.remove("is-active");
-  renderPagination({ currentPage, totalPage, sort: "highPrice" });
-  makeProductList(items);
-});
-selectElementId("nav-lowPrice").addEventListener("click", async () => {
-  const { items, currentPage, totalPage } = await fetchProductList({
-    page: 1,
-    sort: "lowPrice",
+}
+function deleteFilterBtnEvent() {
+  selectElementId("delete-filter-brand").addEventListener("click", async () => {
+    console.log("click");
+    selectElementId("filter-brand").classList.add("hidden");
+    selectedFilter.brand = "";
+    const { items, currentPage, totalPage } = await fetchProductList({
+      page: 1,
+      category: selectedFilter.category,
+      brand: selectedFilter.brand,
+      sort: selectedFilter.sort,
+    });
+    makeProductList(items);
+    renderPagination({
+      currentPage,
+      totalPage,
+      category: selectedFilter.category,
+      sort: selectedFilter.sort,
+      brand: selectedFilter.brand,
+    });
   });
-  selectElementId("nav-lowPrice").classList.add("is-active");
-  selectElementId("nav-highPrice").classList.remove("is-active");
-  selectElementId("nav-regDate").classList.remove("is-active");
-  renderPagination({ currentPage, totalPage, sort: "lowPrice" });
-  makeProductList(items);
-});
-
+  selectElementId("delete-filter-category").addEventListener(
+    "click",
+    async () => {
+      console.log("click");
+      selectElementId("filter-category").classList.add("hidden");
+      selectedFilter.category = "";
+      const { items, currentPage, totalPage } = await fetchProductList({
+        page: 1,
+        category: selectedFilter.category,
+        brand: selectedFilter.brand,
+        sort: selectedFilter.sort,
+      });
+      makeProductList(items);
+      renderPagination({
+        currentPage,
+        totalPage,
+        category: selectedFilter.category,
+        sort: selectedFilter.sort,
+        brand: selectedFilter.brand,
+      });
+    }
+  );
+}
 init();

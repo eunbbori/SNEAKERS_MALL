@@ -32,38 +32,14 @@ export function renderPagination({
   if (pageGroup > 1) {
     const prevLi = document.createElement("li");
     prevLi.addEventListener("click", async () => {
-      if (brand) {
-        const { currentPage, totalPage, items } = await fetchProductList({
-          page: first - 1,
-          brand: brand,
-        });
-        makeProductList(items);
-        renderPagination({ currentPage, totalPage, brand });
-      }
-      if (category) {
-        const { currentPage, totalPage, items } = await fetchProductList({
-          page: first - 1,
-          category: category,
-        });
-        makeProductList(items);
-        renderPagination({ currentPage, totalPage, category });
-      }
-      if (sort) {
-        const { currentPage, totalPage, items } = await fetchProductList({
-          page: first - 1,
-          sort: sort,
-        });
-        makeProductList(items);
-        renderPagination({ currentPage, totalPage, sort });
-      }
-
-      if (!brand && !category && !sort) {
-        const { currentPage, totalPage, items } = await fetchProductList({
-          page: first - 1,
-        });
-        makeProductList(items);
-        renderPagination({ currentPage, totalPage });
-      }
+      const { currentPage, totalPage, items } = await fetchProductList({
+        page: first - 1,
+        brand: brand,
+        sort: sort,
+        category: category,
+      });
+      makeProductList(items);
+      renderPagination({ currentPage, totalPage, brand });
     });
     prevLi.insertAdjacentHTML(
       "beforeend",
@@ -86,28 +62,13 @@ export function renderPagination({
       selectElementId(`page-${disabledPage}`).removeAttribute("disabled");
       selectElementId(`page-${page}`).setAttribute("disabled", "true");
       disabledPage = page;
-      if (brand) {
-        const { items } = await fetchProductList({ page: page, brand: brand });
-        makeProductList(items);
-      }
-      if (category) {
-        const { items } = await fetchProductList({
-          page: page,
-          category: category,
-        });
-        makeProductList(items);
-      }
-      if (sort) {
-        const { items } = await fetchProductList({
-          page: page,
-          sort: sort,
-        });
-        makeProductList(items);
-      }
-      if (!brand && !category && !sort) {
-        const { items } = await fetchProductList(page);
-        makeProductList(items);
-      }
+      const { items } = await fetchProductList({
+        page: page,
+        brand: brand,
+        category: category,
+        sort: sort,
+      });
+      makeProductList(items);
     });
     fragmentPage.appendChild(li);
   }
@@ -116,37 +77,14 @@ export function renderPagination({
   if (lastNumberPerPage < totalPage) {
     const nextLi = document.createElement("li");
     nextLi.addEventListener("click", async () => {
-      if (brand) {
-        const { currentPage, totalPage, items } = await fetchProductList({
-          page: lastNumberPerPage + 1,
-          brand: brand,
-        });
-        makeProductList(items);
-        renderPagination({ currentPage, totalPage, brand });
-      }
-      if (category) {
-        const { currentPage, totalPage, items } = await fetchProductList({
-          page: lastNumberPerPage + 1,
-          category: category,
-        });
-        makeProductList(items);
-        renderPagination({ currentPage, totalPage, category });
-      }
-      if (sort) {
-        const { currentPage, totalPage, items } = await fetchProductList({
-          page: lastNumberPerPage + 1,
-          sort: sort,
-        });
-        makeProductList(items);
-        renderPagination({ currentPage, totalPage, sort });
-      }
-      if (!brand && !category && !sort) {
-        const { currentPage, totalPage, items } = await fetchProductList(
-          lastNumberPerPage + 1
-        );
-        makeProductList(items);
-        renderPagination({ currentPage, totalPage });
-      }
+      const { currentPage, totalPage, items } = await fetchProductList({
+        page: lastNumberPerPage + 1,
+        brand: brand,
+        category: category,
+        sort: sort,
+      });
+      makeProductList(items);
+      renderPagination({ currentPage, totalPage, brand });
     });
     nextLi.insertAdjacentHTML(
       "beforeend",
