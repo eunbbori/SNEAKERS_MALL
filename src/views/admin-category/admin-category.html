@@ -48,30 +48,33 @@
           <span aria-hidden="true"></span>
         </a>
       </div>
-
-      <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
-          <ul id="navbar">
-            <li><a href="/admin-product">상품관리</a></li>
-            <li><a href="/admin-order">주문관리</a></li>
-            <li><a href="/admin-user">사용자 정보 관리</a></li>
-            <li>
-              <a href="#cart" aria-current="page">
-                <span class="icon">
-                  <i class="fas fa-cart-shopping"></i>
-                </span>
-                <span>카트</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
     </div>
   </nav>
+  
+  <div class="columns">
+  <div class="column is-one-fifth is-bordered">
+    <aside class="menu">
+      <p class="menu-label">
+        일반관리
+      </p>
+      <ul class="menu-list">
+        <li><a  href="/admin-order">주문관리</a></li>
+        <li><a href="/admin-user">회원정보 관리</a></li>
+        <li><a href="/admin-category" class='is-active'>카테고리 관리</a></li>
+      </ul>
+      <p class="menu-label">
+        상품관리
+      </p>
+      <ul class="menu-list">
+        <li><a href="/admin-product">상품추가</a></li>
+        <li><a>상품수정/삭제</a></li>
+        
+      </ul>
+    </aside>
+  </div>
+  <div class="column">
   <div class="register-category-form-container">
     <form class="register-category-form-box" id="categoryAddForm">
-        
-      <p class="title is-5 has-text-info">카테고리 추가</p>
         <div class="field">
           <label class="label" for="categoryAdd">브랜드 추가</label>
           <div class="control">
@@ -84,39 +87,11 @@
           />
           </div>
        </div>
-
-
-
        <button class="button is-primary is-fullwidth" id="submitBtnCategory">
         확인
         </button>
     </form>
   </div>
-  <!-- <div class="register-category-form-container">
-    <form class="register-category-form-box" id="categoryAddForm">
-        
-      <p class="title is-5 has-text-info">카테고리 수정</p>
-        <div class="field">
-          <label class="label" for="categoryUpdate">카테고리 수정</label>
-          <div class="control">
-           <input
-            class="input"
-            id="categoryUpdate"
-            type="email"
-            placeholder="카테고리"
-            autocomplete="on"
-          />
-          </div>
-       </div>
-
-
-
-       <button class="button is-primary is-fullwidth" id="submitButton">
-        확인
-        </button>
-    </form>
-
-  </div> -->
   <div class="register-category-form-container">
     <form class="register-category-form-box" id="categoryDeleteForm">
         
@@ -135,11 +110,10 @@
           카테고리(브랜드) 삭제하기
         </button>
     </form>
-  
-
-
-
   </div>
+  </div>
+  </div>
+
 
 
 

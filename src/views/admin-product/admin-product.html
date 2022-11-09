@@ -49,33 +49,30 @@
             <span aria-hidden="true"></span>
           </a>
         </div>
-
-        <div id="navbarBasicExample" class="navbar-menu">
-          <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
-            <ul id="navbar">
-              <li><a href="/admin-order">주문관리</a></li>
-              <li><a href="/admin-category">카테고리 관리</a></li>
-              <li><a href="/admin-user">사용자 정보 관리</a></li>
-              <li>
-                <a href="#cart" aria-current="page">
-                  <span class="icon">
-                    <i class="fas fa-cart-shopping"></i>
-                  </span>
-                  <span>카트</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
       </div>
     </nav>
-    
-
-
-
-
-    <p class="title is-5 has-text-info">상품 관리</p>
-    
+    <div class="columns">
+    <div class="column is-one-fifth is-bordered">
+      <aside class="menu">
+        <p class="menu-label">
+          일반관리
+        </p>
+        <ul class="menu-list">
+          <li><a href="/admin-order" >주문관리</a></li>
+          <li><a href="/admin-user">회원정보 관리</a></li>
+          <li><a href="/admin-category">카테고리 관리</a></li>
+        </ul>
+        <p class="menu-label">
+          상품관리
+        </p>
+        <ul class="menu-list">
+          <li><a href="/admin-product" class='is-active'>상품추가</a></li>
+          <li><a>상품수정/삭제</a></li>
+          
+        </ul>
+      </aside>
+    </div>
+    <div class="column">
     <div class="login-form-container productAddContainer">
       <form class="box login-form-box categoryDeleteForm" id="productAddForm">
         <div class="field mb-5">
@@ -105,7 +102,8 @@
         </div>
       </form>
     </div>
-
+   </div>
+   </div>
     <div class="login-form-container productAddContainer">
       <form class="box login-form-box categoryDeleteForm" id="porductDeleteForm">
 
@@ -135,6 +133,8 @@
         <div class="column is-2">취소</div>
       </div>
     </div>
+
+
     <div id="modal1" class="modal">
       <div class="modal-background" id="modalBackground"></div>
       <div class="modal-content">

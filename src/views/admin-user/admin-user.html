@@ -49,28 +49,31 @@
             <span aria-hidden="true"></span>
           </a>
         </div>
-
-        <div id="navbarBasicExample" class="navbar-menu">
-          <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
-            <ul id="navbar">
-              <li><a href="/admin-product">상품관리</a></li>
-              <li><a href="/admin-category">카테고리 관리</li>
-              <li><a href="/admin-order">주문관리</li>
-
-              <li>
-                <a href="#cart" aria-current="page">
-                  <span class="icon">
-                    <i class="fas fa-cart-shopping"></i>
-                  </span>
-                  <span>카트</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
       </div>
     </nav>
+    <div class="columns">
 
+    <div class="column is-one-fifth is-bordered">
+      <aside class="menu">
+        <p class="menu-label">
+          일반관리
+        </p>
+        <ul class="menu-list">
+          <li><a  href="/admin-order">주문관리</a></li>
+          <li><a href="/admin-user"class='is-active'>회원정보 관리</a></li>
+          <li><a href="/admin-category" >카테고리 관리</a></li>
+        </ul>
+        <p class="menu-label">
+          상품관리
+        </p>
+        <ul class="menu-list">
+          <li><a href="/admin-product">상품추가</a></li>
+          <li><a>상품수정/삭제</a></li>
+          
+        </ul>
+      </aside>
+    </div>
+    <div class="column">
     <div class="block account-header">
       <h1 class="subtitle is-4">회원관리</h1>
     </div>
@@ -98,7 +101,7 @@
       <div class="column is-2">삭제</div>
     </div>
   </div>
-
+  </div>
   <div id="modal" class="modal">
     <div class="modal-background" id="modalBackground"></div>
     <div class="modal-content">
@@ -117,7 +120,7 @@
         </div>
       </div>
     </div>
-
+  </div>
   </div>  
   </body>
 </html>

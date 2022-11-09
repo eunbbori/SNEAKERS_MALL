@@ -122,7 +122,6 @@ async function handleSubmitRef(e) {
     const res = await fetch(`/api/product/detail/${code}`, {
       // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       },
     });
