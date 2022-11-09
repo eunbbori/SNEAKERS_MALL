@@ -82,9 +82,9 @@ productRouter.get("/", async function (req, res, next) {
 });
 
 // 상품 상세 조회 api
-productRouter.get("/:code", async function (req, res, next) {
+productRouter.get("/detail", async function (req, res, next) {
   try {
-    const { code } = req.params;
+    const { code } = req.body;
 
     const productInfo = await productService.getProductDetail(code);
 
@@ -95,7 +95,7 @@ productRouter.get("/:code", async function (req, res, next) {
 });
 
 // 상품 수정 api
-productRouter.put("/:code", loginRequired, async function (req, res, next) {
+productRouter.put("/", loginRequired, async function (req, res, next) {
   try {
     // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
     if (is.emptyObject(req.body)) {
@@ -103,7 +103,7 @@ productRouter.put("/:code", loginRequired, async function (req, res, next) {
         "headers의 Content-Type을 application/json으로 설정해주세요"
       );
     }
-    const { code } = req.params;
+    const { code } = req.body;
     const { brand, name, imageUrl, content, category, size, price, stock } =
       req.body;
 
@@ -129,9 +129,9 @@ productRouter.put("/:code", loginRequired, async function (req, res, next) {
 });
 
 // 상품 삭제 api
-productRouter.delete("/:code", loginRequired, async function (req, res, next) {
+productRouter.delete("/", loginRequired, async function (req, res, next) {
   try {
-    const code = req.params.code;
+    const code = req.body.code;
 
     const { deletedCount } = await productService.deleteProduct(code);
 
