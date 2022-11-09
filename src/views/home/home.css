@@ -61,6 +61,12 @@ button {
   cursor: pointer;
 }
 
+.navbar-filter {
+  display: flex;
+  max-width: 300px;
+  justify-content: space-around;
+}
+
 /* .product-image {
   max-width: 300px;
   min-height: 225px;
