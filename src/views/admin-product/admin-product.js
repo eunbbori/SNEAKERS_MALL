@@ -119,11 +119,11 @@ async function handleSubmitRef(e) {
   e.preventDefault();
   const code = prodcutRefInput.value;
   try {
-    const res = await fetch(`/api/product/${code}`, {
+    const res = await fetch(`/api/product/detail/${code}`, {
       // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
       headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzYwYjQ4MWJjMGZiY2I1YWFhNDYxMmMiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY2NzI4MjIwNH0.pAegQIKEaZmGFznaEablnGuF-1iDFLZs9OgmW4EYFbE",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       },
     });
 
@@ -168,15 +168,17 @@ async function handleSubmitRef(e) {
 }
 async function deleteOrderData(e) {
   e.preventDefault();
-
+  const data = { code: orderIdToDelete };
+  const bodydata = JSON.stringify(data);
   try {
-    await fetch(`/api/product/${orderIdToDelete}`, {
+    await fetch(`/api/product`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization:
           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzYwYjQ4MWJjMGZiY2I1YWFhNDYxMmMiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY2NzI4MjIwNH0.pAegQIKEaZmGFznaEablnGuF-1iDFLZs9OgmW4EYFbE",
       },
+      body: bodydata,
     });
     // await Api.delete("/api/orders", orderIdToDelete);
 
