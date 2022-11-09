@@ -11,13 +11,13 @@ productRouter.post("/", loginRequired, async function (req, res, next) {
     // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
     if (is.emptyObject(req.body)) {
       throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
+          "headers의 Content-Type을 application/json으로 설정해주세요"
       );
     }
 
     // req (request)의 body 에서 데이터 가져오기
     const { brand, name, imageUrl, content, category, size, price, stock } =
-      req.body;
+        req.body;
 
     const newProduct = await productService.addProduct({
       brand,
@@ -52,7 +52,7 @@ productRouter.get("/", async function (req, res, next) {
       ...(brand && { brand }),
       ...(name && { name }),
     };
-    if( sort ) { 
+    if( sort ) {
       toFilter.sort = {};
       switch(sort) {
         case 'regDate':
@@ -82,7 +82,7 @@ productRouter.get("/", async function (req, res, next) {
 });
 
 // 상품 상세 조회 api
-productRouter.get("/detail/:code", async function (req, res, next) {
+productRouter.get("/:code", async function (req, res, next) {
   try {
     const { code } = req.params;
 
@@ -95,17 +95,17 @@ productRouter.get("/detail/:code", async function (req, res, next) {
 });
 
 // 상품 수정 api
-productRouter.put("/", loginRequired, async function (req, res, next) {
+productRouter.put("/:code", loginRequired, async function (req, res, next) {
   try {
     // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
     if (is.emptyObject(req.body)) {
       throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
+          "headers의 Content-Type을 application/json으로 설정해주세요"
       );
     }
-    const { code } = req.body;
+    const { code } = req.params;
     const { brand, name, imageUrl, content, category, size, price, stock } =
-      req.body;
+        req.body;
 
     const product = await productService.updateProduct(code, {
       brand,
@@ -129,9 +129,9 @@ productRouter.put("/", loginRequired, async function (req, res, next) {
 });
 
 // 상품 삭제 api
-productRouter.delete("/", loginRequired, async function (req, res, next) {
+productRouter.delete("/:code", loginRequired, async function (req, res, next) {
   try {
-    const code = req.body.code;
+    const code = req.params.code;
 
     const { deletedCount } = await productService.deleteProduct(code);
 
