@@ -216,14 +216,25 @@ async function pagination() {
   );
   const paginationClass = document.querySelector(".pagination-list");
   for (let i = 0; i < result.totalPage; i++) {
-    paginationClass.insertAdjacentHTML(
-      "beforeend",
-      `<li>
-      <a class="pagination-link" id="page-${i + 1}" aria-label="${i + 1}">${
-        i + 1
-      }</a>
+    if (result.currentPage === i + 1) {
+      paginationClass.insertAdjacentHTML(
+        "beforeend",
+        `<li>
+      <a class="pagination-link is-current" id="page-${i + 1}" aria-label="${
+          i + 1
+        }">${i + 1}</a>
       </li>`
-    );
+      );
+    } else {
+      paginationClass.insertAdjacentHTML(
+        "beforeend",
+        `<li>
+        <a class="pagination-link" id="page-${i + 1}" aria-label="${i + 1}">${
+          i + 1
+        }</a>
+        </li>`
+      );
+    }
     const pageBtn = document.querySelector(`#page-${i + 1}`);
 
     pageBtn.addEventListener("click", () => {
