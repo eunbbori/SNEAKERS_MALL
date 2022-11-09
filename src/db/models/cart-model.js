@@ -29,27 +29,12 @@ export class CartModel {
         return result;
     }
 
-    // 장바구니 특정상품의 수량 변경
-    async updateQuantity(userId, cartId, newQuantity) {
-
-        const cart = await Cart.findOne({"userId" :userId, "cartId": cartId})
+    // 장바구니 특정상품의 수량을 누적하여 변경
+    async updateQuantity(cartId, newQuantity) {
+        const cart = await Cart.findOne({"_id": cartId})
         const updateQuantity = cart.quantity + newQuantity
-        console.log("updateQuantity", updateQuantity)
-
-        const updatedCart = await Cart.update({
-            cartId, update: {
-                quantity: updateQuantity
-            }
-        });
+        const updatedCart = await Cart.updateOne({"_id": cartId}, {quantity: updateQuantity});
         return updatedCart;
-
-
-        // user = await this.userModel.update({
-        //     userId,
-        //     update: {
-        //         role: role
-        //     },
-        // });
     }
 }
 const cartModel = new CartModel();
