@@ -33,6 +33,10 @@ viewsRouter.use(
   "/mypage/mypage-userDelete",
   serveStatic("/mypage/mypage-userDelete", "mypage-userDelete")
 );
+viewsRouter.use(
+  "/admin-product-delup",
+  serveStatic("admin-product-delup", "admin-product-delup")
+);
 // views 폴더의 최상단 파일인 rabbit.png, api.js 등을 쓸 수 있게 함
 viewsRouter.use("/", serveStatic(""));
 
