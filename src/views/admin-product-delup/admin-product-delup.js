@@ -17,8 +17,11 @@ const modalDelete = document.querySelector("#modal1");
 const modalUpdate = document.querySelector("#modal2");
 const updateCompleteButoon = document.querySelector("#updateCompleteButton");
 const updateCancelButton = document.querySelector("#updateCancelButton");
+let pageNumber = 1;
 let orderIdToDelete;
 let orderIdToUpdate;
+pagination();
+
 async function handleSubmitRef(e) {
   e.preventDefault();
   const code = prodcutRefInput.value;
@@ -86,7 +89,7 @@ async function deleteOrderData(e) {
     // await Api.delete("/api/orders", orderIdToDelete);
 
     // 삭제 성공
-    alert("주문 정보가 삭제되었습니다.");
+    alert("상품정보가 삭제되었습니다.");
 
     // 삭제한 아이템 화면에서 지우기
     const deletedItem = document.querySelector(`#order-${orderIdToDelete}`);
@@ -94,7 +97,7 @@ async function deleteOrderData(e) {
 
     // 전역변수 초기화
     orderIdToDelete = "";
-
+    pagination();
     closeModal1();
   } catch (err) {
     alert(`주문정보 삭제 과정에서 오류가 발생하였습니다: ${err}`);
@@ -139,7 +142,7 @@ async function updateOrderData(e) {
     // await Api.delete("/api/orders", orderIdToDelete);
 
     // 삭제 성공
-    alert("주문 정보가 수정되었습니다.");
+    alert("상품 정보가 수정되었습니다.");
 
     // 삭제한 아이템 화면에서 지우기
     const deletedItem = document.querySelector(`#order-${orderIdToUpdate}`);
@@ -150,7 +153,67 @@ async function updateOrderData(e) {
 
     closeModal2();
   } catch (err) {
-    alert(`주문정보 수정 과정에서 오류가 발생하였습니다: ${err}`);
+    alert(`상품정보 수정 과정에서 오류가 발생하였습니다: ${err}`);
+  }
+}
+
+async function pagination() {
+  ordersContainer.innerHTML = "";
+  const res = await fetch(`/api/product?page=${pageNumber}`);
+  const result = await res.json();
+
+  console.log(result);
+
+  result.items.map((e) => {
+    ordersContainer.insertAdjacentHTML(
+      "beforeend",
+      `<div class="columns orders-item" id="order-${e.code}">
+    <div class="column is-2"><figure class="image is-96x96"><img src=${e.imageUrl}></figure></div>
+    <div class="column is-2">${e.name}</div>
+    <div class="column is-4 product-name">${e.brand}</div>
+    <div class="column is-2 update">
+    <button class="button" id="updateButton-${e.code}" > 수정</button>
+    </div>
+    <div class="column is-2">
+    <button class="button" id="deleteButton-${e.code}" > 취소</button>
+    </div>
+    </div>
+  </div>`
+    );
+    const updateButton = document.querySelector(`#updateButton-${e.code}`);
+    updateButton.addEventListener("click", () => {
+      orderIdToUpdate = e.code;
+      openModal2();
+    });
+    const deleteButton = document.querySelector(`#deleteButton-${e.code}`);
+    deleteButton.addEventListener("click", () => {
+      orderIdToDelete = e.code;
+      openModal1();
+    });
+  });
+  ordersContainer.insertAdjacentHTML(
+    "beforeend",
+    `      <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+    <ul class="pagination-list">
+    </ul>
+    </nav>`
+  );
+  const paginationClass = document.querySelector(".pagination-list");
+  for (let i = 0; i < result.totalPage; i++) {
+    paginationClass.insertAdjacentHTML(
+      "beforeend",
+      `<li>
+      <a class="pagination-link" id="page-${i + 1}" aria-label="${i + 1}">${
+        i + 1
+      }</a>
+      </li>`
+    );
+    const pageBtn = document.querySelector(`#page-${i + 1}`);
+
+    pageBtn.addEventListener("click", () => {
+      pageNumber = pageBtn.ariaLabel;
+      pagination();
+    });
   }
 }
 
