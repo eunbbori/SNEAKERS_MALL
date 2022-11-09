@@ -39,9 +39,49 @@ cartRouter.get('/', isMember, async (req, res, next) =>{
             const cart = await cartService.getCart(userId);
             res.status(200).json(cart);
         }
+        else {
+            res.status(200).json({message: 'not member'});
+        }
     }catch(err){
         next(err);
     }
 });
 
+// 장바구니 삭제
+// DELETE: /api/cart/delete?_id값
+// body 안에 _id 포함
+cartRouter.delete('/delete', isMember, async (req, res, next) =>{
+    try {
+        const userId = req.currentUserId;
+        const cartId = req.query._id;
+        // 회원인 경우에만 장바구니를 db에서 삭제
+        if (userId) {
+            const result = await cartService.deleteCart(cartId);
+            res.status(201).json(result);
+        }
+        else {
+            res.status(200).json({message: 'not member'});
+        }
+    }catch(err) {
+        next(err);
+    }
+})
+
+// 장바구니 전체삭제
+// DELETE: /api/cart/delete-all
+cartRouter.delete('/delete-all', isMember, async (req, res, next) =>{
+    try {
+        const userId = req.currentUserId;
+        // 회원인 경우에만 장바구니를 db에서 삭제
+        if (userId) {
+            const result = await cartService.deleteAllCart(userId);
+            res.status(201).json(result);
+        }
+        else {
+            res.status(200).json({message: 'not member'});
+        }
+    }catch(err) {
+        next(err);
+    }
+})
 export { cartRouter };

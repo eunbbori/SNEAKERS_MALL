@@ -2,6 +2,10 @@ import { Schema } from "mongoose";
 
 const CartSchema = new Schema(
     {
+        _id: {
+          type: Schema.Types.ObjectId,
+          required: true
+        },
         userId: {
             type: String,
             required: true,
