@@ -52,9 +52,9 @@ userRouter.post("/login", async function (req, res, next) {
     // req (request) 에서 데이터 가져오기
     const email = req.body.email;
     const password = req.body.password;
-    // const indexedDB = req.body.indexedDB;
+    // const indexedDB = req.body.indexedDB; // 추후 주석 해체
 
-    // 임시 데이터
+    // 임시 데이터 - 추후 삭제
     const indexedDB = [
       {
         brand   : "NIKE",
