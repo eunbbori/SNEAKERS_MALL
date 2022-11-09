@@ -71,10 +71,10 @@ async function getUsersContainer() {
     });
     roleSelectBox.addEventListener("change", async () => {
       const newRole = roleSelectBox.value;
-      const data = { role: newRole };
+      const data = { role: newRole, userId: e._id };
       const bodydata = JSON.stringify(data);
       try {
-        await fetch(`/api/admin/users/${e._id}`, {
+        const res = await fetch(`/api/admin/users`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
@@ -82,7 +82,11 @@ async function getUsersContainer() {
           },
           body: bodydata,
         });
+        if (!res.ok) {
+          throw new Error("???");
+        }
         console.log("사용자 권한이 변경되었습니다!");
+
         window.location.href = "http://localhost:5000/admin-user/";
       } catch (err) {
         console.log(err);
@@ -96,13 +100,16 @@ async function getUsersContainer() {
 async function deleteUserData(e) {
   e.preventDefault();
 
+  const data = { userId: userIdToDelete };
+  const bodydata = JSON.stringify(data);
   try {
-    await fetch(`/api/admin/users/${userIdToDelete}`, {
+    await fetch(`/api/admin/users`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       },
+      body: bodydata,
     });
     // await Api.delete("/api/orders", orderIdToDelete);
 
