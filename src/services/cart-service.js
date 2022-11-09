@@ -16,9 +16,22 @@ class CartService{
         return getCart
     }
 
-    // 장바구니 삭제
+    // 장바구니 cartId 삭제
     async deleteCart(cartId){
-        const result = await this.cartModel.deleteOrder(cartId);
+        const result = await this.cartModel.deleteCart(cartId);
+        if (result.deletedCount !== 1) {
+            const message = {
+                "acknowledged": false,
+                "message": "삭제에 실패했습니다. 장바구니 ID(_id)를 확인해주세요."
+            }
+            return message
+        }
+        return result
+    }
+    
+    // 장바구니 전체 삭제
+    async deleteAllCart(userId){
+        const result = await this.cartModel.deleteAll(userId);
         return result
     }
 }
