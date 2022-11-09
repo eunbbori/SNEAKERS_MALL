@@ -175,9 +175,9 @@ userRouter.delete("/users",loginRequired, async function (req, res, next) {
 });
 
 // 관리자 - 사용자 삭제(탈퇴시키는) api
-userRouter.delete("/admin/users/:userId", loginRequired, isAdmin, async function (req, res, next) {
+userRouter.delete("/admin/users", loginRequired, isAdmin, async function (req, res, next) {
   try {
-    const userId = req.params.userId;
+    const userId = req.body.userId;
 
     const { deletedCount } = await userService.deleteUser(userId)
 
@@ -197,7 +197,7 @@ userRouter.delete("/admin/users/:userId", loginRequired, isAdmin, async function
 
 
 // 관리자 - 사용자 권한 수정 (일반/관리자)
-userRouter.patch("/admin/users/:userId", loginRequired, isAdmin, async function (req, res, next) {
+userRouter.patch("/admin/users", loginRequired, isAdmin, async function (req, res, next) {
     try {
       // content-type 을 application/json 로 프론트에서
       // 설정 안 하고 요청하면, body가 비어 있게 됨.
@@ -207,8 +207,7 @@ userRouter.patch("/admin/users/:userId", loginRequired, isAdmin, async function 
         );
       }
 
-      const userId = req.params.userId;
-
+      const userId = req.body.userId;
       const role = req.body.role;
 
       const updatedUserRole = await userService.updateRole(userId, role);
