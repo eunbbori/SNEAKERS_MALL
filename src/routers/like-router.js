@@ -18,13 +18,33 @@ likeRouter.post("/", loginRequired, async function (req, res, next) {
       const { productCode } = req.body;
       const userId = req.currentUserId;
 
-      const newLike = await likeService.addLike({productCode,userId});
+      const newLike = await likeService.addLike({ productCode, userId });
   
       res.status(200).json(newLike);
     } catch (error) {
       next(error);
     }
   });
+
+// 좋아요 취소 api
+likeRouter.delete("/", loginRequired, async function (req, res, next) {
+  try {
+    const { productCode } = req.body;
+    const userId = req.currentUserId;
+
+    const { deletedCount } = await likeService.deleteLike({ productCode, userId });
+
+    if (deletedCount === 1) {
+      res.status(200).json({
+        result: true,
+      });
+    } else {
+      throw new Error("예상치 못한 오류 발생 관리자에게 문의해주세요");
+    }
+  } catch (error) {
+    next(error);
+  }
+});  
 
 
 export { likeRouter };
