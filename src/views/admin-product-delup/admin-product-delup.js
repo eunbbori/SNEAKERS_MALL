@@ -7,7 +7,6 @@ const updateSize = document.querySelector("#sizeInput");
 const updatePrice = document.querySelector("#priceInput");
 const updateStock = document.querySelector("#stockInput");
 
-const submitAddProduct = document.querySelector("#productAddForm");
 const submitDeleteProduct = document.querySelector("#porductDeleteForm");
 const deleteRef = document.querySelector(".product-container");
 const prodcutRefInput = document.querySelector("#productRefInput");
@@ -24,7 +23,18 @@ pagination();
 
 async function handleSubmitRef(e) {
   e.preventDefault();
+  ordersContainer.innerHTML = `   <div class="columns notification is-info is-light is-mobile orders-top">
+  <div class="column is-4">상품</div>
+  <div class="column is-4">브랜드</div>
+  <div class="column is-2">수정</div>
+  <div class="column is-2">취소</div>
+</div>
+`;
+
   const code = prodcutRefInput.value;
+  if (code === "") {
+    return pagination();
+  }
   try {
     const res = await fetch(`/api/product/detail/${code}`, {
       // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
@@ -158,7 +168,13 @@ async function updateOrderData(e) {
 }
 
 async function pagination() {
-  ordersContainer.innerHTML = "";
+  ordersContainer.innerHTML = `   <div class="columns notification is-info is-light is-mobile orders-top">
+  <div class="column is-4">상품</div>
+  <div class="column is-4">브랜드</div>
+  <div class="column is-2">수정</div>
+  <div class="column is-2">취소</div>
+</div>
+`;
   const res = await fetch(`/api/product?page=${pageNumber}`);
   const result = await res.json();
 
@@ -242,6 +258,7 @@ function openModal2() {
 function closeModal2() {
   modalUpdate.classList.remove("is-active");
 }
+
 submitDeleteProduct.addEventListener("submit", handleSubmitRef);
 deleteCancelButton.addEventListener("click", cancelDelete1);
 deleteCompleteButton.addEventListener("click", deleteOrderData);
