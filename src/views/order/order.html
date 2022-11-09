@@ -64,126 +64,174 @@
         </div>
       </div>
     </nav>
-    <div>
-      <h3>주문 고객정보</h3>
-      <hr />
-      <table>
-        <tr>
-          <th>이름</th>
-          <td><input type="text" id="userName" /></td>
-        </tr>
-        <tr>
-          <th>휴대폰번호</th>
-          <td><input type="text" id="userPhoneNumber" /></td>
-        </tr>
-        <tr>
-          <th>이메일</th>
-          <td><input type="text" id="userEmail" /></td>
-        </tr>
-      </table>
-    </div>
-    <br /><br /><br />
-    <div>
-      <h3>배송 정보</h3>
-      <hr />
-      <table>
-        <tr>
-          <th>이름</th>
-          <td>
-            <input
-              type="text"
-              id="receiverName"
-              placeholder="홍길동"
-              autocomplete="on"
-              required
-            />
-          </td>
-        </tr>
-        <tr>
-          <th>휴대폰번호</th>
-          <td>
-            <input
-              type="tel"
-              id="receiverPhoneNumber"
-              placeholder="-없이 입력해 주세요."
-              autocomplete="on"
-              required
-            />
-          </td>
-        </tr>
-        <tr>
-          <th>주소</th>
-          <td>
-            <p>
-              <input
-                id="address"
-                type="text"
-                placeholder="주소를 입력해 주세요."
-              />
-            </p>
-          </td>
-        </tr>
-        <tr>
-          <th><label for="requestSelectBox">요청사항</label></th>
-          <td>
-            <select id="requestSelectBox">
-              <option value="0">배송시 요청사항을 선택해 주세요.</option>
-              <option value="1" class="select-option">
-                직접 수령하겠습니다.
-              </option>
-              <option value="2" class="select-option">
-                배송 전 연락바랍니다.
-              </option>
-              <option value="3" class="select-option">
-                부재 시 경비실에 맡겨주세요.
-              </option>
-              <option value="4" class="select-option">
-                부재 시 문 앞에 놓아주세요.
-              </option>
-              <option value="5" class="select-option">
-                부재 시 택배함에 넣어주세요.
-              </option>
-              <option value="6" class="select-option">직접 입력</option>
-            </select>
-            <div id="customRequestContainer">
-              <p>
-                <input
-                  id="customRequest"
-                  type="text"
-                  maxlength="50"
-                  placeholder="최대 50자 입력이 가능합니다."
-                  autocomplete="on"
-                />
-              </p>
-            </div>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <br /><br /><br />
+    <div class="container">
+      <div>
+        <div>
+          <h3 class="title is-3">주문 고객정보</h3>
+          <hr />
+          <table>
+            <tr>
+              <th>이름</th>
+              <td><div class="field">
+                <div class="control has-icons-left has-icons-right">
+                  <input class="input " type="text" placeholder="이름을 입력하세요" >
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                  </span>
+                  
+                </div></td>
+            </tr>
+            <tr>
+              <th>휴대폰번호</th>
+              <td><div class="field">
+                
+                <div class="control has-icons-left has-icons-right">
+                  <input class="input " type="text" placeholder="-없이 입력해 주세요." >
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-phone"></i>
+                  </span>
+                 
+                </div></td>
+            </tr>
+            <tr>
+              <th>이메일</th>
+              <td>
+                <p class="control has-icons-left has-icons-right">
+                  <input class="input" type="email" placeholder="Email" />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-envelope"></i>
+                  </span>
+                 
+                </p>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <br /><br /><br />
+        <div>
+          <h3 class="title is-3">배송 정보</h3>
+          <hr />
+          <table>
+            <tr>
+              <th>이름</th>
+              <td>
+                <div class="field">
+                  <div id="receiverName" class="control has-icons-left has-icons-right">
+                    <input class="input " type="text" 
+                    placeholder="이름을 입력하세요" autocomplete="on" 
+                    required>
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-user"></i>
+                    </span>
+                    
+                  </div>
+              </td>
+            </tr>
+            <tr>
+              <th>휴대폰번호</th>
+              <td>
+                <div class="field">
+                
+                  <div class="control has-icons-left has-icons-right">
+                    <input id="receiverPhoneNumber" autocomplete="on"
+                    required class="input " type="tel" placeholder="-없이 입력해 주세요." >
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-phone"></i>
+                    </span>
+                   
+                  </div>
+                
+              </td>
+            </tr>
+            <tr>
+              <th>주소</th>
+              <td>
+                <p>
+                  <div class="field">
+                
+                    <div class="control has-icons-left has-icons-right">
+                      <input id="address" 
+                      required class="input " type="text" placeholder="주소를 입력해 주세요." >
+                      <span class="icon is-small is-left">
+                        <i class="fas fa-earth-americas"></i>
+                      </span>
+                     
+                    </div>
+                  
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <th><label for="requestSelectBox">요청사항</label></th>
+              <td>
+                <div class="field">
+                  <div class="control">
+                    <div class="select">
+                      <select id="requestSelectBox">
+                        <option value="0">배송시 요청사항을 선택해 주세요.</option>
+                        <option value="1" class="select-option">
+                          직접 수령하겠습니다.
+                        </option>
+                        <option value="2" class="select-option">
+                          배송 전 연락바랍니다.
+                        </option>
+                        <option value="3" class="select-option">
+                          부재 시 경비실에 맡겨주세요.
+                        </option>
+                        <option value="4" class="select-option">
+                          부재 시 문 앞에 놓아주세요.
+                        </option>
+                        <option value="5" class="select-option">
+                          부재 시 택배함에 넣어주세요.
+                        </option>
+                        <option value="6" class="select-option">직접 입력</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                
+                <div id="customRequestContainer">
+                  <p>
+                    <input
+                      id="customRequest"
+                      type="text"
+                      maxlength="50"
+                      placeholder="최대 50자 입력이 가능합니다."
+                      autocomplete="on"
+                    />
+                  </p>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <br /><br /><br />
 
-    <div class="payment">
-      <h3>결제정보</h3>
-      <hr />
-      <table>
-        <tr>
-          <td>주문 상품</td>
-          <td><p id="productsTitle"></p></td>
-        </tr>
-        <tr>
-          <td>상품 총액</td>
-          <td id="productsTotal"></td>
-        </tr>
-        <tr>
-          <td>총 배송비</td>
-          <td id="deliveryFee"></td>
-        </tr>
-        <tr>
-          <td>총 결제예정금액</td>
-          <td id="orderTotal"></td>
-        </tr>
-      </table>
-      <button id="checkoutButton">결제하기</button>
+      <div class="payment">
+        <h3 class="title is-3">결제정보</h3>
+        <hr />
+        <table>
+          <tr>
+            <td>주문 상품</td>
+            <td><p id="productsTitle"></p></td>
+          </tr>
+          <tr>
+            <td>상품 총액</td>
+            <td id="productsTotal"></td>
+          </tr>
+          <tr>
+            <td>총 배송비</td>
+            <td id="deliveryFee"></td>
+          </tr>
+          <tr>
+            <td>총 결제예정금액</td>
+            <td id="orderTotal"></td>
+          </tr>
+        </table>
+        <button id="checkoutButton" class="button is-light">결제하기</button>
+        
+      </div>
     </div>
     <script
       src="../global/renderHeaderNavigationBar.js"
