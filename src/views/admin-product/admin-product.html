@@ -67,7 +67,7 @@
         </p>
         <ul class="menu-list">
           <li><a href="/admin-product" class='is-active'>상품추가</a></li>
-          <li><a>상품수정/삭제</a></li>
+          <li><a href="/admin-product-delup">상품수정/삭제</a></li>
           
         </ul>
       </aside>
@@ -90,7 +90,6 @@
               placeholder="이미지 주소"
               autocomplete="on"
             />
-            <input class='input' type="text" placeholder="상품코드" id="productCode" autocomplete="on"/>
             <input class='input' type="text" placeholder="재고" id="productStock" autocomplete="on"/>
             <input class='input' type="text" placeholder="카테고리" id="productCategory" autocomplete="on"/>
           </div>
@@ -104,156 +103,5 @@
     </div>
    </div>
    </div>
-    <div class="login-form-container productAddContainer">
-      <form class="box login-form-box categoryDeleteForm" id="porductDeleteForm">
-
-
-        <div class="field mb-5">
-          <label class="label" for="submitBtnRef">상품 삭제/수정</label>
-          <input class="input" type="text" placeholder="상품코드" id="productRefInput" autocomplete="on"/>
-          <div class="control">
-
-          </div>
-        </div>
-
-        <button class="button is-info is-fullwidth deleteBtn" id="submitBtnRef">
-          조회
-        </button>
-      </form>
-     
-    </div>
-
-
-
-    <div class="container product-container" id="ordersContainer">
-      <div class="columns notification is-info is-light is-mobile orders-top">
-        <div class="column is-4">상품</div>
-        <div class="column is-4">브랜드</div>
-        <div class="column is-2">수정</div>
-        <div class="column is-2">취소</div>
-      </div>
-    </div>
-
-
-    <div id="modal1" class="modal">
-      <div class="modal-background" id="modalBackground"></div>
-      <div class="modal-content">
-        <div class="box">
-          <p class="mb-3">
-            주문 삭제 시 복구할 수 없습니다. 정말로 취소하시겠습니까?
-          </p>
-  
-          <div class="buttons">
-            <button class="button mt-5" id="deleteCompleteButton" aria-label="close">
-              네
-            </button>
-            <button class="button is-primary mt-5" id="deleteCancelButton" aria-label="close">
-              아니오
-            </button>
-          </div>
-        </div>
-      </div>
-  
-    </div>
-    <div id="modal2" class="modal">
-      <div class="modal-background" id="modalBackground"></div>
-      <div class="modal-content">
-        <div class="box">
-          <p class="mb-3">
-            정말로 수정하시겠습니까?
-          </p>
-          <label class="label" for="brandInput">브랜드</label>
-          <div class="control">
-            <input
-              class="input"
-              id="brandInput"
-              type="text"
-              placeholder="브랜드"
-              autocomplete="on"
-            />
-          </div>
-          <label class="label" for="nameInput">상품이름</label>
-          <div class="control">
-            <input
-              class="input"
-              id="nameInput"
-              type="text"
-              placeholder="상품이름"
-              autocomplete="on"
-            />
-          </div>
-          <label class="label" for="imageUrlInput">이미지URL</label>
-          <div class="control">
-            <input
-              class="input"
-              id="imageUrlInput"
-              type="url"
-              placeholder="이미지 주소를 입력하세요."
-              autocomplete="on"
-            />
-          </div>
-          <label class="label" for="contentInput">상품내용</label>
-          <div class="control">
-            <input
-              class="input"
-              id="contentInput"
-              type="text"
-              placeholder="상품내용"
-              autocomplete="on"
-            />
-          </div>
-          <label class="label" for="categoryInput">카테고리</label>
-          <div class="control">
-            <input
-              class="input"
-              id="categoryInput"
-              type="text"
-              placeholder="카테고리"
-              autocomplete="on"
-            />
-          </div>
-          <label class="label" for="sizeInput">사이즈</label>
-          <div class="control">
-            <input
-              class="input"
-              id="sizeInput"
-              type="number"
-              placeholder="사이즈"
-              autocomplete="on"
-            />
-          </div>
-          <label class="label" for="priceInput">가격</label>
-          <div class="control">
-            <input
-              class="input"
-              id="priceInput"
-              type="number"
-              placeholder="가격"
-              autocomplete="on"
-            />
-          </div>
-          <label class="label" for="stockInput">재고</label>
-          <div class="control">
-            <input
-              class="input"
-              id="stockInput"
-              type="number"
-              placeholder="재고"
-              autocomplete="on"
-            />
-          </div>
-          <div class="buttons">
-            <button class="button mt-5" id="updateCompleteButton" aria-label="close">
-              네
-            </button>
-            <button class="button is-primary mt-5" id="updateCancelButton" aria-label="close">
-              아니오
-            </button>
-          </div>
-        </div>
-      </div>
-  
-    </div>  
-
   </body>
 </html>
