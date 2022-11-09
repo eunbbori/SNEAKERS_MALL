@@ -510,7 +510,7 @@ function setQuantityBox(id, type) {
 
 async function deleteSelectedItems() {
   const { selectedIds } = await getFromDb("order", "summary");
-
+  
   selectedIds.forEach((id) => deleteItem(id));
 }
 
@@ -532,9 +532,25 @@ async function updateAllSelectCheckbox() {
 }
 
 async function deleteItem(id) {
+  //mongodb에서 데이터를 삭제함
+  const selectItem = await getFromDb("cart",id);
+  const delete_id=selectItem._id;
+  console.log(delete_id);
+  try{
+    await fetch(`/api/cart/delete?id=${delete_id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+    }
+  });
+  }catch(err){
+    alert(`${_id}를 삭제하는데 오류가 발생했습니다.`)
+  }
+
   // indexedDB의 cart 목록에서 id를 key로 가지는 데이터를 삭제함.
   await deleteFromDb("cart", id);
-
+  
   // 결제정보를 업데이트함.
   await updateOrderSummary(id, "removePermanent-deleteButton");
 
