@@ -23,11 +23,10 @@ function getOrderData() {
 
 function setOrderList(orderlist) {
   orderlist.forEach((order) => {
-    console.log(order);
     const orderListContainer = document.querySelector(".orderList");
     // const productName = order.productName;
     // const quantity = order.orderList[0].quantity;
-    const date = order.createdAt;
+    const date = order.createdAt.slice(0, 10);
     const orderState = order.orderState;
     const orderId = order._id;
     const orderListString = order.orderList
@@ -41,6 +40,8 @@ function setOrderList(orderlist) {
     li.setAttribute("id", `${orderId}`);
     const cancelBtn = document.createElement("button");
     cancelBtn.classList.add("cancelBtn");
+    cancelBtn.classList.add("button");
+    cancelBtn.classList.add("is-light");
     cancelBtn.innerText = "주문 취소";
     cancelBtn.addEventListener("click", orderCancel);
 
@@ -48,7 +49,7 @@ function setOrderList(orderlist) {
       "beforeend",
       `
                 <p id="${orderId}date">${date}</p>
-                <div>${orderListString}</div>
+                <div id="orderListString">${orderListString}</div>
                 <p id="${orderId}orderState">${orderState}</p>
             `
     );
