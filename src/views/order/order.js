@@ -296,8 +296,8 @@ export const checkLogin = () => {
   
       console.log(result);
       userName.value = result.fullName;
-      userPhoneNumber.value = result.orderTel;
-      userEmail.value = result.phoneNumber;
+      userPhoneNumber.value = result.phoneNumber;
+      userEmail.value = result.email;
     } catch (err) {
       console.log(err);
     }

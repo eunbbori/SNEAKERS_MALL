@@ -67,15 +67,15 @@ async function doLike() {
     }
 
     const result = await res.json();
-    const userEmail=result.email;
-    
+    const userEmail = result.email;
+
     if (likeBtn.classList.contains('like-fill')) { //좋아요 취소시,
         likeBtn.classList.remove('like-fill');
     } else {
         likeBtn.classList.add('like-fill'); //좋아요 누를시,
         await post("/api/like", {
-            "productCode":param,
-            "userId":userEmail
+            "productCode": param,
+            "userId": userEmail
         });
 
     }
@@ -114,51 +114,65 @@ async function post(endpoint, data) {
 
 
 async function recieveData() {
-    await fetch(`/api/product/${param}`)
-        .then((res) => res.json())
-        .then((data) => {
-            //console.log(data);
-            imageUrl.src = data.imageUrl
-            price.innerText = `${addCommas(data.price)}`
-            console.log(data.brand)
-            bName.innerText = data.brand
-            gName.innerText = data.name
-            code.innerText = data.code
-            size.innerText = data.size
-            goodsType.innerText = data.category
-            goodsContent.innerText = data.content
+    const res = await fetch(`/api/product/detail/${param}`, {
+        // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
+        headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+    });
 
-            const product = data
+    // 응답 코드가 4XX 계열일 때 (400, 403 등)
+    if (!res.ok) {
+        const errorContent = await res.json();
+        const { reason } = errorContent;
 
-            addToCartButton.addEventListener('click', async () => {
-                try {
-                    await insertDb(product)
-                    console.log(product)
-                    alert('장바구니에 추가되었습니다.')
-                } catch (err) {
-                    // Key already exists 에러면 아래와 같이 alert함
-                    if (err.message.includes('Key')) {
-                        alert('이미 장바구니에 추가되어 있습니다.')
-                    }
+        throw new Error(reason);
+    }
 
-                    console.log(err)
-                }
-            })
+    const data = await res.json();
+    
+    console.log(data);
 
-            purchaseButton.addEventListener('click', async () => {
-                try {
-                    await insertDb(product)
+    imageUrl.src = data.imageUrl
+    price.innerText = `${addCommas(data.price)}`
+    bName.innerText = data.brand
+    gName.innerText = data.name
+    code.innerText = data.code
+    size.innerText = data.size
+    goodsType.innerText = data.category
+    goodsContent.innerText = data.content
 
-                    window.location.href = '/order'
-                } catch (err) {
-                    console.log(err)
+    const product = data
 
-                    //insertDb가 에러가 되는 경우는 이미 제품이 장바구니에 있던 경우임
-                    //따라서 다시 추가 안 하고 바로 order 페이지로 이동함
-                    window.location.href = '/order'
-                }
-            })
-        })
+    addToCartButton.addEventListener('click', async () => {
+        try {
+            await insertDb(product)
+            console.log(product)
+            await post('/api/cart',product);
+            alert('장바구니에 추가되었습니다.')
+        } catch (err) {
+            // Key already exists 에러면 아래와 같이 alert함
+            if (err.message.includes('Key')) {
+                alert('이미 장바구니에 추가되어 있습니다.')
+            }
+
+            console.log(err)
+        }
+    })
+
+    purchaseButton.addEventListener('click', async () => {
+        try {
+            await insertDb(product)
+
+            window.location.href = '/order'
+        } catch (err) {
+            console.log(err)
+
+            //insertDb가 에러가 되는 경우는 이미 제품이 장바구니에 있던 경우임
+            //따라서 다시 추가 안 하고 바로 order 페이지로 이동함
+            window.location.href = '/order'
+        }
+    })
 }
 
 //
@@ -341,112 +355,7 @@ const putToDb = async (storeName, key, dataModifyFunc) => {
     return result
 }
 
-// indexedDB의 데이터를 삭제함
-const deleteFromDb = async (storeName, key = '') => {
-    // database 변수가 아직 초기화가 되어있지 않다면,
-    // openDatabase 함수를 실행하여 데이터베이스 객체를 할당함.
-    if (!database) {
-        database = await openDatabase()
-    }
-
-    const transaction = database.transaction([storeName], 'readwrite')
-    const store = transaction.objectStore(storeName)
-
-    const result = new Promise((resolve, reject) => {
-        // key가 주어졌다면 key에 해당하는 특정 아이템만,
-        // key가 없다면 모든 아이템을 삭제함
-        const deleteRequest = key ? store.delete(key) : store.clear()
-
-        deleteRequest.onsuccess = () => {
-            console.log(`${storeName}에서 정상적으로 삭제되었습니다.`)
-            resolve()
-        }
-
-        deleteRequest.onerror = () => {
-            const err = deleteRequest.error
-            console.log(
-                `${storeName}에서 삭제하는데 에러가 발생하였습니다: ${err} `
-            )
-
-            reject(err)
-        }
-    })
-
-    return result
-}
-
 //숫자에 쉼표를 추가함. (10000 -> 10,000)
 export const addCommas = (n) => {
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '원'
 }
-
-//checkUrlParams("id");
-// addAllElements();
-// addAllEvents();
-
-// html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-// function addAllElements() {
-//     createNavbar();
-//     insertProductData();
-// }
-
-// addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-// function addAllEvents() { }
-
-// async function insertProductData() {
-//     const { id } = getUrlParams();
-//     const product = await Api.get(`/api/products/${id}`);
-
-//     // 객체 destructuring
-//     const {
-//         title,
-//         detailDescription,
-//         manufacturer,
-//         imageKey,
-//         isRecommended,
-//         price,
-//     } = product;
-//     const imageUrl = await getImageUrl(imageKey);
-
-//     productImageTag.src = imageUrl;
-//     titleTag.innerText = title;
-//     detailDescriptionTag.innerText = detailDescription;
-//     manufacturerTag.innerText = manufacturer;
-//     priceTag.innerText = `${addCommas(price)}원`;
-
-//     if (isRecommended) {
-//         titleTag.insertAdjacentHTML(
-//             "beforeend",
-//             '<span class="tag is-success is-rounded">추천</span>'
-//         );
-//     }
-
-//     addToCartButton.addEventListener("click", async () => {
-//         try {
-//             await insertDb(product);
-
-//             alert("장바구니에 추가되었습니다.");
-//         } catch (err) {
-//             // Key already exists 에러면 아래와 같이 alert함
-//             if (err.message.includes("Key")) {
-//                 alert("이미 장바구니에 추가되어 있습니다.");
-//             }
-
-//             console.log(err);
-//         }
-//     });
-
-//     purchaseButton.addEventListener("click", async () => {
-//         try {
-//             await insertDb(product);
-
-//             window.location.href = "/order";
-//         } catch (err) {
-//             console.log(err);
-
-//             //insertDb가 에러가 되는 경우는 이미 제품이 장바구니에 있던 경우임
-//             //따라서 다시 추가 안 하고 바로 order 페이지로 이동함
-//             window.location.href = "/order";
-//         }
-//     });
-// }
