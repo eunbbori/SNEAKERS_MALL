@@ -82,9 +82,9 @@ productRouter.get("/", async function (req, res, next) {
 });
 
 // 상품 상세 조회 api
-productRouter.get("/detail", async function (req, res, next) {
+productRouter.get("/detail/:code", async function (req, res, next) {
   try {
-    const { code } = req.body;
+    const { code } = req.params;
 
     const productInfo = await productService.getProductDetail(code);
 
