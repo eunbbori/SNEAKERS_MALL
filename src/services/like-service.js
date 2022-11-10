@@ -65,8 +65,19 @@ class LikeService {
     return newProduct
   }
 
-}
+  async checkLike(likeInfo) {
+    const product = await this.productModel.findByCode(likeInfo.productCode);
+    if (!product) {
+      throw new Error(
+        "이 코드는 존재하지 않는 코드입니다. 다른 코드를 입력해 주세요."
+      );
+    }
 
+    const like = await this.likeModel.findByCodeAndUser(likeInfo.productCode, likeInfo.userId);
+
+    return !!like;
+  }
+}
 
 const likeService = new LikeService(likeModel, productModel);
 
