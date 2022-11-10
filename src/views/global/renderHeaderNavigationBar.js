@@ -34,7 +34,7 @@ async function renderNavBar() {
       "beforeend",
       `
               <li>
-                <a href="/cart" aria-current="page">
+                <a href="/cart" aria-current="page" style="color:black;">
                   <span class="icon">
                     <i class="fas fa-cart-shopping"></i>
                   </span>
@@ -57,6 +57,7 @@ function selectElementId(id) {
 function createLiElement({ text, href, id }) {
   const liEl = document.createElement("li");
   const aEl = document.createElement("a");
+  aEl.setAttribute("style", "color:black;");
   aEl.setAttribute("href", href);
   aEl.setAttribute("id", id);
   aEl.innerText = text;
