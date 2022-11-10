@@ -65,6 +65,12 @@ productRouter.get("/", async function (req, res, next) {
         case 'lowPrice':
           toFilter.sort.price = 1;
           break;
+        case 'highLike':
+          toFilter.sort.likeCount = -1;
+          break;
+        case 'lowLike':
+          toFilter.sort.likeCount = 1;
+          break;
       }
     }
 
