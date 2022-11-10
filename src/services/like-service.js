@@ -23,9 +23,17 @@ class LikeService {
         "이미 좋아요를 눌렀습니다."
       );
     }
-  
-    const newLike = await this.likeModel.create(likeInfo);
-    return newLike
+    
+    await this.likeModel.create(likeInfo); // Like db에 어떤 상품을 누가 좋아했는지 insert
+
+    const newProduct = await this.productModel.update({
+      code: product.code,
+      update: {
+        likeCount: product.likeCount + 1
+      }
+    })
+
+    return newProduct
   }
   //좋아요 취소 
   async deleteLike(likeInfo) {
