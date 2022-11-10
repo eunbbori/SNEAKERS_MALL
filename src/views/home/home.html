@@ -32,90 +32,91 @@
   </head>
   <body>
     <!-- 헤더 -->
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="container mt-3">
-        <div class="navbar-brand">
-          <a class="navbar-item" href="/">
-            <img src="../elice-rabbit.png" width="30" height="30" />
-            <span class="has-text-link">Elice-MART</span>
+    <div class="header">
+      <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="container mt-3">
+          <a href="/">
+            <img src="../logo.png" width="200px" height="60px" />
           </a>
 
-          <a
-            role="button"
-            class="navbar-burger"
-            aria-label="menu"
-            aria-expanded="false"
-            data-target="navbarBasicExample"
+          <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
+            <ul id="navbar">
+              <li>
+                <a href="/login"
+                  ><span class="icon"
+                    ><i class="fa-sharp fa-solid fa-circle-user"></i
+                  ></span>
+                  <span>로그인</span></a
+                >
+              </li>
+              <li><a href="/register">회원가입</a></li>
+              <li>
+                <a href="/cart" aria-current="page">
+                  <span class="icon">
+                    <i class="fas fa-cart-shopping"></i>
+                  </span>
+                  <span>카트</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <ul class="categoryNav">
+        <!-- <li id="brand"><a class="navbar-item">BRAND</a></li> -->
+        <li>
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a id="brand" class="navbar-link navbar-item">BRAND</a>
+            <div id="navbar-dropdown" class="navbar-dropdown"></div>
+          </div>
+        </li>
+        <li id="MEN"><a class="navbar-item">MEN</a></li>
+        <li id="WOMEN"><a class="navbar-item">WOMEN</a></li>
+        <li id="KIDS"><a class="navbar-item">KIDS</a></li>
+      </ul>
+      <div>
+        <ul class="categoryList hidden"></ul>
+      </div>
+      <div class="container">
+        <div class="filter">
+          <nav
+            class="breadcrumb is-small nav-sortFilter"
+            aria-label="breadcrumbs"
           >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        </div>
-
-        <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
-          <ul id="navbar">
-            <li><a href="/login">로그인</a></li>
-            <li><a href="/register">회원가입</a></li>
-            <li>
-              <a href="/cart" aria-current="page">
-                <span class="icon">
-                  <i class="fas fa-cart-shopping"></i>
-                </span>
-                <span>카트</span>
-              </a>
-            </li>
-          </ul>
+            <ul>
+              <li id="regDate"><a>최근 등록 순</a></li>
+              <li id="highPrice"><a>가격 높은 순</a></li>
+              <li id="lowPrice"><a>가격 낮은 순</a></li>
+              <li id="highLike"><a>좋아요 많은 순</a></li>
+              <li id="lowLike"><a>좋아요 낮은 순</a></li>
+            </ul>
+          </nav>
+          <nav class="navbar-filter">
+            <span>필터 : </span>
+            <div class="block hidden" id="filter-brand">
+              <span class="tag" id="filter-brand-span">
+                브랜드
+                <button
+                  class="delete is-small"
+                  id="delete-filter-brand"
+                ></button>
+              </span>
+            </div>
+            <div class="block hidden" id="filter-category">
+              <span class="tag" id="filter-category-span">
+                카테고리
+                <button
+                  class="delete is-small"
+                  id="delete-filter-category"
+                ></button>
+              </span>
+            </div>
+          </nav>
         </div>
       </div>
-    </nav>
-    <ul class="categoryNav">
-      <!-- <li id="brand"><a class="navbar-item">BRAND</a></li> -->
-      <li>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a id="brand" class="navbar-link navbar-item">BRAND</a>
-          <div class="navbar-dropdown"></div>
-        </div>
-      </li>
-      <li id="MEN"><a class="navbar-item">MEN</a></li>
-      <li id="WOMEN"><a class="navbar-item">WOMEN</a></li>
-      <li id="KIDS"><a class="navbar-item">KIDS</a></li>
-    </ul>
-    <div>
-      <ul class="categoryList hidden"></ul>
     </div>
+    <!-- 상품 리스트 -->
     <div class="container">
-      <div class="filter">
-        <nav
-          class="breadcrumb is-small nav-sortFilter"
-          aria-label="breadcrumbs"
-        >
-          <ul>
-            <li id="regDate"><a>최근 등록 순</a></li>
-            <li id="highPrice"><a>가격 높은 순</a></li>
-            <li id="lowPrice"><a>가격 낮은 순</a></li>
-          </ul>
-        </nav>
-        <nav class="navbar-filter">
-          <span>필터 : </span>
-          <div class="block hidden" id="filter-brand">
-            <span class="tag" id="filter-brand-span">
-              브랜드
-              <button class="delete is-small" id="delete-filter-brand"></button>
-            </span>
-          </div>
-          <div class="block hidden" id="filter-category">
-            <span class="tag" id="filter-category-span">
-              카테고리
-              <button
-                class="delete is-small"
-                id="delete-filter-category"
-              ></button>
-            </span>
-          </div>
-        </nav>
-      </div>
-      <!-- 상품 리스트 -->
       <ul class="productList">
         <div class="card">
           <div class="card-image">
@@ -137,16 +138,17 @@
           </div>
         </div>
       </ul>
+
+      <!-- 페이지네이션 -->
+      <nav
+        class="pagination is-centered"
+        role="navigation"
+        aria-label="pagination"
+      >
+        <ul class="pageFrame pagination-list" id="js-pagination"></ul>
+      </nav>
     </div>
 
-    <!-- 페이지네이션 -->
-    <nav
-      class="pagination is-centered"
-      role="navigation"
-      aria-label="pagination"
-    >
-      <ul class="pageFrame pagination-list" id="js-pagination"></ul>
-    </nav>
     <script src="home.js" type="module" defer></script>
     <script
       src="../global/renderHeaderNavigationBar.js"
