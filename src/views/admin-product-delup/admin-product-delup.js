@@ -211,6 +211,7 @@ async function pagination() {
   <div class="select">
   <select id="categorySelect">
   <option value="브랜드">브랜드</option>
+  <option value="전체"style="background-color: #000000; color:  #ffffff">전체</option>
   </select>
   </div>
   </div>
@@ -233,7 +234,7 @@ async function pagination() {
     pagination();
   });
   const res =
-    brandSwitch === undefined
+    brandSwitch === undefined || brandSwitch === "전체"
       ? await fetch(`/api/product?page=${pageNumber}`)
       : await fetch(`/api/product?brand=${brandSwitch}`);
   const result = await res.json();
