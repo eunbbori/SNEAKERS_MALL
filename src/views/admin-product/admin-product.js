@@ -1,23 +1,36 @@
 const productName = document.querySelector("#productName");
 const productDsc = document.querySelector("#productDsc");
 const productPrice = document.querySelector("#productPrice");
-const productSize = document.querySelector("#productSize");
 const productImg = document.querySelector("#productImg");
-const productBrand = document.querySelector("#productBrand");
 const productStock = document.querySelector("#productStock");
-const productCategory = document.querySelector("#productCategory");
 const submitAddProduct = document.querySelector("#productAddForm");
-
+const brandSelectBox = document.querySelector("#brandSelect");
+const sizeSelectBox = document.querySelector("#sizeSelect");
+const categorySelectBox = document.querySelector("#categorySelect");
+let startSize = 120;
+brandSelectHandler();
+sizeCreate();
+function sizeCreate() {
+  for (let i = 0; i < 37; i++) {
+    sizeSelectBox.insertAdjacentHTML(
+      "beforeend",
+      ` <option value="${startSize}" style="background-color: #ebfffc; color: #00947e">
+    ${startSize}
+  </option>`
+    );
+    startSize += 5;
+  }
+}
 async function handleSubmitAddProduct(e) {
   e.preventDefault();
   const name = productName.value;
   const content = productDsc.value;
   const price = productPrice.value;
-  const size = productSize.value;
+  const size = sizeSelectBox.value;
   const imageUrl = productImg.value;
-  const brand = productBrand.value;
+  const brand = brandSelectBox.value;
   const stock = productStock.value;
-  const category = productCategory.value;
+  const category = categorySelectBox.value;
   const data = {
     name,
     content,
@@ -53,6 +66,32 @@ async function handleSubmitAddProduct(e) {
       body: bodyData,
     });
     submitAddProduct.reset();
+  } catch (err) {
+    console.log(err.stack);
+  }
+}
+
+async function brandSelectHandler() {
+  try {
+    brandSelectBox.innerHTML = "";
+    const res = await fetch("/api/brand", {
+      headers: {
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzYwYjQ4MWJjMGZiY2I1YWFhNDYxMmMiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY2NzI4MjIwNH0.pAegQIKEaZmGFznaEablnGuF-1iDFLZs9OgmW4EYFbE",
+      },
+    });
+    const results = await res.json();
+    results.map((e) => {
+      brandSelectBox.insertAdjacentHTML(
+        "beforeend",
+        ` <option value="${e.name}" style="background-color: #ebfffc; color: #00947e">
+          ${e.name}
+        </option>`
+      );
+    });
+    console.dir(results);
+    console.log(`브랜드 가져오기 성공! `);
+    console.log(brandSelectBox.value);
   } catch (err) {
     console.log(err.stack);
   }
