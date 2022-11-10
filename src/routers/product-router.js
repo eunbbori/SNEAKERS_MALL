@@ -101,6 +101,8 @@ productRouter.get("/detail/:code", async function (req, res, next) {
 
       const isLike = await likeService.checkLike({userId: userId, productCode: code});
       result.isLike = isLike;
+    }else{
+      result.isLike = false;
     }
 
     res.status(200).json(result);
