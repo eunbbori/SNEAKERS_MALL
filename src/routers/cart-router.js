@@ -48,12 +48,12 @@ cartRouter.get('/', isMember, async (req, res, next) =>{
 });
 
 // 장바구니 삭제
-// DELETE: /api/cart/delete?_id값
+// DELETE: /api/cart/delete?id=_id값
 // body 안에 _id 포함
 cartRouter.delete('/delete', isMember, async (req, res, next) =>{
     try {
         const userId = req.currentUserId;
-        const cartId = req.query._id;
+        const cartId = req.query.id;
         // 회원인 경우에만 장바구니를 db에서 삭제
         if (userId) {
             const result = await cartService.deleteCart(cartId);
