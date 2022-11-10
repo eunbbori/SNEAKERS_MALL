@@ -16,6 +16,12 @@ class CartService{
         return getCart
     }
 
+    // 장바구니 수량 변경
+    async updateQuantity(cartId, newQuantity) {
+        const result = await this.cartModel.updateCartQuantity(cartId, newQuantity);
+        return result;
+    }
+
     // 장바구니 cartId 삭제
     async deleteCart(cartId){
         const result = await this.cartModel.deleteCart(cartId);

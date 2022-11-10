@@ -47,13 +47,42 @@ cartRouter.get('/', isMember, async (req, res, next) =>{
     }
 });
 
+// 장바구니 수정
+cartRouter.put('/', isMember, async (req, res, next) =>{
+    try {
+        // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
+        if (is.emptyObject(req.body)) {
+            throw new Error(
+                "headers의 Content-Type을 application/json으로 설정해주세요"
+            );
+        }
+        const userId = req.currentUserId;
+        if (userId) {
+            const cartId = req.query.id;
+            const { quantity } = req.body;
+            const result = await cartService.updateQuantity(cartId, quantity)
+            res.status(200).json(result);
+        }
+        else {
+            res.status(200).json({message: 'not member'});
+        }
+    }
+    catch (err) {
+        next(err);
+
+    }
+
+})
+
+
+
 // 장바구니 삭제
-// DELETE: /api/cart/delete?_id값
+// DELETE: /api/cart/delete?id=_id값
 // body 안에 _id 포함
 cartRouter.delete('/delete', isMember, async (req, res, next) =>{
     try {
         const userId = req.currentUserId;
-        const cartId = req.query._id;
+        const cartId = req.query.id;
         // 회원인 경우에만 장바구니를 db에서 삭제
         if (userId) {
             const result = await cartService.deleteCart(cartId);
