@@ -76,6 +76,8 @@ export function makeProductList(items) {
  */
 function renderProductCard(item) {
   const { brand: brandName, name, price, code, imageUrl } = item;
+  console.log(name, name.length);
+
   selectElement(".productList").insertAdjacentHTML(
     "beforeend",
     `<li class="product" id="${code}Li">
