@@ -10,8 +10,8 @@ export class LikeModel {
     }  
 
   async findByProductCode(productCode) {
-    const product = await Like.findOne({ productCode });
-    return product;
+    const like = await Like.findOne({ productCode });
+    return like;
     }  
 
   async delete(productCode) {
@@ -20,8 +20,8 @@ export class LikeModel {
   }  
 
   async findByCodeAndUser(productCode,userId) {
-    const product = await Like.findOne({ productCode: productCode , userId : userId});
-    return product;
+    const like = await Like.findOne({ productCode: productCode , userId : userId});
+    return like;
     }  
 
   async deleteCodeAndUser(likeInfo) {
