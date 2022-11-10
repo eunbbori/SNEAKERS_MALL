@@ -32,9 +32,8 @@ likeRouter.delete("/", loginRequired, async function (req, res, next) {
     const { productCode } = req.body;
     const userId = req.currentUserId;
 
-    const { deletedCount } = await likeService.deleteLike({ productCode, userId });
-
-    if (deletedCount === 1) {
+    const likeCount = await likeService.deleteLike({ productCode, userId });
+    if (likeCount) {
       res.status(200).json({
         result: true,
       });
