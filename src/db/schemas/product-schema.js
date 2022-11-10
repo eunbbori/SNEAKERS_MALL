@@ -42,6 +42,10 @@ const ProductSchema = new Schema(
       type: Date,
       default: Date.now
     },
+    likeCount : {
+      type : Number,
+      default : 0 
+    }
   }
 );
 
