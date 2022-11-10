@@ -53,19 +53,25 @@ async function likeBtnStatus(data) {
 async function doLike() {
     checkLogin();
     if (likeBtn.classList.contains('like-fill')) { //좋아요 취소시,
-        console.log('좋아요 취소 ');
-        likeBtn.classList.remove('like-fill');
-        try{
-            await fetch('/api/like', {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-                },
-                body: {"productCode":param},
-            });
-        }catch(err){
-            console.log('좋아요 취소 실패');
+        try {
+          fetch("/api/like", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+            body: JSON.stringify({
+              productCode : param,
+            })
+          }).then(({ status }) => {
+            if ( status == 200){
+              likeBtn.classList.remove('like-fill');
+            }else {
+              alert(' 오류 발생 ');
+            }
+          });
+        } catch(err){
+          alert('좋아요 취소 실패');
         }
 
         // api/like delete요청 보낼때, {bodyData: productCode(param)}

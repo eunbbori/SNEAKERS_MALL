@@ -46,8 +46,9 @@ class LikeService {
     }
 
     // 좋아요 이력이 없으면
-    const like = await this.likeModel.findByCodeAndUser(likeInfo.productCode,likeInfo.userId);
-    if (!like) {
+    const like = await this.likeModel.findByCodeAndUser(likeInfo.productCode, likeInfo.userId);
+
+    if (!like || like === 'null') {
       throw new Error(
         "상품을 좋아한 적이 없습니다."
       );
@@ -55,14 +56,14 @@ class LikeService {
   
     await this.likeModel.deleteCodeAndUser(likeInfo); // Like db에 어떤 상품을 누가 좋아했던 것을 delete
 
-    const newProduct = await this.productModel.update({
+    const { likeCount } = await this.productModel.update({
       code: product.code,
       update: {
         likeCount: product.likeCount - 1
       }
     })
 
-    return newProduct
+    return likeCount
   }
 
   async checkLike(likeInfo) {
