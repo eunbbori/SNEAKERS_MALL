@@ -23,16 +23,7 @@ const purchaseButton = document.getElementById('purchaseButton')
 const goToCart = document.getElementById('goToCart')
 const likeBtn = document.getElementById('likeBtn')
 
-
-recieveData()
-
-async function likeBtnClick(e) {
-    const emptyHeart = e.currentTarget.getElementById('emptyHeart');
-    const fullHeart = e.currentTarget.getElementById('fullHeart');
-    emptyHeart.classList.toggle('hide');
-    fullHeart.classList.toggle('hide');
-}
-
+recieveData();
 likeBtn.addEventListener('click', doLike);
 
 //로그인 체크
@@ -48,37 +39,45 @@ const checkLogin = () => {
     }
 };
 
+async function likeBtnStatus(data) {
+    //상품상세 조회 데이터에서 isLike 기본값은 false?
+    if (data.isLike) {
+        if (!likeBtn.classList.contains('like-fill')) {
+            likeBtn.classList.add('like-fill');
+        }
+    } else {
+        likeBtn.classList.remove('like-fill');
+    }
+}
 
 async function doLike() {
     checkLogin();
-    const res = await fetch('/api/user', {
-        // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
-        headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-        },
-    });
-
-    // 응답 코드가 4XX 계열일 때 (400, 403 등)
-    if (!res.ok) {
-        const errorContent = await res.json();
-        const { reason } = errorContent;
-
-        throw new Error(reason);
-    }
-
-    const result = await res.json();
-    const userEmail = result.email;
-
     if (likeBtn.classList.contains('like-fill')) { //좋아요 취소시,
+        console.log('좋아요 취소 ');
         likeBtn.classList.remove('like-fill');
+        try{
+            await fetch('/api/like', {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+                },
+                body: {"productCode":param},
+            });
+        }catch(err){
+            console.log('좋아요 취소 실패');
+        }
+
+        // api/like delete요청 보낼때, {bodyData: productCode(param)}
+        //1. isLike=>false가 되는지
+        //2. like-1
     } else {
         likeBtn.classList.add('like-fill'); //좋아요 누를시,
-        await post("/api/like", {
-            "productCode": param,
-        });
-
+        await post(`/api/like`, {"productCode":param});
+        // api/like post 요청 보낼때, {bodyData: productCode(param)}
+        //1. isLike=>true가 되는지
+        //2. like+1
     }
-    //console.log(code.innerText);
 }
 
 async function post(endpoint, data) {
@@ -128,9 +127,9 @@ async function recieveData() {
         throw new Error(reason);
     }
 
-    const result=await res.json();
+    const result = await res.json();
     const data = result.product;
-    
+    likeBtnStatus(result);
     console.log(data);
 
     imageUrl.src = data.imageUrl
@@ -143,13 +142,14 @@ async function recieveData() {
     goodsContent.innerText = data.content
 
     const product = data;
-    product.quantity=1;
+    product.quantity = 1;
+
 
     addToCartButton.addEventListener('click', async () => {
         try {
             await insertDb(product)
             console.log(product)
-            await post('/api/cart',product);
+            await post('/api/cart', product);
             alert('장바구니에 추가되었습니다.')
         } catch (err) {
             // Key already exists 에러면 아래와 같이 alert함
