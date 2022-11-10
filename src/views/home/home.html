@@ -85,30 +85,36 @@
       <ul class="categoryList hidden"></ul>
     </div>
     <div class="container">
-      <nav class="breadcrumb is-small nav-sortFilter" aria-label="breadcrumbs">
-        <ul>
-          <li id="regDate"><a>최근 등록 순</a></li>
-          <li id="highPrice"><a>가격 높은 순</a></li>
-          <li id="lowPrice"><a>가격 낮은 순</a></li>
-        </ul>
-      </nav>
-      <nav class="navbar-filter">
-        <div class="block hidden" id="filter-brand">
-          <span class="tag" id="filter-brand-span">
-            브랜드
-            <button class="delete is-small" id="delete-filter-brand"></button>
-          </span>
-        </div>
-        <div class="block hidden" id="filter-category">
-          <span class="tag" id="filter-category-span">
-            카테고리
-            <button
-              class="delete is-small"
-              id="delete-filter-category"
-            ></button>
-          </span>
-        </div>
-      </nav>
+      <div class="filter">
+        <nav
+          class="breadcrumb is-small nav-sortFilter"
+          aria-label="breadcrumbs"
+        >
+          <ul>
+            <li id="regDate"><a>최근 등록 순</a></li>
+            <li id="highPrice"><a>가격 높은 순</a></li>
+            <li id="lowPrice"><a>가격 낮은 순</a></li>
+          </ul>
+        </nav>
+        <nav class="navbar-filter">
+          <span>필터 : </span>
+          <div class="block hidden" id="filter-brand">
+            <span class="tag" id="filter-brand-span">
+              브랜드
+              <button class="delete is-small" id="delete-filter-brand"></button>
+            </span>
+          </div>
+          <div class="block hidden" id="filter-category">
+            <span class="tag" id="filter-category-span">
+              카테고리
+              <button
+                class="delete is-small"
+                id="delete-filter-category"
+              ></button>
+            </span>
+          </div>
+        </nav>
+      </div>
       <!-- 상품 리스트 -->
       <ul class="productList">
         <div class="card">
