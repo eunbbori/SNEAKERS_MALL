@@ -410,6 +410,28 @@ async function increaseItemQuantity(id) {
 
   // 수량 변경박스(-버튼, 입력칸, +버튼) 상태 업데이트
   setQuantityBox(id, "plus");
+
+  //mongoDB의 수량 업데이트
+  const dbQuantity=parseInt(document.querySelector(`#quantityInput-${id}`).value);
+  //console.log(dbQuantity,typeof dbQuantity);
+  const selectItem = await getFromDb("cart",id);
+  const increase_id=selectItem._id;
+  const data={
+    "quantity":dbQuantity
+  }
+  const bodydata = JSON.stringify(data);
+  try {
+    await fetch(`/api/cart?id=${increase_id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      },
+      body: bodydata,
+    });
+  } catch (err) {
+    console.log('db 수량 증가 실패');
+  }
 }
 
 async function decreaseItemQuantity(id) {
@@ -426,6 +448,28 @@ async function decreaseItemQuantity(id) {
 
   // 수량 변경박스(-버튼, 입력칸, +버튼) 상태 업데이트
   setQuantityBox(id, "minus");
+
+  //mongoDB의 수량 업데이트
+  const dbQuantity=parseInt(document.querySelector(`#quantityInput-${id}`).value);
+  //console.log(`수량:${dbQuantity}`);
+  const selectItem = await getFromDb("cart",id);
+  const decrease_id=selectItem._id;
+  const data={
+    "quantity":dbQuantity
+  }
+  const bodydata = JSON.stringify(data);
+  try {
+    await fetch(`/api/cart?id=${decrease_id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      },
+      body: bodydata,
+    });
+  } catch (err) {
+    console.log('db 수량감소 실패');
+  }
 }
 
 async function handleQuantityInput(id) {
@@ -450,6 +494,25 @@ async function handleQuantityInput(id) {
 
   // 수량 변경박스(-버튼, 입력칸, +버튼) 상태 업데이트
   setQuantityBox(id, "input");
+
+  //mongoDB의 수량 업데이트
+  console.log(quantity,typeof quantity);
+  const selectItem = await getFromDb("cart",id);
+  const change_id=selectItem._id;
+  const data={quantity}
+  const bodydata = JSON.stringify(data);
+  try {
+    await fetch(`/api/cart?id=${change_id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      },
+      body: bodydata,
+    });
+  } catch (err) {
+    console.log('db 수량 변경 실패');
+  }
 }
 
 // -버튼, 숫자입력칸, +버튼 활성화 여부 및 값을 세팅함.
