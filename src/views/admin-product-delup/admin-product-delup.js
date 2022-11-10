@@ -19,17 +19,48 @@ const updateCancelButton = document.querySelector("#updateCancelButton");
 let pageNumber = 1;
 let orderIdToDelete;
 let orderIdToUpdate;
+let brandSwitch;
 pagination();
 
 async function handleSubmitRef(e) {
   e.preventDefault();
+  const res1 = await fetch("/api/brand", {
+    headers: {
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzYwYjQ4MWJjMGZiY2I1YWFhNDYxMmMiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY2NzI4MjIwNH0.pAegQIKEaZmGFznaEablnGuF-1iDFLZs9OgmW4EYFbE",
+    },
+  });
+  const results1 = await res1.json();
+  console.log(results1);
+  console.log(brandSwitch);
   ordersContainer.innerHTML = `   <div class="columns notification is-info is-light is-mobile orders-top">
   <div class="column is-4">상품</div>
-  <div class="column is-4">브랜드</div>
+  <div class="column is-4">      
+  <div class="control">
+  <div class="select">
+  <select id="categorySelect">
+  <option value="브랜드">브랜드</option>
+  </select>
+  </div>
+  </div>
+  </div>
   <div class="column is-2">수정</div>
   <div class="column is-2">취소</div>
-</div>
-`;
+  </div>
+  `;
+  const categorySelect = document.querySelector("#categorySelect");
+  results1.map((e) => {
+    categorySelect.insertAdjacentHTML(
+      "beforeend",
+      `<option value="${e.name}" style="background-color: #ebfffc; color: #00947e" >
+    ${e.name}
+  </option>`
+    );
+  });
+  categorySelect.addEventListener("change", () => {
+    brandSwitch = categorySelect.value;
+    pagination();
+  });
 
   const name = prodcutRefInput.value;
   if (name === "") {
@@ -156,7 +187,7 @@ async function updateOrderData(e) {
 
     // 전역변수 초기화
     orderIdToUpdate = "";
-
+    pagination();
     closeModal2();
   } catch (err) {
     alert(`상품정보 수정 과정에서 오류가 발생하였습니다: ${err}`);
@@ -164,16 +195,48 @@ async function updateOrderData(e) {
 }
 
 async function pagination() {
+  const res1 = await fetch("/api/brand", {
+    headers: {
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzYwYjQ4MWJjMGZiY2I1YWFhNDYxMmMiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY2NzI4MjIwNH0.pAegQIKEaZmGFznaEablnGuF-1iDFLZs9OgmW4EYFbE",
+    },
+  });
+  const results1 = await res1.json();
+  console.log(results1);
+  console.log(brandSwitch);
   ordersContainer.innerHTML = `   <div class="columns notification is-info is-light is-mobile orders-top">
   <div class="column is-4">상품</div>
-  <div class="column is-4">브랜드</div>
+  <div class="column is-4">      
+  <div class="control">
+  <div class="select">
+  <select id="categorySelect">
+  <option value="브랜드">브랜드</option>
+  </select>
+  </div>
+  </div>
+  </div>
   <div class="column is-2">수정</div>
   <div class="column is-2">취소</div>
-</div>
-`;
-  const res = await fetch(`/api/product?page=${pageNumber}`);
+  </div>
+  `;
+  const categorySelect = document.querySelector("#categorySelect");
+  results1.map((e) => {
+    categorySelect.insertAdjacentHTML(
+      "beforeend",
+      `<option value="${e.name}" style="background-color: #ebfffc; color: #00947e" >
+    ${e.name}
+  </option>`
+    );
+  });
+  categorySelect.addEventListener("change", () => {
+    brandSwitch = categorySelect.value;
+    pagination();
+  });
+  const res =
+    brandSwitch === undefined
+      ? await fetch(`/api/product?page=${pageNumber}`)
+      : await fetch(`/api/product?brand=${brandSwitch}`);
   const result = await res.json();
-
   console.log(result);
 
   result.items.map((e) => {
@@ -203,6 +266,7 @@ async function pagination() {
       openModal1();
     });
   });
+
   ordersContainer.insertAdjacentHTML(
     "beforeend",
     `      <nav class="pagination is-centered" role="navigation" aria-label="pagination">
