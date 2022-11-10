@@ -12,6 +12,17 @@ const addCommas = (n) => {
 
 let userIdToDelete;
 async function getUsersContainer() {
+  usersContainer.innerHTML = "";
+  usersContainer.insertAdjacentHTML(
+    "beforeend",
+    `    <div class="columns notification is-info is-light is-mobile orders-top">
+  <div class="column is-2">가입날짜</div>
+  <div class="column is-2">이메일</div>
+  <div class="column is-2">이름</div>
+  <div class="column is-2">권한</div>
+  <div class="column is-2">삭제</div>
+</div>`
+  );
   const res = await fetch("/api/userlist", {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -87,7 +98,7 @@ async function getUsersContainer() {
         }
         console.log("사용자 권한이 변경되었습니다!");
 
-        window.location.href = "http://localhost:5000/admin-user/";
+        getUsersContainer();
       } catch (err) {
         console.log(err);
       }
@@ -122,6 +133,7 @@ async function deleteUserData(e) {
 
     // 전역변수 초기화
     userIdToDelete = "";
+    getUsersContainer();
 
     closeModal();
   } catch (err) {
