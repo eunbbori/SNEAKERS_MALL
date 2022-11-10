@@ -31,52 +31,49 @@ async function handleSubmitRef(e) {
 </div>
 `;
 
-  const code = prodcutRefInput.value;
-  if (code === "") {
+  const name = prodcutRefInput.value;
+  if (name === "") {
     return pagination();
   }
   try {
-    const res = await fetch(`/api/product/detail/${code}`, {
+    const res = await fetch(`/api/product?name=${name}`, {
       // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       },
     });
 
-    if (code === "") {
+    if (name === "") {
       throw new Error("다시 입력하세요");
     }
     const results = await res.json();
     console.log(results);
-
-    ordersContainer.insertAdjacentHTML(
-      "beforeend",
-      `<div class="columns orders-item" id="order-${results.code}">
-        <div class="column is-2"><figure class="image is-96x96"><img src=${results.imageUrl}></figure></div>
-        <div class="column is-2">${results.name}</div>
-        <div class="column is-4 product-name">${results.brand}</div>
+    results.items.map((e) => {
+      ordersContainer.insertAdjacentHTML(
+        "beforeend",
+        `<div class="columns orders-item" id="order-${e.code}">
+        <div class="column is-2"><figure class="image is-96x96"><img src=${e.imageUrl}></figure></div>
+        <div class="column is-2">${e.name}(${e.stock})</div>
+        <div class="column is-4 product-name">${e.brand}</div>
         <div class="column is-2 update">
-        <button class="button" id="updateButton-${results.code}" > 수정</button>
+        <button class="button" id="updateButton-${e.code}" > 수정</button>
         </div>
         <div class="column is-2">
-        <button class="button" id="deleteButton-${results.code}" > 취소</button>
+        <button class="button" id="deleteButton-${e.code}" > 취소</button>
         </div>
         </div>
       </div>`
-    );
-    const updateButton = document.querySelector(
-      `#updateButton-${results.code}`
-    );
-    updateButton.addEventListener("click", () => {
-      orderIdToUpdate = results.code;
-      openModal2();
-    });
-    const deleteButton = document.querySelector(
-      `#deleteButton-${results.code}`
-    );
-    deleteButton.addEventListener("click", () => {
-      orderIdToDelete = results.code;
-      openModal1();
+      );
+      const updateButton = document.querySelector(`#updateButton-${e.code}`);
+      updateButton.addEventListener("click", () => {
+        orderIdToUpdate = e.code;
+        openModal2();
+      });
+      const deleteButton = document.querySelector(`#deleteButton-${e.code}`);
+      deleteButton.addEventListener("click", () => {
+        orderIdToDelete = e.code;
+        openModal1();
+      });
     });
   } catch (err) {
     alert(err);
@@ -135,11 +132,13 @@ async function updateOrderData(e) {
     size,
     price,
     stock,
+    code: orderIdToUpdate,
   };
 
   const bodyData = JSON.stringify(data);
+  console.log(bodyData);
   try {
-    await fetch(`/api/product/${orderIdToUpdate}`, {
+    await fetch(`/api/product`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -149,14 +148,11 @@ async function updateOrderData(e) {
       // body 추가
       body: bodyData,
     });
-    // await Api.delete("/api/orders", orderIdToDelete);
 
     // 삭제 성공
     alert("상품 정보가 수정되었습니다.");
 
     // 삭제한 아이템 화면에서 지우기
-    const deletedItem = document.querySelector(`#order-${orderIdToUpdate}`);
-    deletedItem.remove();
 
     // 전역변수 초기화
     orderIdToUpdate = "";
@@ -185,7 +181,7 @@ async function pagination() {
       "beforeend",
       `<div class="columns orders-item" id="order-${e.code}">
     <div class="column is-2"><figure class="image is-96x96"><img src=${e.imageUrl}></figure></div>
-    <div class="column is-2">${e.name}</div>
+    <div class="column is-2">${e.name}(${e.stock})</div>
     <div class="column is-4 product-name">${e.brand}</div>
     <div class="column is-2 update">
     <button class="button" id="updateButton-${e.code}" > 수정</button>
