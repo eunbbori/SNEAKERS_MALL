@@ -429,7 +429,21 @@ export const checkLogin = () => {
     const account = convertToNumber(orderTotalElem.innerText); //총 결제예정금액
     const { selectedIds } = await getFromDb("order", "summary");
     const orderList = [];
+    try{
+      console.log('장바구니 전체삭제');
+      await fetch('/api/cart/delete-all', {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      },
+    });
+    }catch(err){
+      alert('전체삭제 실패');
+    }
+    
   
+
     if (!receiverName || !tel || !address) {
       return alert("배송지 정보를 모두 입력해 주세요.");
     }
