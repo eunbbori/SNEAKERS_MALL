@@ -78,20 +78,34 @@
         <div class="field mb-5">
           <label class="label" for="productAdd">상품 추가</label>
           <div class="control">
-            <input class='input' type="text" placeholder="브랜드" id="productBrand"autocomplete="on"/>
+            <div class="select is-fullwidth">
+              <select id="brandSelect">
+                <option value="">브랜드 선택</option>
+              </select>
+            </div>
             <input class='input' type="text" placeholder="상품이름" id="productName"autocomplete="on"/>
             <input class='input' type="text" placeholder="설명" id="productDsc"autocomplete="on"/>
-            <input class='input' type="text" placeholder="가격" id="productPrice"autocomplete="on"/>
-            <input class='input' type="text" placeholder="사이즈" id="productSize" autocomplete="on"/>
+            <input class='input' type="number" placeholder="가격" id="productPrice"autocomplete="on"/>
+            <div class="select is-fullwidth">
+              <select id="sizeSelect">
+                
+              </select>
+            </div>
             <input
               class="input"
               id="productImg"
-              type="text"
+              type="url"
               placeholder="이미지 주소"
               autocomplete="on"
             />
-            <input class='input' type="text" placeholder="재고" id="productStock" autocomplete="on"/>
-            <input class='input' type="text" placeholder="카테고리" id="productCategory" autocomplete="on"/>
+            <input class='input' type="number" placeholder="재고" id="productStock" autocomplete="on"/>
+            <div class="select is-fullwidth">
+              <select id="categorySelect">
+                <option value="MEN">MEN</option>
+                <option value="WOMEN">WOMEN</option>
+                <option value="KIDS">KIDS</option>
+              </select>
+            </div>
           </div>
         </div>
         <div class="mt-5">
