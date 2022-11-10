@@ -1,7 +1,8 @@
 import { Router } from "express";
 import is from "@sindresorhus/is";
+import jwt from "jsonwebtoken";
 import { loginRequired } from "../middlewares";
-import { productService } from "../services";
+import { productService, likeService } from "../services";
 
 const productRouter = Router();
 
@@ -88,7 +89,21 @@ productRouter.get("/detail/:code", async function (req, res, next) {
 
     const productInfo = await productService.getProductDetail(code);
 
-    res.status(200).json(productInfo);
+    
+    const result = { product: productInfo };
+
+    const userToken = req.headers["authorization"]?.split(" ")[1];
+
+    if (userToken) {
+      const secretKey = process.env.JWT_SECRET_KEY || "secret-key";
+      const jwtDecoded = jwt.verify(userToken, secretKey);
+      const userId = jwtDecoded.userId;
+
+      const isLike = await likeService.checkLike({userId: userId, productCode: code});
+      result.isLike = isLike;
+    }
+
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }
