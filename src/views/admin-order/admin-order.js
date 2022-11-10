@@ -11,11 +11,22 @@ userOrderList();
 const addCommas = (n) => {
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
-
+const ordersContainerBox = document.querySelector("#orderContainerBox");
 let orderIdToDelete;
 let orderIdToUpdate;
 
 async function userOrderList(e) {
+  ordersContainer.innerHTML = "";
+  ordersContainer.insertAdjacentHTML(
+    "beforeend",
+    `   <div class="columns notification is-info is-light is-mobile orders-top" id="orderContainerBox">
+  <div class="column is-2">유저아이디</div>
+  <div class="column is-2">상품이름</div>
+  <div class="column is-2">주문총액</div>
+  <div class="column is-2">상태관리</div>
+  <div class="column is-2">취소</div>
+</div>`
+  );
   try {
     const res = await fetch("/api/order/admin", {
       headers: {
@@ -103,6 +114,7 @@ async function userOrderList(e) {
             body: bodydata,
           });
           console.log("상품의 배송상태가 변경이 되었습니다!");
+          userOrderList();
         } catch (err) {
           console.log(err);
         }
@@ -146,7 +158,7 @@ async function deleteOrderData(e) {
     orderIdToDelete = "";
 
     closeModal();
-    window.location.href = "http://localhost:5000/admin-order/";
+    userOrderList();
   } catch (err) {
     alert(`주문정보 삭제 과정에서 오류가 발생하였습니다: ${err}`);
   }
