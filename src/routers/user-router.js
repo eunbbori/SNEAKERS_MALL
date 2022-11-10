@@ -2,7 +2,7 @@ import { Router } from "express";
 import is from "@sindresorhus/is";
 // 폴더에서 import하면, 자동으로 폴더의 index.js에서 가져옴
 import { loginRequired, isAdmin } from "../middlewares";
-import { userService } from "../services";
+import {cartService, userService} from "../services";
 
 const userRouter = Router();
 
@@ -13,7 +13,7 @@ userRouter.post("/register", async (req, res, next) => {
     // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
     if (is.emptyObject(req.body)) {
       throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
+          "headers의 Content-Type을 application/json으로 설정해주세요"
       );
     }
 
@@ -45,19 +45,64 @@ userRouter.post("/login", async function (req, res, next) {
     // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
     if (is.emptyObject(req.body)) {
       throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
+          "headers의 Content-Type을 application/json으로 설정해주세요"
       );
     }
 
     // req (request) 에서 데이터 가져오기
     const email = req.body.email;
     const password = req.body.password;
+    const indexedDB = req.body.indexedDB; // body에서 indexedDB 가져옴
 
     // 로그인 진행 (로그인 성공 시 jwt 토큰을 프론트에 보내 줌)
-    const userToken = await userService.getUserToken({ email, password });
+    const { token, userId } = await userService.getUserToken({ email, password });
+
+    const id = userId.toString()
+
+
+    // indexedDB에 데이터 있는 경우, indexDB-DB 데이터 일치시킴
+    if (indexedDB) {
+      const result = await cartService.syncData(id , indexedDB)
+      console.log(result)
+    }
+
+    // 임시 데이터 - 추후 삭제
+    // const indexedDB =
+    //     [
+    //   {
+    //     brand   : "NIKE",
+    //     category: "WOMEN",
+    //     code    : "6facqsmdr",
+    //     content : "설명",
+    //     imageUrl: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/7437e33d-fcc8-46a6-82d4-16ed34370b6f/%EC%97%90%EC%96%B4%EB%A7%A5%EC%8A%A4-97-%EC%97%AC%EC%84%B1-%EC%8B%A0%EB%B0%9C-rCXkYtQ4.png",
+    //     name    : "나이키 에어맥스 97",
+    //     price   : 199000,
+    //     quantity: 2,
+    //     regDate : "2022-11-09T08:05:40.620Z",
+    //     size    : 280,
+    //     stock   : 23,
+    //     __v    : 0,
+    //     _id     : "636b5f548fc36b717b396ee0"
+    //   },
+    //   {
+    //     brand:"NIKE",
+    //     category:"MEN",
+    //     code:"ka9c6nj9g",
+    //     content:"설명",
+    //     imageUrl:"https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/3e9e43c6-ee56-482d-a847-4648e468d4f0/%EC%97%90%EC%96%B4-%EC%A1%B0%EB%8D%98-1-%EB%A0%88%ED%8A%B8%EB%A1%9C-%ED%95%98%EC%9D%B4-og-%EC%8B%A0%EB%B0%9C-uXXnpk3p.png",
+    //     name:"에어 조던 1 레트로 하이 OG",
+    //     price:209000,
+    //     quantity: 1,
+    //     regDate:"2022-11-09T08:05:40.589Z",
+    //     size:260,
+    //     stock:23,
+    //     __v:0,
+    //     _id:"636b5f548fc36b717b396edc",
+    //   }
+    // ]
 
     // jwt 토큰을 프론트에 보냄 (jwt 토큰은, 문자열임)
-    res.status(200).json(userToken);
+    res.status(200).json({"token": token});
   } catch (error) {
     next(error);
   }
@@ -92,60 +137,60 @@ userRouter.get("/user", loginRequired, async function(req, res, next) {
 // 사용자 정보 수정
 // (예를 들어 /api/users/abc12345 로 요청하면 req.params.userId는 'abc12345' 문자열로 됨)
 userRouter.patch(
-  "/users/:userId",
-  loginRequired,
-  async function (req, res, next) {
-    try {
-      // content-type 을 application/json 로 프론트에서
-      // 설정 안 하고 요청하면, body가 비어 있게 됨.
-      if (is.emptyObject(req.body)) {
-        throw new Error(
-          "headers의 Content-Type을 application/json으로 설정해주세요"
+    "/users/:userId",
+    loginRequired,
+    async function (req, res, next) {
+      try {
+        // content-type 을 application/json 로 프론트에서
+        // 설정 안 하고 요청하면, body가 비어 있게 됨.
+        if (is.emptyObject(req.body)) {
+          throw new Error(
+              "headers의 Content-Type을 application/json으로 설정해주세요"
+          );
+        }
+
+        // params로부터 id를 가져옴
+        const userId = req.params.userId;
+
+        // body data 로부터 업데이트할 사용자 정보를 추출함.
+        const fullName = req.body.fullName;
+        const password = req.body.password;
+        const address = req.body.address;
+        const phoneNumber = req.body.phoneNumber;
+        const role = req.body.role;
+
+        // body data로부터, 확인용으로 사용할 현재 비밀번호를 추출함.
+        const currentPassword = req.body.currentPassword;
+
+        // currentPassword 없을 시, 진행 불가
+        if (!currentPassword) {
+          throw new Error("정보를 변경하려면, 현재의 비밀번호가 필요합니다.");
+        }
+
+        const userInfoRequired = { userId, currentPassword };
+
+        // 위 데이터가 undefined가 아니라면, 즉, 프론트에서 업데이트를 위해
+        // 보내주었다면, 업데이트용 객체에 삽입함.
+        const toUpdate = {
+          ...(fullName && { fullName }),
+          ...(password && { password }),
+          ...(address && { address }),
+          ...(phoneNumber && { phoneNumber }),
+          ...(role && { role }),
+        };
+
+        // 사용자 정보를 업데이트함.
+        const updatedUserInfo = await userService.setUser(
+            userInfoRequired,
+            toUpdate
         );
+
+        // 업데이트 이후의 유저 데이터를 프론트에 보내 줌
+        res.status(200).json(updatedUserInfo);
+      } catch (error) {
+        next(error);
       }
-
-      // params로부터 id를 가져옴
-      const userId = req.params.userId;
-
-      // body data 로부터 업데이트할 사용자 정보를 추출함.
-      const fullName = req.body.fullName;
-      const password = req.body.password;
-      const address = req.body.address;
-      const phoneNumber = req.body.phoneNumber;
-      const role = req.body.role;
-
-      // body data로부터, 확인용으로 사용할 현재 비밀번호를 추출함.
-      const currentPassword = req.body.currentPassword;
-
-      // currentPassword 없을 시, 진행 불가
-      if (!currentPassword) {
-        throw new Error("정보를 변경하려면, 현재의 비밀번호가 필요합니다.");
-      }
-
-      const userInfoRequired = { userId, currentPassword };
-
-      // 위 데이터가 undefined가 아니라면, 즉, 프론트에서 업데이트를 위해
-      // 보내주었다면, 업데이트용 객체에 삽입함.
-      const toUpdate = {
-        ...(fullName && { fullName }),
-        ...(password && { password }),
-        ...(address && { address }),
-        ...(phoneNumber && { phoneNumber }),
-        ...(role && { role }),
-      };
-
-      // 사용자 정보를 업데이트함.
-      const updatedUserInfo = await userService.setUser(
-        userInfoRequired,
-        toUpdate
-      );
-
-      // 업데이트 이후의 유저 데이터를 프론트에 보내 줌
-      res.status(200).json(updatedUserInfo);
-    } catch (error) {
-      next(error);
     }
-  }
 );
 
 // 사용자 삭제(탈퇴) api
@@ -165,7 +210,7 @@ userRouter.delete("/users",loginRequired, async function (req, res, next) {
         });
       }else{
         throw new Error(
-          "예상치 못한 오류 발생 관리자에게 문의해주세요"
+            "예상치 못한 오류 발생 관리자에게 문의해주세요"
         );
       }
     }
@@ -187,7 +232,7 @@ userRouter.delete("/admin/users", loginRequired, isAdmin, async function (req, r
       });
     }else{
       throw new Error(
-        "예상치 못한 오류 발생 관리자에게 문의해주세요"
+          "예상치 못한 오류 발생 관리자에게 문의해주세요"
       );
     }
   } catch (error) {
@@ -198,25 +243,25 @@ userRouter.delete("/admin/users", loginRequired, isAdmin, async function (req, r
 
 // 관리자 - 사용자 권한 수정 (일반/관리자)
 userRouter.patch("/admin/users", loginRequired, isAdmin, async function (req, res, next) {
-    try {
-      // content-type 을 application/json 로 프론트에서
-      // 설정 안 하고 요청하면, body가 비어 있게 됨.
-      if (is.emptyObject(req.body)) {
-        throw new Error(
-          "headers의 Content-Type을 application/json으로 설정해주세요"
-        );
+      try {
+        // content-type 을 application/json 로 프론트에서
+        // 설정 안 하고 요청하면, body가 비어 있게 됨.
+        if (is.emptyObject(req.body)) {
+          throw new Error(
+              "headers의 Content-Type을 application/json으로 설정해주세요"
+          );
+        }
+
+        const userId = req.body.userId;
+        const role = req.body.role;
+
+        const updatedUserRole = await userService.updateRole(userId, role);
+
+        res.status(200).json(updatedUserRole);
+      } catch (error) {
+        next(error);
       }
-
-      const userId = req.body.userId;
-      const role = req.body.role;
-
-      const updatedUserRole = await userService.updateRole(userId, role);
-
-      res.status(200).json(updatedUserRole);
-    } catch (error) {
-      next(error);
     }
-  }
 );
 
 export { userRouter };
