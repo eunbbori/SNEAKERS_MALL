@@ -171,7 +171,7 @@
   }
   
   .order-summary {
-    background-color: #f0f5f7;
+    background-color: #f0f0f0;
     width: 100%;
   }
   
@@ -230,6 +230,7 @@
   }
   
   .purchase button {
+    background-color: #555;
     font-size: 1.4rem;
     font-weight: 800;
     width: 100%;
