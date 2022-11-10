@@ -120,4 +120,36 @@ button {
     z-index: 2;
     background-color: rgba(255, 255, 255, 0.9);
   }
+  .header {
+    background-color: rgba(255, 255, 255, 0.9);
+    height: 250px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    box-shadow: rgb(0 0 0 / 10%) 0px 25px 20px -20px;
+  }
+  .breadcrumb.is-small {
+    flex-wrap: wrap;
+    font-size: 0.75rem;
+  }
+  .filter {
+    padding-top: 5px;
+    z-index: 2;
+    height: 30px;
+    display: block;
+  }
+  .navbar-filter {
+    justify-content: space-between;
+    font-size: small;
+    font-weight: bold;
+    width: 230px;
+    display: flex;
+    margin: 10px 0 0 0;
+  }
+  .no-margin {
+    margin: 0;
+  }
+  .block:not(:last-child) {
+    margin-bottom: 0;
+  }
 }

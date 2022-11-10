@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>snekersMall</title>
+    <title>SHOW-SHOES</title>
     <!-- 아이콘 -->
     <link
       rel="icon"
@@ -25,6 +25,7 @@
 
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="home.css" />
+    <link rel="stylesheet" href="../global/header.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
@@ -42,12 +43,7 @@
           <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
             <ul id="navbar">
               <li>
-                <a href="/login"
-                  ><span class="icon"
-                    ><i class="fa-sharp fa-solid fa-circle-user"></i
-                  ></span>
-                  <span>로그인</span></a
-                >
+                <a href="/login">로그인</a>
               </li>
               <li><a href="/register">회원가입</a></li>
               <li>
@@ -93,7 +89,7 @@
           </nav>
           <nav class="navbar-filter">
             <span>필터 : </span>
-            <div class="block hidden" id="filter-brand">
+            <div class="block hidden no-margin" id="filter-brand">
               <span class="tag" id="filter-brand-span">
                 브랜드
                 <button
@@ -102,7 +98,7 @@
                 ></button>
               </span>
             </div>
-            <div class="block hidden" id="filter-category">
+            <div class="block hidden no-margin" id="filter-category">
               <span class="tag" id="filter-category-span">
                 카테고리
                 <button
