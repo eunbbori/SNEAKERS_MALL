@@ -13,8 +13,8 @@ export class CartModel {
 
     // 장바구니 조회
     async findGroupByUserId(userId) {
-        const order = await Cart.find({"userId" :userId}).sort({regDate: "desc"});
-        return order;
+        const cart = await Cart.find({"userId" :userId}).sort({regDate: "desc"});
+        return cart;
     }
 
     // 장바구니 수정
@@ -26,7 +26,6 @@ export class CartModel {
 
     // 장바구니 삭제 - cartId
     async deleteCart(cartId) {
-        console.log(cartId)
         const result = await Cart.deleteOne({_id: cartId});
         return result;
     }
@@ -35,6 +34,14 @@ export class CartModel {
     async deleteAll(userId){
         const result = await Cart.deleteMany({ userId: userId });
         return result;
+    }
+
+    // 장바구니 특정상품의 수량을 누적하여 변경
+    async updateQuantity(cartId, newQuantity) {
+        const cart = await Cart.findOne({"_id": cartId})
+        const updateQuantity = cart.quantity + newQuantity
+        const updatedCart = await Cart.updateOne({"_id": cartId}, {quantity: updateQuantity});
+        return updatedCart;
     }
 }
 const cartModel = new CartModel();
