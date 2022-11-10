@@ -17,6 +17,13 @@ export class CartModel {
         return order;
     }
 
+    // 장바구니 수정
+    async updateCartQuantity(cartId, newQuantity) {
+        const result = await Cart.findOneAndUpdate({ _id: cartId }, {quantity: newQuantity}, { returnOriginal: false });
+        return result;
+    }
+
+
     // 장바구니 삭제 - cartId
     async deleteCart(cartId) {
         console.log(cartId)
