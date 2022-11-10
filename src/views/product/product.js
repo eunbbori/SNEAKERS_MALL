@@ -142,7 +142,8 @@ async function recieveData() {
     goodsType.innerText = data.category
     goodsContent.innerText = data.content
 
-    const product = data
+    const product = data;
+    product.quantity=1;
 
     addToCartButton.addEventListener('click', async () => {
         try {
@@ -175,7 +176,7 @@ async function recieveData() {
     })
 }
 
-//
+//indexeddb에 데이터 추가
 async function insertDb(product) {
     // 객체 destructuring
     const { code, price } = product
