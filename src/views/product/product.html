@@ -1,67 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SHOW-SHOES</title>
-    <!-- 아이콘 -->
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/elice-rabbit-favicon.png"
-    />
-    <!-- bulma css -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-    />
-    <!-- 폰트 어썸: 아이콘 -->
-    <script
-      defer
-      src="https://kit.fontawesome.com/9daa42bcef.js"
-      crossorigin="anonymous"
-    ></script>
-    <title>SHOW-SHOES</title>
-    <script src="product.js" type="module" defer></script>
-    <link rel="stylesheet" href="product.css" />
-    <link rel="stylesheet" href="../../global/header.css" />
-  </head>
 
-  <body>
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="container mt-3">
-        <a href="/">
-          <img src="../../logo.png" width="200px" height="60px" />
-        </a>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SHOW-SHOES</title>
+  <!-- 아이콘 -->
+  <link rel="icon" type="image/png" sizes="16x16" href="/elice-rabbit-favicon.png" />
+  <!-- bulma css -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+  <!-- 폰트 어썸: 아이콘 -->
+  <script defer src="https://kit.fontawesome.com/9daa42bcef.js" crossorigin="anonymous"></script>
+  <title>SHOW-SHOES</title>
+  <script src="product.js" type="module" defer></script>
+  <link rel="stylesheet" href="product.css" />
+  <link rel="stylesheet" href="../../global/header.css" />
+</head>
 
-        <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
-          <ul id="navbar">
-            <li>
-              <a href="/login">로그인</a>
-            </li>
-            <li><a href="/register">회원가입</a></li>
-            <li>
-              <a href="/cart" aria-current="page">
-                <span class="icon">
-                  <i class="fas fa-cart-shopping"></i>
-                </span>
-                <span>카트</span>
-              </a>
-            </li>
-          </ul>
-        </div>
+<body>
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="container mt-3">
+      <a href="/">
+        <img src="../../logo.png" width="200px" height="60px" />
+      </a>
+
+      <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
+        <ul id="navbar">
+          <li>
+            <a href="/login">로그인</a>
+          </li>
+          <li><a href="/register">회원가입</a></li>
+          <li>
+            <a href="/cart" aria-current="page">
+              <span class="icon">
+                <i class="fas fa-cart-shopping"></i>
+              </span>
+              <span>카트</span>
+            </a>
+          </li>
+        </ul>
       </div>
-    </nav>
-    <div><img id="gImage" src="" width="500px" alt="sneakers" /></div>
-    <br />
-    <div>
-      <span id="goodsName" style="font-weight: bolder; font-size: large"
-        >상품명</span
-      >
-      <span id="productType" style="font-weight: lighter; font-size: small"
-        >women</span
-      >
+    </div>
+  </nav>
+  <div id="productBody">
+    <div id="productImage"><img id="gImage" src="" width="500px" alt="sneakers" /></div>
+
+    <div id="productTable">
+      <div id="tableHead">
+        <span id="goodsName">상품명</span>
+        <span id="productType">women</span>
+      </div>
       <table style="border: 2px solid white">
         <tr>
           <th>상품가격</th>
@@ -79,29 +67,21 @@
           <th>사이즈</th>
           <td id="productSize"></td>
         </tr>
-        <!-- <tr>
-                <th>구매수량</th>
-                <td><input type="number" min="1" max="99" step="1" value="1" id="count" required /></td>
-            </tr> -->
         <tr>
-          <td>
-            <button type="button" id="cartButton" class="button is-white">
-              장바구니
-            </button>
-            <button type="button" id="purchaseButton" class="button is-white">
-              바로주문
-            </button>
-            <button id="likeBtn" class="likeButton like button">Like</button>
-          </td>
+          <th>상품설명</th>
+          <td id="content"></td>
         </tr>
       </table>
-      <p id="content">상품설명~~~</p>
+      <div id="btn">
+        <button type="button" id="cartButton" class="button is-dark">장바구니</button>
+        <button type="button" id="purchaseButton" class="button is-dark">바로주문</button>
+        <button id="likeBtn" class="likeButton like button">Like</button>
+      </div>
     </div>
-    <script
-      src="../../global/renderHeaderNavigationBar.js"
-      type="module"
-      defer
-    ></script>
-    <script src="../../global/renderFooter.js"></script>
-  </body>
+  </div>
+
+  <script src="../../global/renderHeaderNavigationBar.js" type="module" defer></script>
+  <script src="../../global/renderFooter.js"></script>
+</body>
+
 </html>
