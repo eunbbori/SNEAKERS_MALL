@@ -67,7 +67,7 @@ async function updateUse(e) {
       throw new Error(reason);
     }
     alert("수정되었습니다");
-    window.location.href = "http://localhost:5000/mypage/";
+    window.location.href = "/mypage";
   } catch (err) {
     console.log(err);
     alert(err);
