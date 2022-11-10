@@ -56,7 +56,7 @@ async function handleSubmitAddProduct(e) {
   const bodyData = JSON.stringify(data);
   console.log(data);
   try {
-    await fetch("/api/product", {
+    const res = await fetch("/api/product", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -65,6 +65,8 @@ async function handleSubmitAddProduct(e) {
       },
       body: bodyData,
     });
+    if (res.ok)
+      alert(`상품이 ${category}에 추가 되었습니다 ${brand}:${name}(${stock})`);
     submitAddProduct.reset();
   } catch (err) {
     console.log(err.stack);
