@@ -100,7 +100,7 @@ productRouter.get("/detail/:code", async function (req, res, next) {
 
     const userToken = req.headers["authorization"]?.split(" ")[1];
 
-    if (userToken) {
+    if (userToken && userToken !== 'null') {
       const secretKey = process.env.JWT_SECRET_KEY || "secret-key";
       const jwtDecoded = jwt.verify(userToken, secretKey);
       const userId = jwtDecoded.userId;
@@ -110,7 +110,6 @@ productRouter.get("/detail/:code", async function (req, res, next) {
     }else{
       result.isLike = false;
     }
-
     res.status(200).json(result);
   } catch (error) {
     next(error);
