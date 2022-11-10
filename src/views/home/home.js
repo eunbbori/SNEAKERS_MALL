@@ -76,6 +76,7 @@ export function makeProductList(items) {
  */
 function renderProductCard(item) {
   const { brand: brandName, name, price, code, imageUrl } = item;
+
   selectElement(".productList").insertAdjacentHTML(
     "beforeend",
     `<li class="product" id="${code}Li">
@@ -220,7 +221,6 @@ function createFilterEvent({ selectedId, able1, able2 }) {
 }
 function deleteFilterBtnEvent() {
   selectElementId("delete-filter-brand").addEventListener("click", async () => {
-    console.log("click");
     selectElementId("filter-brand").classList.add("hidden");
     selectedFilter.brand = "";
     const { items, currentPage, totalPage } = await fetchProductList({
@@ -241,7 +241,6 @@ function deleteFilterBtnEvent() {
   selectElementId("delete-filter-category").addEventListener(
     "click",
     async () => {
-      console.log("click");
       selectElementId("filter-category").classList.add("hidden");
       selectedFilter.category = "";
       const { items, currentPage, totalPage } = await fetchProductList({
