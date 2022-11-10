@@ -17,7 +17,7 @@ class LikeService {
     }
 
     // 이미 좋아요를 누른 적이 있다면
-    const like = await this.likeModel.findByProductCode(likeInfo.productCode);
+    const like = await this.likeModel.findByCodeAndUser(likeInfo.productCode, likeInfo.userId);
     if (like) {
       throw new Error(
         "이미 좋아요를 눌렀습니다."
