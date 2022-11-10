@@ -100,7 +100,7 @@ async function handleSubmit(e) {
     }
 
     // 기본 페이지로 이동
-    window.location.href = "/";
+    //window.location.href = "/";
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
@@ -206,11 +206,11 @@ const deleteFromDb = async (storeName) => {
 //indexeddb에 데이터 추가
 async function insertDb(product) {
   // 객체 destructuring
-  const { code, price } = product
+  const { code, price,quantity } = product
+  const mongoPrice=parseInt(price*quantity)
 
   // 장바구니 추가 시, indexedDB에 제품 데이터 및
-  // 주문수량 (기본값 1)을 저장함.
-  await addToDb('cart', { ...product, quantity: 1 }, code)
+  await addToDb('cart', { ...product }, code)
 
   // 장바구니 요약(=전체 총합)을 업데이트함.
   await putToDb('order', 'summary', (data) => {
@@ -219,12 +219,12 @@ async function insertDb(product) {
     const total = parseInt(data.productsTotal)
     const ids = data.ids
     const selectedIds = data.selectedIds
-
+    
     // 기존 데이터가 있다면 1을 추가하고, 없다면 초기값 1을 줌
     data.productsCount = count ? count + 1 : 1
 
     // 기존 데이터가 있다면 가격만큼 추가하고, 없다면 초기값으로 해당 가격을 줌
-    data.productsTotal = total ? total + price : price
+    data.productsTotal = total ? total + mongoPrice : mongoPrice
 
     // 기존 데이터(배열)가 있다면 id만 추가하고, 없다면 배열 새로 만듦
     data.ids = ids ? [...ids, code] : [code]
