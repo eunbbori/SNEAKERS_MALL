@@ -27,16 +27,36 @@ const filterArray = [
     selectedId: "regDate",
     able1: "highPrice",
     able2: "lowPrice",
+    able3: "highLike",
+    able4: "lowLike",
   },
   {
     selectedId: "highPrice",
     able1: "regDate",
     able2: "lowPrice",
+    able3: "highLike",
+    able4: "lowLike",
   },
   {
     selectedId: "lowPrice",
     able1: "highPrice",
     able2: "regDate",
+    able3: "highLike",
+    able4: "lowLike",
+  },
+  {
+    selectedId: "highLike",
+    able1: "highPrice",
+    able2: "regDate",
+    able3: "lowPrice",
+    able4: "lowLike",
+  },
+  {
+    selectedId: "lowLike",
+    able1: "highPrice",
+    able2: "regDate",
+    able3: "highLike",
+    able4: "lowPrice",
   },
 ];
 
@@ -95,7 +115,7 @@ function renderProductCard(item) {
               <div class="media-content">
                 <p class="title is-6">${name}</p>
                 <p class="subtitle is-6">${brandName}</p>
-                <p class="subtitle is-6">${useful.addCommas(price)} 원</p>
+                <p class="subtitle is-5 price">${useful.addCommas(price)} 원</p>
               </div>
             </div>
           </div>
@@ -119,7 +139,7 @@ function setBrandList(brand) {
       "beforeend",
       `<span id="${brandName}">${brandName}</span>`
     );
-    selectElement(".navbar-dropdown").appendChild(aTag);
+    selectElement("#navbar-dropdown").appendChild(aTag);
   });
 }
 
@@ -196,7 +216,7 @@ function createCategoryEvent(elementId) {
   });
 }
 
-function createFilterEvent({ selectedId, able1, able2 }) {
+function createFilterEvent({ selectedId, able1, able2, able3, able4 }) {
   selectElementId(selectedId).addEventListener("click", async () => {
     const { items, currentPage, totalPage } = await fetchProductList({
       page: 1,
@@ -207,6 +227,8 @@ function createFilterEvent({ selectedId, able1, able2 }) {
     selectElementId(selectedId).classList.add("is-active");
     selectElementId(able1).classList.remove("is-active");
     selectElementId(able2).classList.remove("is-active");
+    selectElementId(able3).classList.remove("is-active");
+    selectElementId(able4).classList.remove("is-active");
 
     renderPagination({
       currentPage,
@@ -260,4 +282,7 @@ function deleteFilterBtnEvent() {
     }
   );
 }
+selectElementId("brand").addEventListener("click", () =>
+  selectElementId("navbar-dropdown").classList.toggle("show-block")
+);
 init();
