@@ -471,6 +471,7 @@ async function decreaseItemQuantity(id) {
     console.log('db 수량감소 실패');
   }
 }
+//test
 
 async function handleQuantityInput(id) {
   // 우선 입력값이 범위 1~99 인지 확인

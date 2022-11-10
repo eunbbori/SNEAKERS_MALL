@@ -75,7 +75,6 @@ async function doLike() {
         likeBtn.classList.add('like-fill'); //좋아요 누를시,
         await post("/api/like", {
             "productCode": param,
-            "userId": userEmail
         });
 
     }
@@ -129,7 +128,8 @@ async function recieveData() {
         throw new Error(reason);
     }
 
-    const data = await res.json();
+    const result=await res.json();
+    const data = result.product;
     
     console.log(data);
 
