@@ -53,13 +53,14 @@ async function userOrderList(e) {
       }
     }
     //주석 제거
+
     results.map((e) => {
       ordersContainer.insertAdjacentHTML(
         "beforeend",
         `<div class="columns orders-item" id="order-${e._id}">
         <div class="column is-2">${e.name}</div>
         <div class="column is-2 product-name${e._id}"></div>
-        <div class="column is-2">${e.account}</div>
+        <div class="column is-2">${Number(e.account).toLocaleString("en")}</div>
         <div class="column is-2">
           <div class="select" >
             <select id="statusSelectBox-${e._id}">
