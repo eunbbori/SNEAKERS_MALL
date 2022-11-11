@@ -14,9 +14,10 @@ export const fetchProductList = ({
   brand = "",
   category = "",
   sort = "",
+  name = "",
 }) => {
   const res = fetch(
-    `/api/product?page=${page}&brand=${brand}&category=${category}&sort=${sort}`
+    `/api/product?page=${page}&brand=${brand}&category=${category}&sort=${sort}&name=${name}`
   )
     .then((res) => {
       if (!res.ok) {
