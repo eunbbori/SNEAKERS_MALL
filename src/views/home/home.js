@@ -302,6 +302,13 @@ selectElementId("brand").addEventListener("click", () =>
   selectElementId("navbar-dropdown").classList.toggle("show-block")
 );
 
+selectElementId("search-input").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    selectElementId("search-button").click();
+  }
+});
+
 selectElementId("search-button").addEventListener("click", async () => {
   let searchName = selectElementId("search-input").value;
   selectedFilter.name = searchName;
