@@ -231,7 +231,14 @@ function addAllElements() {
 function addAllEvents() {
   allSelectCheckbox.addEventListener("change", toggleAll);
   partialDeleteLabel.addEventListener("click", deleteSelectedItems);
-  purchaseButton.addEventListener("click", navigate("/order"));
+  purchaseButton.addEventListener("click", function(e){
+    const currentCount = convertToNumber(productsCountElem.innerText);
+    if( currentCount === 0 ){
+      alert('구매할 상품이 없습니다.');
+    } else {
+      window.location.href = '/order'; // navigate 함수가 안되어 직접 href 변경하는 식으로 처리해주었습니다.
+    }
+  });
 }
 
 // indexedDB의 cart와 order에서 필요한 정보를 가져온 후
