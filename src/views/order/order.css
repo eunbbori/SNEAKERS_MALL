@@ -12,9 +12,32 @@ td {
 }
 
 .container {
-  margin-top: 5x0px;
+  margin-top: 5px;
   display: flex;
   align-content: center;
   width: 80vw;
   justify-content: space-around;
+}
+
+@media screen and (max-width: 800px) {
+  tr {
+    display: flex;
+    flex-direction: column;
+  }
+  input {
+    width: auto;
+  }
+  .container {
+    margin-top: 5px;
+    display: block;
+    align-content: center;
+    width: 80vw;
+    justify-content: space-around;
+  }
+  .payment {
+    margin-right: 20px;
+    border: solid black;
+    padding: 10px;
+    width: auto;
+  }
 }

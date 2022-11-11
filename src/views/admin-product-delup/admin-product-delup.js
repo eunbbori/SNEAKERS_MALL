@@ -45,7 +45,7 @@ async function handleSubmitRef(e) {
   </div>
   </div>
   <div class="column is-2">수정</div>
-  <div class="column is-2">취소</div>
+  <div class="column is-2"삭제</div>
   </div>
   `;
   const categorySelect = document.querySelector("#categorySelect");
@@ -90,7 +90,7 @@ async function handleSubmitRef(e) {
         <button class="button" id="updateButton-${e.code}" > 수정</button>
         </div>
         <div class="column is-2">
-        <button class="button" id="deleteButton-${e.code}" > 취소</button>
+        <button class="button" id="deleteButton-${e.code}" >삭제</button>
         </div>
         </div>
       </div>`
@@ -217,7 +217,7 @@ async function pagination() {
   </div>
   </div>
   <div class="column is-2">수정</div>
-  <div class="column is-2">취소</div>
+  <div class="column is-2">삭제</div>
   </div>
   `;
   const categorySelect = document.querySelector("#categorySelect");
@@ -251,7 +251,7 @@ async function pagination() {
     <button class="button" id="updateButton-${e.code}" > 수정</button>
     </div>
     <div class="column is-2">
-    <button class="button" id="deleteButton-${e.code}" > 취소</button>
+    <button class="button" id="deleteButton-${e.code}" > 삭제</button>
     </div>
     </div>
   </div>`
