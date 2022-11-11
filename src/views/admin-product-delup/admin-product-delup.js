@@ -2,8 +2,8 @@ const updateBrand = document.querySelector("#brandInput");
 const updateName = document.querySelector("#nameInput");
 const updateUrl = document.querySelector("#imageUrlInput");
 const updateContent = document.querySelector("#contentInput");
-const updateCategory = document.querySelector("#categoryInput");
-const updateSize = document.querySelector("#sizeInput");
+const updateCategory = document.querySelector("#categorySelect");
+const updateSize = document.querySelector("#sizeSelect");
 const updatePrice = document.querySelector("#priceInput");
 const updateStock = document.querySelector("#stockInput");
 
@@ -16,12 +16,29 @@ const modalDelete = document.querySelector("#modal1");
 const modalUpdate = document.querySelector("#modal2");
 const updateCompleteButoon = document.querySelector("#updateCompleteButton");
 const updateCancelButton = document.querySelector("#updateCancelButton");
+const brandSelectBox = document.querySelector("#brandSelect");
+const sizeSelectBox = document.querySelector("#sizeSelect");
+let startSize = 120;
+
 let pageNumber = 1;
 let orderIdToDelete;
 let orderIdToUpdate;
 let brandSwitch;
-pagination();
+brandSelectHandler();
+sizeCreate();
 
+pagination();
+function sizeCreate() {
+  for (let i = 0; i < 37; i++) {
+    sizeSelectBox.insertAdjacentHTML(
+      "beforeend",
+      ` <option value="${startSize}" style="background-color: #ebfffc; color: #00947e">
+    ${startSize}
+  </option>`
+    );
+    startSize += 5;
+  }
+}
 async function handleSubmitRef(e) {
   e.preventDefault();
   const res1 = await fetch("/api/brand", {
@@ -145,7 +162,7 @@ async function deleteOrderData(e) {
 async function updateOrderData(e) {
   e.preventDefault();
   //수정 input 값 확인 후 없으면 undefined return
-  const brand = updateBrand.value === "" ? undefined : updateBrand.value;
+  const brand = brandSelectBox.value === "" ? undefined : brandSelectBox.value;
   const name = updateName.value === "" ? undefined : updateName.value;
   const imageUrl = updateUrl.value === "" ? undefined : updateUrl.value;
   const content = updateContent.value === "" ? undefined : updateContent.value;
@@ -302,6 +319,31 @@ async function pagination() {
       pageNumber = pageBtn.ariaLabel;
       pagination();
     });
+  }
+}
+async function brandSelectHandler() {
+  try {
+    brandSelectBox.innerHTML = "";
+    const res = await fetch("/api/brand", {
+      headers: {
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzYwYjQ4MWJjMGZiY2I1YWFhNDYxMmMiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY2NzI4MjIwNH0.pAegQIKEaZmGFznaEablnGuF-1iDFLZs9OgmW4EYFbE",
+      },
+    });
+    const results = await res.json();
+    results.map((e) => {
+      brandSelectBox.insertAdjacentHTML(
+        "beforeend",
+        ` <option value="${e.name}" style="background-color: #ebfffc; color: #00947e">
+          ${e.name}
+        </option>`
+      );
+    });
+    console.dir(results);
+    console.log(`브랜드 가져오기 성공! `);
+    console.log(brandSelectBox.value);
+  } catch (err) {
+    console.log(err.stack);
   }
 }
 

@@ -128,15 +128,10 @@
           <p class="mb-3">
             정말로 수정하시겠습니까?
           </p>
-          <label class="label" for="brandInput">브랜드</label>
-          <div class="control">
-            <input
-              class="input"
-              id="brandInput"
-              type="text"
-              placeholder="브랜드"
-              autocomplete="on"
-            />
+          <div class="select is-fullwidth">
+            <select id="brandSelect">
+              <option value="">브랜드 선택</option>
+            </select>
           </div>
           <label class="label" for="nameInput">상품이름</label>
           <div class="control">
@@ -168,25 +163,18 @@
               autocomplete="on"
             />
           </div>
-          <label class="label" for="categoryInput">카테고리</label>
-          <div class="control">
-            <input
-              class="input"
-              id="categoryInput"
-              type="text"
-              placeholder="카테고리"
-              autocomplete="on"
-            />
+          <label class="label" for="categorySelect">카테고리</label>
+          <div class="select is-fullwidth">
+            <select id="categorySelect">
+              <option value="MEN">MEN</option>
+              <option value="WOMEN">WOMEN</option>
+              <option value="KIDS">KIDS</option>
+            </select>
           </div>
-          <label class="label" for="sizeInput">사이즈</label>
-          <div class="control">
-            <input
-              class="input"
-              id="sizeInput"
-              type="number"
-              placeholder="사이즈"
-              autocomplete="on"
-            />
+          <label class="label" for="sizeSelect">사이즈</label>
+
+          <div class="select is-fullwidth">
+            <select id="sizeSelect"></select>
           </div>
           <label class="label" for="priceInput">가격</label>
           <div class="control">
