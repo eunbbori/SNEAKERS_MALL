@@ -2,6 +2,84 @@ function init() {
   renderNavBar();
 }
 
+async function removeDB(){
+    await deleteFromDb("cart");
+    await deleteFromDb("order");
+    console.log('indexeddb삭제')
+    sessionStorage.removeItem("token");
+    console.log('db 날리기');
+    
+}
+
+let database;
+
+const openDatabase = () => {
+  const db = new Promise((resolve, reject) => {
+    const onRequest = indexedDB.open("shopping", 1);
+    onRequest.onupgradeneeded = () => {
+      console.log("indexeddb의 업그레이드가 이루어집니다.");
+      const database = onRequest.result;
+
+      database.createObjectStore("cart", {
+        autoIncrement: true,
+      });
+
+      database.createObjectStore("order", {
+        autoIncrement: true,
+      });
+    };
+
+    onRequest.onsuccess = async () => {
+      console.log("indexeddb가 정상적으로 시작되었습니다.");
+
+      resolve(onRequest.result);
+    };
+
+    onRequest.onerror = () => {
+      const err = onRequest.error;
+      console.log(
+        `indexeddb를 시작하는 과정에서 오류가 발생하였습니다: ${err}`
+      );
+
+      reject(err);
+    };
+  });
+
+  return db;
+};
+
+// indexedDB의 데이터를 삭제함
+const deleteFromDb = async (storeName) => {
+  // database 변수가 아직 초기화가 되어있지 않다면,
+  // openDatabase 함수를 실행하여 데이터베이스 객체를 할당함.
+  if (!database) {
+    database = await openDatabase();
+  }
+
+  const transaction = database.transaction([storeName], "readwrite");
+  const store = transaction.objectStore(storeName);
+
+  const result = new Promise((resolve, reject) => {
+    // key가 주어졌다면 key에 해당하는 특정 아이템만,
+    // key가 없다면 모든 아이템을 삭제함
+    const deleteRequest = store.clear();
+
+    deleteRequest.onsuccess = () => {
+      console.log(`${storeName}에서 정상적으로 삭제되었습니다.`);
+      resolve();
+    };
+
+    deleteRequest.onerror = () => {
+      const err = deleteRequest.error;
+      console.log(`${storeName}에서 삭제하는데 에러가 발생하였습니다: ${err} `);
+
+      reject(err);
+    };
+  });
+
+  return result;
+};
+
 async function renderNavBar() {
   const token = sessionStorage.getItem("token");
   const navBarEl = selectElementId("navbar");
@@ -45,9 +123,7 @@ async function renderNavBar() {
     if (role === "admin") {
       navBarEl.appendChild(adminLiEl);
     }
-    selectElementId("nav-logout").addEventListener("click", () => {
-      sessionStorage.removeItem("token");
-    });
+    selectElementId("nav-logout").addEventListener("click", removeDB);
   }
 }
 function selectElementId(id) {
