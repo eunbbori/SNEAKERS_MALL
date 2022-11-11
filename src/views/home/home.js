@@ -145,6 +145,7 @@ async function brandFilter() {
     brand: brandName,
     sort: selectedFilter.sort,
     category: selectedFilter.category,
+    name: selectedFilter.name,
   });
   makeProductList(items);
   renderPagination({
@@ -153,6 +154,7 @@ async function brandFilter() {
     brand: brandName,
     category: selectedFilter.category,
     sort: selectedFilter.sort,
+    name: selectedFilter.name,
   });
   selectElementId("filter-brand").classList.remove("hidden");
   selectElementId(
@@ -188,6 +190,7 @@ function createCategoryEvent(elementId) {
       page: 1,
       category: elementId,
       brand: selectedFilter.brand,
+      name: selectedFilter.name,
       sort: selectedFilter.sort,
     });
     renderPagination({
@@ -196,6 +199,7 @@ function createCategoryEvent(elementId) {
       category: elementId,
       brand: selectedFilter.brand,
       sort: selectedFilter.sort,
+      name: selectedFilter.name,
     });
     makeProductList(items);
     selectElementId("filter-category").classList.remove("hidden");
@@ -216,6 +220,7 @@ function createFilterEvent({ selectedId, able1, able2, able3, able4 }) {
       sort: selectedId,
       category: selectedFilter.category,
       brand: selectedFilter.brand,
+      name: selectedFilter.name,
     });
     selectElementId(selectedId).classList.add("is-active");
     selectElementId(able1).classList.remove("is-active");
@@ -228,6 +233,7 @@ function createFilterEvent({ selectedId, able1, able2, able3, able4 }) {
       sort: selectedId,
       brand: selectedFilter.brand,
       category: selectedFilter.category,
+      name: selectedFilter.name,
     });
     makeProductList(items);
     selectedFilter.sort = selectedId;
