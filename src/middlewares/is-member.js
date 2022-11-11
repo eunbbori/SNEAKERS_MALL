@@ -28,7 +28,6 @@ function isMember(req, res, next) {
     } catch (error) {
         // jwt.verify 함수가 에러를 발생시키는 경우는 토큰이 정상적으로 decode 안되었을 경우임.
         // 403 코드로 JSON 형태로 프론트에 전달함.
-        console.log("비회원 장바구니");
         req.currentUserId = undefined;
         return;
     }

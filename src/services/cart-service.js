@@ -46,22 +46,21 @@ class CartService{
         // db에서 데이터 가져와 상품코드만 배열로 만든다.
         const dbCart = await this.cartModel.findGroupByUserId(userId);
         const dbCodes = dbCart.map(row => row.code);
+        const dbQuantity = dbCart.map(row => row.quantity);
 
         // db의 code랑 indexedDB의 code가 동일한 게 있는지 확인
-        for (const data of indexedDB) {
+        for (const indexed of indexedDB) {
             // 기존에 동일상품 있다면 quantity 누적
-            if (dbCodes.includes(data.code)){
-                const result = await this.cartModel.updateQuantity(data._id, data.quantity)
-                console.log(result);
-
+            if (dbCodes.includes(indexed.code)){
+                const dbIndex = dbCodes.indexOf(indexed.code)
+                const newQuantity = indexed.quantity + dbQuantity[dbIndex]
+                await this.cartModel.updateCartQuantity(dbCart[dbIndex]._id, newQuantity)
             }
             // 없다면 장바구니 추가
             else {
-                const cart = data;
-                cart.userId = userId;
-                const result = await this.cartModel.create(data);
-                console.log(result);
-
+                const cart = indexed;
+                cart.userId = userId; //userId는 필수값이라 추가함.
+                await this.cartModel.create(cart);
             }
         }
     }

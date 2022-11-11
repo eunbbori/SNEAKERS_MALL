@@ -62,44 +62,8 @@ userRouter.post("/login", async function (req, res, next) {
 
     // indexedDB에 데이터 있는 경우, indexDB-DB 데이터 일치시킴
     if (indexedDB) {
-      const result = await cartService.syncData(id , indexedDB)
-      console.log(result)
+      await cartService.syncData(id , indexedDB)
     }
-
-    // 임시 데이터 - 추후 삭제
-    // const indexedDB =
-    //     [
-    //   {
-    //     brand   : "NIKE",
-    //     category: "WOMEN",
-    //     code    : "6facqsmdr",
-    //     content : "설명",
-    //     imageUrl: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/7437e33d-fcc8-46a6-82d4-16ed34370b6f/%EC%97%90%EC%96%B4%EB%A7%A5%EC%8A%A4-97-%EC%97%AC%EC%84%B1-%EC%8B%A0%EB%B0%9C-rCXkYtQ4.png",
-    //     name    : "나이키 에어맥스 97",
-    //     price   : 199000,
-    //     quantity: 2,
-    //     regDate : "2022-11-09T08:05:40.620Z",
-    //     size    : 280,
-    //     stock   : 23,
-    //     __v    : 0,
-    //     _id     : "636b5f548fc36b717b396ee0"
-    //   },
-    //   {
-    //     brand:"NIKE",
-    //     category:"MEN",
-    //     code:"ka9c6nj9g",
-    //     content:"설명",
-    //     imageUrl:"https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/3e9e43c6-ee56-482d-a847-4648e468d4f0/%EC%97%90%EC%96%B4-%EC%A1%B0%EB%8D%98-1-%EB%A0%88%ED%8A%B8%EB%A1%9C-%ED%95%98%EC%9D%B4-og-%EC%8B%A0%EB%B0%9C-uXXnpk3p.png",
-    //     name:"에어 조던 1 레트로 하이 OG",
-    //     price:209000,
-    //     quantity: 1,
-    //     regDate:"2022-11-09T08:05:40.589Z",
-    //     size:260,
-    //     stock:23,
-    //     __v:0,
-    //     _id:"636b5f548fc36b717b396edc",
-    //   }
-    // ]
 
     // jwt 토큰을 프론트에 보냄 (jwt 토큰은, 문자열임)
     res.status(200).json({"token": token});
