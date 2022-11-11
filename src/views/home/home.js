@@ -21,6 +21,7 @@ const selectedFilter = {
   category: "",
   brand: "",
   sort: "",
+  name: "",
 };
 const filterArray = [
   {
@@ -28,35 +29,24 @@ const filterArray = [
     able1: "highPrice",
     able2: "lowPrice",
     able3: "highLike",
-    able4: "lowLike",
   },
   {
     selectedId: "highPrice",
     able1: "regDate",
     able2: "lowPrice",
     able3: "highLike",
-    able4: "lowLike",
   },
   {
     selectedId: "lowPrice",
     able1: "highPrice",
     able2: "regDate",
     able3: "highLike",
-    able4: "lowLike",
   },
   {
     selectedId: "highLike",
     able1: "highPrice",
     able2: "regDate",
     able3: "lowPrice",
-    able4: "lowLike",
-  },
-  {
-    selectedId: "lowLike",
-    able1: "highPrice",
-    able2: "regDate",
-    able3: "highLike",
-    able4: "lowPrice",
   },
 ];
 
@@ -167,7 +157,8 @@ async function brandFilter() {
   selectElementId("filter-brand").classList.remove("hidden");
   selectElementId(
     "filter-brand-span"
-  ).innerHTML = `${brandName}<button class="delete is-small" id="delete-filter-brand"></button>`;
+  ).innerHTML = `BRAND : ${brandName}<button class="delete is-small" id="delete-filter-brand"></button>`;
+  selectElementId("navbar-dropdown").classList.remove("show-block");
   deleteFilterBtnEvent();
 }
 
@@ -208,7 +199,9 @@ function createCategoryEvent(elementId) {
     });
     makeProductList(items);
     selectElementId("filter-category").classList.remove("hidden");
-    selectElementId("filter-category-span").innerHTML = `${elementId}<button
+    selectElementId(
+      "filter-category-span"
+    ).innerHTML = `Category : ${elementId}<button
     class="delete is-small"
     id="delete-filter-category"
   ></button>`;
@@ -228,7 +221,6 @@ function createFilterEvent({ selectedId, able1, able2, able3, able4 }) {
     selectElementId(able1).classList.remove("is-active");
     selectElementId(able2).classList.remove("is-active");
     selectElementId(able3).classList.remove("is-active");
-    selectElementId(able4).classList.remove("is-active");
 
     renderPagination({
       currentPage,
@@ -250,6 +242,7 @@ function deleteFilterBtnEvent() {
       category: selectedFilter.category,
       brand: selectedFilter.brand,
       sort: selectedFilter.sort,
+      name: selectedFilter.name,
     });
     makeProductList(items);
     renderPagination({
@@ -258,6 +251,7 @@ function deleteFilterBtnEvent() {
       category: selectedFilter.category,
       sort: selectedFilter.sort,
       brand: selectedFilter.brand,
+      name: selectedFilter.name,
     });
   });
   selectElementId("delete-filter-category").addEventListener(
@@ -270,6 +264,7 @@ function deleteFilterBtnEvent() {
         category: selectedFilter.category,
         brand: selectedFilter.brand,
         sort: selectedFilter.sort,
+        name: selectedFilter.name,
       });
       makeProductList(items);
       renderPagination({
@@ -278,11 +273,61 @@ function deleteFilterBtnEvent() {
         category: selectedFilter.category,
         sort: selectedFilter.sort,
         brand: selectedFilter.brand,
+        name: selectedFilter.name,
       });
     }
   );
+  selectElementId("delete-filter-name").addEventListener("click", async () => {
+    selectElementId("filter-name").classList.add("hidden");
+    selectedFilter.name = "";
+    const { items, currentPage, totalPage } = await fetchProductList({
+      page: 1,
+      category: selectedFilter.category,
+      brand: selectedFilter.brand,
+      sort: selectedFilter.sort,
+      name: selectedFilter.name,
+    });
+    makeProductList(items);
+    renderPagination({
+      currentPage,
+      totalPage,
+      category: selectedFilter.category,
+      sort: selectedFilter.sort,
+      brand: selectedFilter.brand,
+      name: selectedFilter.name,
+    });
+  });
 }
 selectElementId("brand").addEventListener("click", () =>
   selectElementId("navbar-dropdown").classList.toggle("show-block")
 );
+
+selectElementId("search-button").addEventListener("click", async () => {
+  let searchName = selectElementId("search-input").value;
+  selectedFilter.name = searchName;
+  const { currentPage, totalPage, items } = await fetchProductList({
+    page: 1,
+    brand: selectedFilter.brand,
+    category: selectedFilter.category,
+    sort: selectedFilter.sort,
+    name: searchName,
+  });
+  selectElementId("search-input").value = "";
+  makeProductList(items);
+  renderPagination({
+    currentPage,
+    totalPage,
+    category: selectedFilter.category,
+    sort: selectedFilter.sort,
+    brand: selectedFilter.brand,
+    name: selectedFilter.name,
+  });
+
+  selectElementId("filter-name").classList.remove("hidden");
+  selectElementId("filter-name-span").innerHTML = `상품명 : ${searchName}<button
+    class="delete is-small"
+    id="delete-filter-name"
+  ></button>`;
+  deleteFilterBtnEvent();
+});
 init();

@@ -12,6 +12,7 @@ export function renderPagination({
   brand = "",
   category = "",
   sort = "",
+  name = "",
 }) {
   selectElementId("js-pagination").innerHTML = "";
   let disabledPage = currentPage; // 현재 위치한 페이지 버튼을 비활성화 시키기 위한 변수
@@ -37,6 +38,7 @@ export function renderPagination({
         brand: brand,
         sort: sort,
         category: category,
+        name: name,
       });
       makeProductList(items);
       renderPagination({ currentPage, totalPage, brand });
@@ -67,6 +69,7 @@ export function renderPagination({
         brand: brand,
         category: category,
         sort: sort,
+        name: name,
       });
       makeProductList(items);
     });
@@ -82,6 +85,7 @@ export function renderPagination({
         brand: brand,
         category: category,
         sort: sort,
+        name: name,
       });
       makeProductList(items);
       renderPagination({ currentPage, totalPage, brand });
