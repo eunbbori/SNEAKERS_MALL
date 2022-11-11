@@ -72,8 +72,9 @@ async function doLike() {
         //1. isLike=>false가 되는지
         //2. like-1
     } else {
+        await post(`/api/like`, {"productCode":param}); // 순서를 지켜야함. db에서 처리가 된 다음 css처리.
         likeBtn.classList.add('like-fill'); //좋아요 누를시,
-        await post(`/api/like`, {"productCode":param});
+
         // api/like post 요청 보낼때, {bodyData: productCode(param)}
         //1. isLike=>true가 되는지
         //2. like+1
