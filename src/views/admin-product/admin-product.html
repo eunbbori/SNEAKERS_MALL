@@ -35,77 +35,98 @@
           <a href="/">
             <img src="../logo.png" width="200px" height="30px" />
           </a>
-
-      
         </div>
-    </nav>
+      </nav>
     </div>
     <div class="columns">
-    <div class="column is-one-fifth is-bordered">
-      <aside class="menu">
-        <p class="menu-label">
-          일반관리
-        </p>
-        <ul class="menu-list">
-          <li><a href="/admin-order" >주문관리</a></li>
-          <li><a href="/admin-user">회원정보 관리</a></li>
-          <li><a href="/admin-category">카테고리 관리</a></li>
-        </ul>
-        <p class="menu-label">
-          상품관리
-        </p>
-        <ul class="menu-list">
-          <li><a href="/admin-product" class='is-active'>상품추가</a></li>
-          <li><a href="/admin-product-delup">상품수정/삭제</a></li>
-          
-        </ul>
-      </aside>
-    </div>
-    <div class="column">
-    <div class="login-form-container productAddContainer">
-      <form class="box login-form-box categoryDeleteForm" id="productAddForm">
-        <div class="field mb-5">
-          <label class="label" for="productAdd">상품 추가</label>
-          <div class="control">
-            <div class="select is-fullwidth">
-              <select id="brandSelect">
-                <option value="">브랜드 선택</option>
-              </select>
+      <div class="column is-one-fifth is-bordered">
+        <aside class="menu">
+          <p class="menu-label">일반관리</p>
+          <ul class="menu-list">
+            <li><a href="/admin-order">주문관리</a></li>
+            <li><a href="/admin-user">회원정보 관리</a></li>
+            <li><a href="/admin-category">브랜드 관리</a></li>
+          </ul>
+          <p class="menu-label">상품관리</p>
+          <ul class="menu-list">
+            <li><a href="/admin-product" class="is-active">상품추가</a></li>
+            <li><a href="/admin-product-delup">상품수정/삭제</a></li>
+          </ul>
+        </aside>
+      </div>
+      <div class="column">
+        <div class="login-form-container productAddContainer">
+          <form
+            class="box login-form-box categoryDeleteForm"
+            id="productAddForm"
+          >
+            <div class="field mb-5">
+              <label class="label" for="productAdd">상품 추가</label>
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <select id="brandSelect">
+                    <option value="">브랜드 선택</option>
+                  </select>
+                </div>
+                <input
+                  class="input"
+                  type="text"
+                  placeholder="상품이름"
+                  id="productName"
+                  autocomplete="on"
+                />
+                <input
+                  class="input"
+                  type="text"
+                  placeholder="설명"
+                  id="productDsc"
+                  autocomplete="on"
+                />
+                <input
+                  class="input"
+                  type="number"
+                  placeholder="가격"
+                  id="productPrice"
+                  autocomplete="on"
+                />
+                <div class="select is-fullwidth">
+                  <select id="sizeSelect"></select>
+                </div>
+                <input
+                  class="input"
+                  id="productImg"
+                  type="url"
+                  placeholder="이미지 주소"
+                  autocomplete="on"
+                />
+                <input
+                  class="input"
+                  type="number"
+                  placeholder="재고"
+                  id="productStock"
+                  autocomplete="on"
+                />
+                <div class="select is-fullwidth">
+                  <select id="categorySelect">
+                    <option value="MEN">MEN</option>
+                    <option value="WOMEN">WOMEN</option>
+                    <option value="KIDS">KIDS</option>
+                  </select>
+                </div>
+              </div>
             </div>
-            <input class='input' type="text" placeholder="상품이름" id="productName"autocomplete="on"/>
-            <input class='input' type="text" placeholder="설명" id="productDsc"autocomplete="on"/>
-            <input class='input' type="number" placeholder="가격" id="productPrice"autocomplete="on"/>
-            <div class="select is-fullwidth">
-              <select id="sizeSelect">
-                
-              </select>
+            <div class="mt-5">
+              <button
+                class="button is-primary is-fullwidth"
+                id="submitAddButton"
+              >
+                확인
+              </button>
             </div>
-            <input
-              class="input"
-              id="productImg"
-              type="url"
-              placeholder="이미지 주소"
-              autocomplete="on"
-            />
-            <input class='input' type="number" placeholder="재고" id="productStock" autocomplete="on"/>
-            <div class="select is-fullwidth">
-              <select id="categorySelect">
-                <option value="MEN">MEN</option>
-                <option value="WOMEN">WOMEN</option>
-                <option value="KIDS">KIDS</option>
-              </select>
-            </div>
-          </div>
+          </form>
         </div>
-        <div class="mt-5">
-          <button class="button is-primary is-fullwidth" id="submitAddButton">
-          확인
-          </button>
-        </div>
-      </form>
+      </div>
     </div>
-   </div>
-   </div>
-   <script src="../global/renderFooter.js" type="module" defer></script>
+    <script src="../global/renderFooter.js" type="module" defer></script>
   </body>
 </html>
