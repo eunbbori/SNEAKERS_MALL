@@ -32,6 +32,9 @@ ol {
   text-align: center;
 }
 
+table {
+  text-align: center;
+}
 /* .state {
     border: solid blueviolet;
     padding: 10px 20px 10px 20px;

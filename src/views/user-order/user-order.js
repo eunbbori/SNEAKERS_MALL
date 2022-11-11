@@ -1,7 +1,8 @@
+const orderListContainer = document.querySelector(".orderList");
+
 async function init() {
   const dataArr = await getOrderData();
   setOrderList(dataArr);
-  //   setOrderList(orderlist);
 }
 
 function getOrderData() {
@@ -23,9 +24,6 @@ function getOrderData() {
 
 function setOrderList(orderlist) {
   orderlist.forEach((order) => {
-    const orderListContainer = document.querySelector(".orderList");
-    // const productName = order.productName;
-    // const quantity = order.orderList[0].quantity;
     const date = order.createdAt.slice(0, 10);
     const orderState = order.orderState;
     const orderId = order._id;
@@ -35,9 +33,19 @@ function setOrderList(orderlist) {
       })
       .join("");
 
-    const li = document.createElement("li");
-    li.classList.add("stateList");
-    li.setAttribute("id", `${orderId}`);
+    const tr = document.createElement("tr");
+    tr.setAttribute("id", orderId);
+    tr.insertAdjacentHTML(
+      "beforeend",
+      `
+                <td id="${orderId}date">${date}</td>
+                <td id="orderListString">${orderListString}</td>
+                <td id="${orderId}orderState">${orderState}</td>  
+                `
+    );
+
+    orderListContainer.appendChild(tr);
+
     const cancelBtn = document.createElement("button");
     cancelBtn.classList.add("cancelBtn");
     cancelBtn.classList.add("button");
@@ -47,29 +55,24 @@ function setOrderList(orderlist) {
     if (orderState !== "상품 준비중") {
       cancelBtn.setAttribute("disabled", "true");
     }
-    li.insertAdjacentHTML(
-      "beforeend",
-      `
-                <p id="${orderId}date">${date}</p>
-                <div id="orderListString">${orderListString}</div>
-                <p id="${orderId}orderState">${orderState}</p>
-            `
-    );
-
-    li.appendChild(cancelBtn);
-    orderListContainer.appendChild(li);
+    const td = document.createElement("td");
+    td.setAttribute("id", `${orderId}td`);
+    td.appendChild(cancelBtn);
+    tr.appendChild(td);
   });
 }
 
 async function orderCancel() {
-  const orderId = this.parentNode.id;
+  const orderId = this.parentNode.parentNode.id;
   await fetch(`/api/order/user?id=${orderId}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     },
   });
-  this.parentNode.remove();
+  const dataArr = await getOrderData();
+  orderListContainer.innerHTML = "";
+  setOrderList(dataArr);
 }
 
 init();
