@@ -1,111 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>관리자페이지</title>
-  <!-- 아이콘 -->
-  <link
-    rel="icon"
-    type="image/png"
-    sizes="16x16"
-    href="/elice-rabbit-favicon.png"
-  />
-  <!-- bulma css 관련 -->
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-  />
-  <!-- 폰트 어썸: 아이콘 -->
-  <script
-    defer
-    src="https://kit.fontawesome.com/9daa42bcef.js"
-    crossorigin="anonymous"
-  ></script>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>관리자페이지</title>
+    <!-- 아이콘 -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/elice-rabbit-favicon.png"
+    />
+    <!-- bulma css 관련 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
 
-  <!-- 커스텀 css, js -->
-  <link rel="stylesheet" href="admin-category.css" />
-  <script src="admin-category.js" type="module" defer></script>
-</head>
-<body>
-  <div class="header">
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="container mt-3">
-        <a href="/">
-          <img src="../logo.png" width="200px" height="30px" />
-        </a>
-
-    
-      </div>
-  </nav>
-  </div>
-  
-  <div class="columns">
-  <div class="column is-one-fifth is-bordered">
-    <aside class="menu">
-      <p class="menu-label">
-        일반관리
-      </p>
-      <ul class="menu-list">
-        <li><a  href="/admin-order">주문관리</a></li>
-        <li><a href="/admin-user">회원정보 관리</a></li>
-        <li><a href="/admin-category" class='is-active'>카테고리 관리</a></li>
-      </ul>
-      <p class="menu-label">
-        상품관리
-      </p>
-      <ul class="menu-list">
-        <li><a href="/admin-product">상품추가</a></li>
-        <li><a href="/admin-product-delup">상품수정/삭제</a></li>
-        
-      </ul>
-    </aside>
-  </div>
-  <div class="column">
-  <div class="register-category-form-container">
-    <form class="register-category-form-box" id="categoryAddForm">
-        <div class="field">
-          <label class="label" for="categoryAdd">브랜드 추가</label>
-          <div class="control">
-           <input
-            class="input"
-            id="categoryAdd"
-            type="text"
-            placeholder="카테고리"
-            autocomplete="on"
-          />
-          </div>
-       </div>
-       <button class="button is-primary is-fullwidth" id="submitBtnCategory">
-        확인
-        </button>
-    </form>
-  </div>
-  <div class="register-category-form-container">
-    <form class="register-category-form-box" id="categoryDeleteForm">
-        
-     
-        <div class="field">
-          <label class="label" for="themeSelectBox">브랜드 삭제</label>
-          <div class="control">
-            <div class="select is-fullwidth">
-              <select id="brandSelect">
-                <option value="">브랜드 선택</option>
-              </select>
-            </div>
-          </div>
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="admin-category.css" />
+    <script src="admin-category.js" type="module" defer></script>
+  </head>
+  <body>
+    <div class="header">
+      <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="container mt-3">
+          <a href="/">
+            <img src="../logo.png" width="200px" height="30px" />
+          </a>
         </div>
-        <button class="button is-primary is-fullwidth" id="addCategoryButton">
-          카테고리(브랜드) 삭제하기
-        </button>
-    </form>
-  </div>
-  </div>
-  </div>
+      </nav>
+    </div>
 
+    <div class="columns">
+      <div class="column is-one-fifth is-bordered">
+        <aside class="menu">
+          <p class="menu-label">일반관리</p>
+          <ul class="menu-list">
+            <li><a href="/admin-order">주문관리</a></li>
+            <li><a href="/admin-user">회원정보 관리</a></li>
+            <li><a href="/admin-category" class="is-active">브랜드 관리</a></li>
+          </ul>
+          <p class="menu-label">상품관리</p>
+          <ul class="menu-list">
+            <li><a href="/admin-product">상품추가</a></li>
+            <li><a href="/admin-product-delup">상품수정/삭제</a></li>
+          </ul>
+        </aside>
+      </div>
+      <div class="column">
+        <div class="register-category-form-container">
+          <form class="register-category-form-box" id="categoryAddForm">
+            <div class="field">
+              <label class="label" for="categoryAdd">브랜드 추가</label>
+              <div class="control">
+                <input
+                  class="input"
+                  id="categoryAdd"
+                  type="text"
+                  placeholder="카테고리"
+                  autocomplete="on"
+                />
+              </div>
+            </div>
+            <button
+              class="button is-primary is-fullwidth"
+              id="submitBtnCategory"
+            >
+              확인
+            </button>
+          </form>
+        </div>
+        <div class="register-category-form-container">
+          <form class="register-category-form-box" id="categoryDeleteForm">
+            <div class="field">
+              <label class="label" for="themeSelectBox">브랜드 삭제</label>
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <select id="brandSelect">
+                    <option value="">브랜드 선택</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <button
+              class="button is-primary is-fullwidth"
+              id="addCategoryButton"
+            >
+              카테고리(브랜드) 삭제하기
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
 
-  <script src="../global/renderFooter.js" type="module" defer></script>
-
-
-</body>
+    <script src="../global/renderFooter.js" type="module" defer></script>
+  </body>
 </html>
