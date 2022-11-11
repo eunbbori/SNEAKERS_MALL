@@ -2,11 +2,6 @@ function init() {
   renderNavBar();
 }
 
-async function removeDB(){
-    window.indexedDB.deleteDatabase('shopping')
-    sessionStorage.removeItem("token");
-}
-
 async function renderNavBar() {
   const token = sessionStorage.getItem("token");
   const navBarEl = selectElementId("navbar");
@@ -50,7 +45,10 @@ async function renderNavBar() {
     if (role === "admin") {
       navBarEl.appendChild(adminLiEl);
     }
-    selectElementId("nav-logout").addEventListener("click", removeDB);
+    selectElementId("nav-logout").addEventListener("click", () => {
+      window.indexedDB.deleteDatabase('shopping')
+      sessionStorage.removeItem("token");
+    });
   }
 }
 function selectElementId(id) {
