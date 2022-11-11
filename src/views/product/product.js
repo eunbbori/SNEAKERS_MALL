@@ -62,7 +62,7 @@ async function doLike() {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${sessionStorage.getItem("token")}`,
                 },
-                body: {"productCode":param},
+                body: JSON.stringify({"productCode":param}),
             });
         }catch(err){
             console.log('좋아요 취소 실패');
