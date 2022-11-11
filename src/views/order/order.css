@@ -7,7 +7,8 @@ td {
 }
 .payment {
   border: solid black;
-  padding: 10px;
+  font-size: large;
+  padding: 40px;
   width: 500px;
 }
 
@@ -17,6 +18,12 @@ td {
   align-content: center;
   width: 80vw;
   justify-content: space-around;
+}
+
+#checkoutButton{
+  display:flex;
+  margin-left:auto;
+  margin-top:80px;
 }
 
 @media screen and (max-width: 800px) {
