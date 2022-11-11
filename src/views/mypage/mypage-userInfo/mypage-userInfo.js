@@ -76,5 +76,5 @@ async function updateUse(e) {
 
 updateBtn.addEventListener("click", updateUse);
 updateCancelBtn.addEventListener("click", () => {
-  window.location.href = "http://localhost:5000/mypage/";
+  window.location.href = "/mypage/";
 });
