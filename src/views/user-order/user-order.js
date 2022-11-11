@@ -44,7 +44,9 @@ function setOrderList(orderlist) {
     cancelBtn.classList.add("is-light");
     cancelBtn.innerText = "주문 취소";
     cancelBtn.addEventListener("click", orderCancel);
-
+    if (orderState !== "상품 준비중") {
+      cancelBtn.setAttribute("disabled", "true");
+    }
     li.insertAdjacentHTML(
       "beforeend",
       `
