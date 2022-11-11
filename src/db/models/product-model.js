@@ -17,10 +17,10 @@ export class ProductModel {
   async total(filter) {
     return await Product.countDocuments(filter);
   }
-
-  async paginationProducts({ page, perPage, ...filter }){
+  
+  async paginationProducts({ page, perPage, sort , ...filter }){
     const products = await Product.find(filter)
-      .sort({regDate : -1})
+      .sort(sort)
       .skip(perPage * (page -1))
       .limit(perPage);
 

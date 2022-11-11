@@ -1,0 +1,56 @@
+#customRequest {
+  display: none;
+}
+th,
+td {
+  padding: 10px;
+}
+.payment {
+  border: solid black;
+  font-size: large;
+  margin-top:40px;
+  padding: 40px;
+  height: 580px;
+  width: 500px;
+}
+
+.container {
+  margin-top: 5px;
+  display: flex;
+  align-content: center;
+  width: 80vw;
+  justify-content: space-around;
+}
+
+#btnContainer{
+  display:flex;
+}
+
+#checkoutButton{
+  display:flex;
+  margin-left:auto;
+}
+
+@media screen and (max-width: 800px) {
+  tr {
+    display: flex;
+    flex-direction: column;
+  }
+  input {
+    width: auto;
+  }
+  .container {
+    margin-top: 5px;
+    display: block;
+    align-content: center;
+    width: 80vw;
+    justify-content: space-around;
+  }
+  .payment {
+    margin-right: 30px;
+    border: solid black;
+    padding: 20px;
+    width: auto;
+    height:650px;
+  }
+}

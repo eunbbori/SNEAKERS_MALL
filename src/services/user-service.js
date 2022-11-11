@@ -12,7 +12,7 @@ class UserService {
   // 회원가입
   async addUser(userInfo) {
     // 객체 destructuring
-    const { email, fullName, password } = userInfo;
+    const { email, fullName, password, phoneNumber } = userInfo;
 
     // 이메일 중복 확인
     const user = await this.userModel.findByEmail(email);
@@ -27,7 +27,7 @@ class UserService {
     // 우선 비밀번호 해쉬화(암호화)
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUserInfo = { fullName, email, password: hashedPassword };
+    const newUserInfo = { fullName, email, password: hashedPassword, phoneNumber };
 
     // db에 저장
     const createdNewUser = await this.userModel.create(newUserInfo);
@@ -35,6 +35,33 @@ class UserService {
     return createdNewUser;
   }
 
+  async checkUserPassword(loginInfo) {
+    // 객체 destructuring
+    const { userId, password } = loginInfo;
+
+    const user = await this.userModel.findById(userId);
+    if (!user) {
+      throw new Error(
+        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요."
+      );
+    }
+
+    // 비밀번호 일치 여부 확인
+    const correctPasswordHash = user.password; // db에 저장되어 있는 암호화된 비밀번호
+
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      correctPasswordHash
+    );
+
+    if (!isPasswordCorrect) {
+      throw new Error(
+        "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
+      );
+    }
+    
+    return true;
+  }
   // 로그인
   async getUserToken(loginInfo) {
     // 객체 destructuring
@@ -70,14 +97,20 @@ class UserService {
 
     // 2개 프로퍼티를 jwt 토큰에 담음
     const token = jwt.sign({ userId: user._id, role: user.role }, secretKey);
-
-    return { token };
+    const userId = user._id;
+    return { token, userId };
   }
 
   // 사용자 목록을 받음.
   async getUsers() {
     const users = await this.userModel.findAll();
     return users;
+  }
+
+  // 유저정보 반환.
+  async getUserById(userId) {
+    const user = await this.userModel.findById(userId);
+    return user;
   }
 
   // 유저정보 수정, 현재 비밀번호가 있어야 수정 가능함.
@@ -125,6 +158,33 @@ class UserService {
     });
 
     return user;
+  }
+  
+  //사용자 삭제(탈퇴) 
+  async deleteUser(userId) {
+    const deletedUser = await this.userModel.delete(userId);
+    return deletedUser
+  }
+
+  // 관리자 - 사용자 권한 정보 수정  
+  async updateRole(userId, role) {
+    // 우선 해당 id의 유저가 db에 있는지 확인
+    let user = await this.userModel.findById(userId);
+
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!user) {
+      throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
+    }
+    // 업데이트 진행
+    user = await this.userModel.update({
+      userId,
+      update: {
+        role: role
+      },
+    });
+
+    return user;
+    
   }
 }
 

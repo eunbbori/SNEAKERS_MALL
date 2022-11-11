@@ -25,6 +25,7 @@ async function brandSelectHandler() {
     });
     console.dir(results);
     console.log(`브랜드 가져오기 성공! `);
+    categoryDeleteForm.reset();
   } catch (err) {
     console.log(err.stack);
   }
@@ -54,9 +55,11 @@ async function categoryAddFormHandler(e) {
     }
 
     categoryAddForm.reset();
+    console.log("hi");
   } catch (err) {
     alert(err);
   }
+  brandSelectHandler();
   categoryAddForm.reset();
 }
 
@@ -76,8 +79,9 @@ async function categoryDeleteFormHandler(e) {
   } catch (err) {
     console.log(err.stack);
   }
+  brandSelectHandler();
 }
 categoryAddForm.addEventListener("submit", categoryAddFormHandler);
-categoryAddForm.addEventListener("submit", brandSelectHandler);
+// categoryAddForm.addEventListener("submit", brandSelectHandler);
 categoryDeleteForm.addEventListener("submit", categoryDeleteFormHandler);
-categoryDeleteForm.addEventListener("submit", brandSelectHandler);
+// categoryDeleteForm.addEventListener("submit", brandSelectHandler);
