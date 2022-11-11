@@ -3,12 +3,14 @@
 }
 th,
 td {
-  padding: 7px;
+  padding: 10px;
 }
 .payment {
   border: solid black;
   font-size: large;
+  margin-top:40px;
   padding: 40px;
+  height: 580px;
   width: 500px;
 }
 
@@ -20,10 +22,13 @@ td {
   justify-content: space-around;
 }
 
+#btnContainer{
+  display:flex;
+}
+
 #checkoutButton{
   display:flex;
   margin-left:auto;
-  margin-top:80px;
 }
 
 @media screen and (max-width: 800px) {
@@ -42,9 +47,10 @@ td {
     justify-content: space-around;
   }
   .payment {
-    margin-right: 20px;
+    margin-right: 30px;
     border: solid black;
-    padding: 10px;
+    padding: 20px;
     width: auto;
+    height:650px;
   }
 }
