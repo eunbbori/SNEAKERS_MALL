@@ -202,25 +202,28 @@
       <div class="payment">
         <h3 class="title is-3">결제정보</h3>
         <hr />
-        <table>
+        <table id="paymentTable">
           <tr>
-            <td>주문 상품</td>
-            <td><p id="productsTitle"></p></td>
+            <th width="300px">주문 상품</th>
+            <td width="600px"><p id="productsTitle"></p></td>
           </tr>
           <tr>
-            <td>상품 총액</td>
+            <th>상품 총액</th>
             <td id="productsTotal"></td>
           </tr>
           <tr>
-            <td>총 배송비</td>
+            <th>총 배송비</th>
             <td id="deliveryFee"></td>
           </tr>
           <tr>
-            <td>총 결제예정금액</td>
+            <th>총 결제예정금액</th>
             <td id="orderTotal"></td>
           </tr>
         </table>
-        <button id="checkoutButton" class="button is-danger is-large">결제하기</button>
+        <div id="btnContainer">
+          <button id="checkoutButton" class="button is-danger is-large">결제하기</button>
+        </div>
+        
         
       </div>
     </div>
