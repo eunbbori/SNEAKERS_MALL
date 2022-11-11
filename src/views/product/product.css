@@ -17,6 +17,7 @@ input[type="number"]::-webkit-outer-spin-button {
 } */
 
 #productTable {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   display: flex;
   flex-direction: column;
   padding-top: 10px;
@@ -67,6 +68,9 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .container {
   margin: 0 50px 0 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 @media (max-width: 730px) {
@@ -81,6 +85,7 @@ input[type="number"]::-webkit-outer-spin-button {
     flex-direction: column;
     padding-top: 10px;
     padding-left: 0;
+    flex-flow: 2;
   }
   .container {
     flex-grow: 1;
